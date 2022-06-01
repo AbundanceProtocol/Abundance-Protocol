@@ -6,7 +6,7 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { AccountContext } from '../context.js'
 // import { ownerAddress } from '../config'
-import { button, buttonPath, Logo, LeftCorner, RightCorner, Space } from './assets'
+import { button, Logo, LeftCorner, RightCorner, Space } from './assets'
 import { useRouter } from 'next/router'
 import 'easymde/dist/easymde.min.css'
 import { FaPen } from 'react-icons/fa';
