@@ -371,8 +371,6 @@ function App({ Component, pageProps }) {
       },
     }
 
-
-
   let targetLink = 'Vision'
   if (typeof window !== 'undefined') {
     let search = window.location.pathname
