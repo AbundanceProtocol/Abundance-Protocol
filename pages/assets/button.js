@@ -285,7 +285,7 @@ const button = {
         menu: 'Home',
         description: 'In-depth explanation of the Protocol',
         account: false,
-        working: false,
+        working: true,
         icon: FaFileAlt
     },
     'Project': {

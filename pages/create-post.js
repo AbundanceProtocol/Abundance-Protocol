@@ -155,7 +155,7 @@ function CreatePost() {
 	}
 
 	return (
-    <div style={{padding: '150px 0 0 0'}}>
+	<div className="t-p-130">
       <Warning />
       <div className="input-container-wide flex-middle flex-col">
         <div className="flex-row" style={{padding: '0 0 10px 0', width: '100%'}}>

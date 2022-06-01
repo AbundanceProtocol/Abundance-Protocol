@@ -33,7 +33,7 @@ export default function Home(props) {
   }
 
   return (
-    <div style={{padding: '130px 0 0 0' , backgroundColor: '#bfdeff'}}>
+    <div className="t-p-130" style={{backgroundColor: '#bfdeff'}}>
       <div className="top-frame flex-middle">
         <div className="border-style wrap bg-grd6 flex-middle flex-row flex-wr" ref={ref}>
           <div className='flex-col flex-2'>

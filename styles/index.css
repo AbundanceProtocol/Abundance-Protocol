@@ -722,6 +722,10 @@ blockquote {
 	text-align: center !important;
 }
 
+.t-p-130 {
+    padding: 130px 0 0 0;
+}
+
 .mid-frame-font {
     font-family: inter,sans-serif;
     font-size: 18px;
