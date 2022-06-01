@@ -6,10 +6,12 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { AccountContext } from '../context.js'
 // import { ownerAddress } from '../config'
-import { button, Logo, LeftCorner, RightCorner, Space } from './assets'
+import { Logo, LeftCorner, RightCorner, Space } from './assets'
 import { useRouter } from 'next/router'
 import 'easymde/dist/easymde.min.css'
 import { FaPen } from 'react-icons/fa';
+import button from './assets/button';
+
 
 function App({ Component, pageProps }) {
   let targetLink = 'Vision'
