@@ -117,7 +117,7 @@ export default function Home(props) {
 
       <div className="top-frame flex-middle">
         <div className="border-style wrap-title flex-middle flex-col">
-            <p className="title-font">Transforming the Intenet (and the Economy)</p>
+            <p className="title-font">Transforming the Internet (and the Economy)</p>
         </div>
       </div>
       <div className="top-frame flex-middle flex-row">
