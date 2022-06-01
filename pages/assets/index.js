@@ -10,7 +10,6 @@ import PublicGoodsIcon from './PublicGoodsIcon';
 import RightCorner from './RightCorner';
 import ScienceIcon from './ScienceIcon';
 import Space from './Space';
-import buttonPath from './button-path';
 import button from './button';
 import Warning from './Warning';
 
@@ -27,7 +26,6 @@ export {
   RightCorner,
   ScienceIcon,
   Space,
-  buttonPath,
   button,
   Warning
 }

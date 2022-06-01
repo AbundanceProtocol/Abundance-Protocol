@@ -355,5 +355,5 @@ const button = {
         icon: BsFillDiagram3Fill
     },
   }
-
-  export default button;
+  module.exports = button;
+//   export default button;
