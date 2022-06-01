@@ -12,6 +12,12 @@ import ScienceIcon from './ScienceIcon';
 import Space from './Space';
 import Warning from './Warning';
 
+const Spaces = () => {
+  return <div className="flex-s" />
+}
+
+export default Spaces;
+
 export {
   CodeIcon,
   CollabIcon,

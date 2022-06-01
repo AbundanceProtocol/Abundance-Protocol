@@ -43,3 +43,6 @@ typechain
 
 #Hardhat files
 cache
+
+# Local Netlify folder
+.netlify
