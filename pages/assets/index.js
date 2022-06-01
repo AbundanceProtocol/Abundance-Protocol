@@ -1,3 +1,4 @@
+import button from './button';
 import CodeIcon from './CodeIcon';
 import CollabIcon from './CollabIcon';
 import ExpandIcon from './ExpandIcon';
@@ -15,10 +16,10 @@ import Warning from './Warning';
 const Spaces = () => {
   return <div className="flex-s" />
 }
-
 export default Spaces;
 
 export {
+  button,
   CodeIcon,
   CollabIcon,
   ExpandIcon,
