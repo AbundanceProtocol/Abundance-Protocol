@@ -837,7 +837,11 @@ blockquote {
 }
 
 .bg-grey {
-    color: #888;
+    color: #999;
+}
+
+.bg-inactive {
+    color: #666;
 }
 
 .submenu-button {
@@ -889,6 +893,18 @@ blockquote {
     display: flex;
     cursor: pointer;
     justify-content: center;
+}
+
+.inactive-nav-link {
+    color: #aaa;
+    min-width: 87px;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.inactive-nav-link:hover {
+    color: #aaa;
 }
 
 .nav-link:hover {

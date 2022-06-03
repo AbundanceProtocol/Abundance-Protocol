@@ -18,11 +18,11 @@ const button = {
     'nav-menu': {
         'Home': ['Vision', 'Roadmap', 'Mechanism', 'Whitepaper', 'FAQ', 'Blog'],
         'Portal': ['Profile', 'Wallet', 'Expertise', 'Portfolio', 'Subscriptions', 'Inbox'],
-        'Fund': ['Project Funding', 'Review Funding', 'Funding Proposal', 'Search Requests'],
+        'Fund': ['Project Funding', 'Review Funding', 'Funding Proposal'],
         'Create': ['Project', 'Post', 'Initial Review', 'Collaboration', 'Reviews'],
         'Search': ['Posts', 'Users', 'Proposals', 'Categories'],
         'Connect': ['GitHub', 'Discord', 'OpenSea', 'YouTube', 'Twitter', 'Email'],
-        'Eco': ['Trending', 'Curated', 'Favorites', 'Feed'],
+        'Explore': ['Trending', 'Curated', 'Favorites', 'Feed', 'Search Requests'],
     },
     'GitHub': {
         link: false,
@@ -80,52 +80,52 @@ const button = {
     },
     'Email': {
         link: false,
-        url: '',
+        url: 'mailto:info@buildingweb4.io',
         menu: 'Connect',
         description: 'Contact us',
         account: false,
-        working: false,
+        working: true,
         icon: FaAt
     },
 
     'create': {
-        link: '/trending',
+        link: '/create',
         menu: 'Create',
-        account: false,
+        account: true,
         working: true,
         icon: FaPen
     },
     'fund': {
-        link: '/trending',
+        link: '/fund',
         menu: 'Fund',
-        account: false,
+        account: true,
         working: true,
         icon: FaCoins
     },
     'connect': {
-        link: '/trending',
+        link: '/connect',
         menu: 'Connect',
         account: false,
         working: true,
         icon: FaLink
     },
     'explore': {
-        link: '/trending',
-        menu: 'Eco',
+        link: '/explore',
+        menu: 'Explore',
         account: false,
         working: true,
         icon: FaGlobe
     },
     'portal': {
-        link: '/profile',
+        link: '/portal',
         menu: 'Portal',
         description: 'review categories',
-        account: false,
+        account: true,
         working: true,
         icon: FaUser
     },
     'search': {
-        link: '/posts',
+        link: '/search',
         menu: 'Search',
         description: 'review categories',
         account: false,
@@ -135,7 +135,7 @@ const button = {
 
     'Trending': {
         link: '/trending',
-        menu: 'Eco',
+        menu: 'Explore',
         description: 'Trending projects and posts',
         account: false,
         working: false,
@@ -143,7 +143,7 @@ const button = {
     },
     'Curated': {
         link: '/curated',
-        menu: 'Eco',
+        menu: 'Explore',
         description: 'Curated project and posts',
         account: false,
         working: false,
@@ -151,7 +151,7 @@ const button = {
     },
     'Favorites': {
         link: '/favorites',
-        menu: 'Eco',
+        menu: 'Explore',
         description: 'Your favorite project categories',
         account: true,
         working: false,
@@ -159,7 +159,7 @@ const button = {
     },
     'Feed': {
         link: '/feed',
-        menu: 'Eco',
+        menu: 'Explore',
         description: 'Latest projects and posts',
         account: true,
         working: false,
@@ -199,7 +199,7 @@ const button = {
         icon: GiReceiveMoney
     },
     'Funding Proposal': {
-        link: '/proposal',
+        link: '/funding-proposal',
         menu: 'Fund',
         description: 'Create an ecosystem improvement proposal',
         account: true,
@@ -211,23 +211,23 @@ const button = {
         link: '/profile',
         menu: 'Portal',
         description: 'Update your PFP and bio',
-        account: false,
+        account: true,
         working: false,
         icon: FaAddressCard
     },
     'Wallet': {
-        link: '/profile',
+        link: '/wallet',
         menu: 'Portal',
         description: 'Manage your funds, investments, proposals & bids',
-        account: false,
+        account: true,
         working: false,
         icon: FaWallet
     },
     'Expertise': {
-        link: '/profile',
+        link: '/expertise',
         menu: 'Portal',
         description: 'Review your scores across fields',
-        account: false,
+        account: true,
         working: false,
         icon: FaAward
     },
@@ -235,7 +235,7 @@ const button = {
         link: '/portfolio',
         menu: 'Portal',
         description: 'Check your projects, posts and reviews',
-        account: false,
+        account: true,
         working: false,
         icon: FaFolderOpen
     },
@@ -243,7 +243,7 @@ const button = {
         link: '/subscriptions',
         menu: 'Portal',
         description: 'Subscribe to Categories to participate in reviews',
-        account: false,
+        account: true,
         working: false,
         icon: MdCastConnected
     },
@@ -251,7 +251,7 @@ const button = {
         link: '/inbox',
         menu: 'Portal',
         description: 'Pending reviews',
-        account: false,
+        account: true,
         working: false,
         icon: MdMail
     },
@@ -321,13 +321,6 @@ const button = {
         icon: HiBadgeCheck
     },
 
-    'inbox': {
-        link: '/inbox',
-        menu: 'Create',
-        description: 'review categories',
-        account: true,
-        working: false,
-    },
     'Posts': {
         link: '/posts',
         menu: 'Search',
@@ -345,8 +338,8 @@ const button = {
         icon: FaPen
     },
     'Search Requests': {
-        link: '/proposals',
-        menu: 'Fund',
+        link: '/search-requests',
+        menu: 'Explore',
         description: 'Find funding requests and auctions',
         account: false,
         working: true,

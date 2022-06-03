@@ -199,7 +199,7 @@ export default function Home(props) {
           <p className="frame-desc text-c">Join our Discord Community</p>
         </a>
         <a href="https://opensea.io/web4" className="border-style wrap bg-grd6 flex-middle flex-col flex-1 min-h flex-3" target="_blank" rel="noopener noreferrer">
-          <OpenSeaIcon iconSize='40' className="icon-40" />
+          <OpenSeaIcon iconsize='40' className="icon-40" />
           <p className="frame-title">OpenSea</p>
           <p className="frame-desc text-c">Get our project&apos;s NFTs</p>
         </a>
@@ -230,11 +230,11 @@ export default function Home(props) {
           <p className="frame-title">Twitter</p>
           <p className="frame-desc text-c">Follow us on Twitter</p>
         </a>
-        <div className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-4">
+        <a href="mailto:info@buildingweb4.io" className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-4" target="_blank" rel="noopener noreferrer">
           <FaAt className="icon-40" />
           <p className="frame-title">Email</p>
           <p className="frame-desc text-c">Contact us</p>
-        </div>
+        </a>
       </div>
 
       <div className="top-frame flex-middle flex-row">
