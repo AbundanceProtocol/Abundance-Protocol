@@ -12,13 +12,10 @@ export default function Roadmap(props) {
   const account = useContext(AccountContext)
 
   const router = useRouter()
-  async function navigate() {
-    router.push('/create-post')
-  }
 
   return (
-    <div>
-      <div className="top-frame">
+    <div className="t-p-130">
+      <div className="top-frame flex-middle">
         {
           <div className="border-style">
               <p className="top-font">Roadmap</p>
