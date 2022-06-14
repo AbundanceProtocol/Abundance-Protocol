@@ -5,7 +5,7 @@ import { AccountContext } from '../context.js'
 import { ethers } from 'ethers'
 import { create } from 'ipfs-http-client'
 import { contractAddress } from '../config'
-import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
+import PostsFacet from '../artifacts/contracts/facets/PostsFacet.sol/PostsFacet.json'
 import { FaTimesCircle, FaCheckCircle } from 'react-icons/fa';
 import { Warning } from './assets'
 
@@ -43,7 +43,7 @@ function CreatePost() {
 		if (typeof window.ethereum !== 'undefined') {
 			const provider = new ethers.providers.Web3Provider(window.ethereum)
 			const signer = provider.getSigner()
-			const contract = new ethers.Contract(contractAddress, Abundance.abi, signer)
+			const contract = new ethers.Contract(contractAddress, PostsFacet.abi, signer)
 			console.log('contract: ', contract)
 			try {
 				const val = await contract.fetchCategory(hash)
@@ -59,7 +59,7 @@ function CreatePost() {
 		if (typeof window.ethereum !== 'undefined') {
 			const provider = new ethers.providers.Web3Provider(window.ethereum)
 			const signer = provider.getSigner()
-			const contract = new ethers.Contract(contractAddress, Abundance.abi, signer)
+			const contract = new ethers.Contract(contractAddress, PostsFacet.abi, signer)
 			console.log('contract: ', contract)
 			try {
 				const val = await contract.createPost(_title, _hash, _authors)

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import { ethers } from 'ethers'
 import { contractAddress } from '../config'
-import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
+import UserFundingFacet from '../artifacts/contracts/facets/UserFundingFacet.sol/UserFundingFacet.json'
 import { Warning } from './assets'
 
 function RequestFunding() {
@@ -43,11 +43,12 @@ function RequestFunding() {
 		if (typeof window.ethereum !== 'undefined') {
 			const provider = new ethers.providers.Web3Provider(window.ethereum)
 			const signer = provider.getSigner()
-			const contract = new ethers.Contract(contractAddress, Abundance.abi, signer)
+			const contract = new ethers.Contract(contractAddress, UserFundingFacet.abi, signer)
 			let _amount = ethers.utils.parseUnits(amount.toString(), 18)
 			let _percentReturn = parseInt(percentReturn * 100)
 			let _deadline = parseInt(deadline)
 			let _reqType = parseInt(reqType)
+			console.log(contract)
 			console.log(_amount, _percentReturn, _deadline, _reqType)
             
 			try {

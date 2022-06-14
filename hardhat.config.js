@@ -4,11 +4,11 @@ const fs = require('fs')
 const privateKey = fs.readFileSync('.secret').toString()
 
 module.exports = {
-  solidity: "0.8.12",
+  solidity: "0.8.6",
   settings: {
     optimizer: {
       enabled: true,
-      runs: 1
+      runs: 200
     }
   },
   networks: {

@@ -44,9 +44,7 @@ function App({ Component, pageProps }) {
     let contentVar = "bg-blue"
     let textVar = ""
     let accountState = !btn.account || (account && btn.account)
-
-
-    if (button[linkTarget].link === btn.link && btn.working && accountState) {
+    if (button[linkTarget].link === btn.link && btn.link && btn.working && accountState) {
       menuVar = "red-menu"
       contentVar = "bg-red"
       textVar = "bg-red"
@@ -61,7 +59,6 @@ function App({ Component, pageProps }) {
       contentVar = "bg-grey"
       textVar = "bg-grey"
     }
-
     let topBox = `sub-cat-top-box flex-row ${menuVar}`
     let iconClass = `sub-cat-icon ${contentVar} size-30`
     let titleClass = `sub-cat-title nav-frame-title ${textVar} full-w`
