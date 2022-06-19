@@ -16,6 +16,11 @@ function RequestFunding() {
 	const RequestMessage = () => {
 		return (
 			<>
+				{ (submitMessage.status === 'pending') && (
+					<div className="alert-button alert-pending">
+						<p className="alert-text">Processing...</p>
+					</div>)
+				}
 				{ (submitMessage.status === 'success') && (
 					<div className="alert-button flex-col alert-success">
 						<span className="alert-text">Funding request submitted successfully!</span>
@@ -48,29 +53,21 @@ function RequestFunding() {
 			let _percentReturn = parseInt(percentReturn * 100)
 			let _deadline = parseInt(deadline)
 			let _reqType = parseInt(reqType)
-			console.log(contract)
-			console.log(_amount, _percentReturn, _deadline, _reqType)
             
 			try {
-				// console.log(_amount)
 				const val = await contract.requestFunding(_amount, _percentReturn, _deadline, _reqType)
-				console.log(val)
 				const blockHash = await provider.waitForTransaction(val.hash)
-
 				setSubmitMessage({message: blockHash.transactionHash, status: 'success'})
 				setRequest({ amount: 0, percentReturn: 0, deadline: 0, reqType: 0 })
-
-				// console.log(submitMessage)
 			} catch (err) {
 				console.log('Error: ', err)
 				setSubmitMessage({message: '', status: 'failed'})
-				// console.log(submitMessage)
 			}
 		}    
 	}
 
 	const RequestFunds = () => {
-		if (((reqType == 0 && deadline > 0 && deadline <= 90) || (reqType == 1 && deadline == 0)) && (percentReturn > 0 && percentReturn < 100) && (amount > 0)) {
+		if (((reqType == 0 && deadline > 0 && deadline <= 90) || (reqType == 1 && deadline == 0)) && (percentReturn > 0 && percentReturn < 100) && (amount > 0) && submitMessage.status !== 'pending') {
 			return (
 				<button className="input-button" type='button' onClick={requestFunding}>Request Funding</button>
 			)
@@ -82,14 +79,11 @@ function RequestFunding() {
 	}
 
 	async function requestFunding() {
-			// if (!amount || !percentReturn || !deadline || !reqType) return
-			// const hash = await savePostToIpfs()
+		setSubmitMessage({...submitMessage, status: 'pending'})
 		await saveRequestFunding()
-			// router.push('/')
 	}
 
 	function fundingToggle(e) {
-		console.log(e.target.name)
 		if (e.target.name === 'request') {
 			setRequest( () => ({ ...request, reqType: 1, deadline: 0 }) )
 		} else if (e.target.name === 'auction') {
