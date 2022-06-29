@@ -285,16 +285,18 @@ function App({ Component, pageProps }) {
                     </div>
                   </div>
                 </div>
-                <div className="grid-col centered"style={{justifyContent: 'center'}} onClick={() => setMobileMenuOpen(false)}>
+                <div className="grid-col centered"style={{justifyContent: 'center', cursor: 'pointer', padding: '8px'}} onClick={() => setMobileMenuOpen(false)}>
                   <CollapseIcon color="#eee" />
                 </div>
               </div>
             ) : (
               <div className="flex-row flex-middle" style={{width: '100%', margin: '0', height:  '48px', justifyContent: 'center'}}>
                 {store.isMobile
-                  ?  <div className="sub-nav-box grid-col centered" style={{cursor: 'pointer', width: 'calc(100vw - 48px)', justifyContent: 'center' }}
+                  ?  <div className="sub-nav-box grid-col centered" style={{position: 'relative', cursor: 'pointer', width: 'calc(100vw - 48px)', justifyContent: 'center' }}
                         onClick={() => setMobileMenuOpen(true)}>
-                        <DropdownIcon color="#eee" />
+                        <div style={{position: 'absolute', left: '50%'}}>
+                          <DropdownIcon color="#eee" />
+                        </div>
                     </div>
                   : <div className="sub-nav-box flex-row flex-wr" style={{width: 'max-content', maxWidth: '1060px', backgroundColor: '#dddddde6', borderRadius: '20px', margin: '0 10px 10px 10px'}} onMouseEnter={() => {
                       setMenuHover({ ...menuHover, in: Date.now() })
@@ -307,7 +309,7 @@ function App({ Component, pageProps }) {
             )} 
           </div>
           <div className="nav-shadow" style={{height: '1px', backgroundColor: '', width: '100%'}}>
-            <div className={store.isMobile ? "flex-row" : "flex-row flex-left"}><LeftCorner /></div>
+            <div className="flex-row flex-left"><LeftCorner /></div>
           </div>
         </div>
       </nav>
