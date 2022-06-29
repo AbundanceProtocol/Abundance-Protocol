@@ -1,5 +1,5 @@
 import '../styles/index.css';
-import { useCallback, useState, useEffect, useMemo } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
@@ -25,17 +25,15 @@ function App({ Component, pageProps }) {
     useStore.setState({ router })
   }, [router])
 
-  const getDeviceSize = useCallback(() => {
+  const setDeviceSize = useCallback(() => {
       store.setIsMobile(window.innerWidth <= 768)
-
   }, [store.setIsMobile])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-
-      window.addEventListener('resize', getDeviceSize)
+      window.addEventListener('resize', setDeviceSize)
     }
-  }, [getDeviceSize])
+  }, [setDeviceSize])
 
   useEffect(() => {
     let menuLink = targetLink()
@@ -127,13 +125,13 @@ function App({ Component, pageProps }) {
         }} onMouseLeave={() => {
           setMenuHover({ ...menuHover, out: Date.now() })
         }}>
-          <div className="flex-row">
+          <div className="grid-col centered">
             <div className={`logo-wrapper`}>
               <Logo height={store.isMobile ? '25px' : '45px'} width={store.isMobile ? '25px' : '45px'}/>
             </div>
             <div style={{ padding: '15px 15px' }}>
-              <h2 className="nav-title">Abundance Protocol</h2>
-              <p className="nav-subtitle">Building Web 4</p>
+              <h2 className={`nav-title${store.isMobile ? ' mid-frame-font' : ''}`}>Abundance Protocol</h2>
+              <p className={`nav-subtitle${store.isMobile ? ' small-font' : ''}`}>Building Web 4</p>
             </div>
           </div>
         </a>

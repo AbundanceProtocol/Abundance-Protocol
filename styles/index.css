@@ -46,6 +46,21 @@ blockquote {
     margin-left: 0px;
 }
 
+/* GRID LAYOUT */
+.grid-col {
+    display: grid;
+    grid-auto-flow: column;
+}
+.grid-row {
+    display: grid;
+    grid-auto-flow: row;
+}
+.centered {
+    align-items: center;
+    justify-content: start;
+    height: 100%;
+}
+
 /* FLEX */
 
 .flex-row {
@@ -804,12 +819,15 @@ blockquote {
     margin-left: 30px;
     font-weight: 600;
     margin: 0;
+    text-align: left;
+    white-space: nowrap;
 }
 
 .nav-subtitle {
     font-family: inter,sans-serif;
     font-weight: 500;
     margin: 0;
+    text-align: left;
 }
 
 .sub-nav {
@@ -817,7 +835,7 @@ blockquote {
     justify-content: center;
     display: flex;
     /* background-color: #ddd; */
-    align: center;
+    align-items: center;
     width: 100%;
     /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
 }
