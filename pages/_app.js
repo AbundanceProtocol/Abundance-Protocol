@@ -10,6 +10,8 @@ import { useRouter } from 'next/router'
 import 'easymde/dist/easymde.min.css'
 import { FaPen } from 'react-icons/fa';
 import { button } from './assets/button';
+import MenuIconButton from './assets/MenuIconButton'
+import Modal from './assets/Modal'
 import useStore from './utils/store'
 
 function App({ Component, pageProps }) {
@@ -19,6 +21,7 @@ function App({ Component, pageProps }) {
   const [account, setAccount] = useState(null)
   const [accountText, setAccountText] = useState(null)
   const [navMenu, setNavMenu] = useState('Home')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [menuHover, setMenuHover] = useState( {in: Date.now(), out: Date.now() } )
   
   useEffect(() => {
@@ -149,6 +152,7 @@ function App({ Component, pageProps }) {
     } else if (!accountState) {
       menuState = "inactive-nav-link"
     }
+
     return (
       <a onMouseEnter={() => {
         setNavMenu(btn.menu)
@@ -182,6 +186,12 @@ function App({ Component, pageProps }) {
       console.log('error:', err)
       return null;
     }
+  }
+
+  const MobileNavModal = ({show=false}) => {
+    return (
+      <Modal show={show}/>
+    )
   }
 
   function targetLink() {
@@ -239,9 +249,21 @@ function App({ Component, pageProps }) {
           <div className="nav-head">
             <HomeButton />
             <Space />
-            { button['top-menu'].map((btn, index) => (
-              <TopNav buttonName={btn} key={index} /> ))}
-            <ConnectButton />
+            {store.isMobile ? (
+              <div 
+                className="grid-col centered" 
+                style={{cursor: 'pointer'}}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              > 
+                <MenuIconButton color="#eee" />
+              </div>
+            ) : (
+              <>
+                {button['top-menu'].map((btn, index) => (
+                  <TopNav buttonName={btn} key={index} /> ))}
+                <ConnectButton />
+              </>
+            )}
           </div>
           <Space />
         </div>
@@ -269,6 +291,7 @@ function App({ Component, pageProps }) {
           <Component {...pageProps} connect={connect} />
         </AccountContext.Provider>
       </div>
+      <MobileNavModal show={mobileMenuOpen} />
     </div>
   )
 }
