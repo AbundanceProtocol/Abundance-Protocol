@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 import Link from 'next/link'
 import { AccountContext } from '../context'
 import { contractAddress, ownerAddress } from '../config'
-import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
+// import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
 
 export default function Users(props) {
   const { posts } = props
@@ -39,7 +39,7 @@ export async function getServerSideProps() {
   } else {
     provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
   }
-  const contract = new ethers.Contract(contractAddress, Abundance.abi, provider)
+  // const contract = new ethers.Contract(contractAddress, Abundance.abi, provider)
   // const data = await contract.numReturn()
 
   // let stringData = JSON.parse(JSON.stringify(data)).hex

@@ -1,5 +1,5 @@
 import '../styles/index.css';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import Link from 'next/link'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
@@ -12,12 +12,21 @@ import { FaPen } from 'react-icons/fa';
 import { button } from './assets/button';
 
 function App({ Component, pageProps }) {
+  const ref = useRef(null)
+  const [navSize, setNavSize] = useState(1060)
+  // const [nav, setNav] = useState()
   const router = useRouter()
   const [linkTarget, setLinkTarget] = useState('Vision')
   const [account, setAccount] = useState(null)
   const [accountText, setAccountText] = useState(null)
   const [navMenu, setNavMenu] = useState('Home')
   const [menuHover, setMenuHover] = useState( {in: Date.now(), out: Date.now() } )
+
+  useLayoutEffect(() => {
+    handleResize()
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [])
 
   useEffect(() => {
     let menuLink = targetLink()
@@ -36,6 +45,10 @@ function App({ Component, pageProps }) {
     }
   }, [menuHover, linkTarget])
 
+  function handleResize() {
+    setNavSize(ref.current.offsetWidth - 60)
+  }
+
   const NavItem = (props) => {
     let btnHover = menuHover.in > menuHover.out
     let btn = button[props.buttonName]
@@ -44,9 +57,7 @@ function App({ Component, pageProps }) {
     let contentVar = "bg-blue"
     let textVar = ""
     let accountState = !btn.account || (account && btn.account)
-
-
-    if (button[linkTarget].link === btn.link && btn.working && accountState) {
+    if (button[linkTarget].link === btn.link && btn.link && btn.working && accountState) {
       menuVar = "red-menu"
       contentVar = "bg-red"
       textVar = "bg-red"
@@ -61,7 +72,6 @@ function App({ Component, pageProps }) {
       contentVar = "bg-grey"
       textVar = "bg-grey"
     }
-
     let topBox = `sub-cat-top-box flex-row ${menuVar}`
     let iconClass = `sub-cat-icon ${contentVar} size-30`
     let titleClass = `sub-cat-title nav-frame-title ${textVar} full-w`
@@ -216,7 +226,7 @@ function App({ Component, pageProps }) {
   return (
     <div>
       <nav className="nav-bar">
-        <div className="flex-row top-nav-wrap">
+        <div className="flex-row top-nav-wrap" ref={ref}>
           <Space />
           <div className="nav-head">
             <HomeButton />
@@ -233,7 +243,7 @@ function App({ Component, pageProps }) {
           </div>
           <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
             <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
-              <div className="sub-nav-box flex-row flex-wr" style={{width: 'max-content', maxWidth: '1060px', backgroundColor: '#dddddde6', borderRadius: '20px', margin: '0 10px 10px 10px'}} onMouseEnter={() => {
+              <div className="sub-nav-box flex-row flex-wr" style={{width: 'max-content', maxWidth: (navSize < 1000) ? navSize + 'px' : '1060px', backgroundColor: '#dddddde6', borderRadius: '20px', margin: '0 10px 10px 10px'}} onMouseEnter={() => {
               setMenuHover({ ...menuHover, in: Date.now() })
               }} onMouseLeave={() => {
               setMenuHover({ ...menuHover, out: Date.now() })}}>

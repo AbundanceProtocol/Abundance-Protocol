@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { AccountContext } from '../context'
 import { contractAddress, ownerAddress } from '../config'
 import { Warning } from './assets'
-import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
+import UserFundingFacet from '../artifacts/contracts/facets/UserFundingFacet.sol/UserFundingFacet.json'
 
 export default function Proposals(props) {
   const { proposals, address } = props
@@ -83,26 +83,31 @@ export default function Proposals(props) {
 
 export async function getServerSideProps() {
   let provider 
-  if (process.env.ENVIRONMENT === 'local') {
-    provider = new ethers.providers.JsonRpcProvider()
-  } else if (process.env.ENVIRONMENT === 'testnet') {
+  // if (process.env.ENVIRONMENT === 'local') {
+  //   provider = new ethers.providers.JsonRpcProvider()
+  // } else if (process.env.ENVIRONMENT === 'testnet') {
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
-  } else {
-    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  }
-  const contract = new ethers.Contract(contractAddress, Abundance.abi, provider)
-  const data = await contract.getAllFundingReqs('0xc6FD734790E83820e311211B6d9A682BCa4ac97b')
+  // } else {
+  //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  // }
+  // console.log(provider)
+  const contract = new ethers.Contract(contractAddress, UserFundingFacet.abi, provider)
+  // console.log(contract)
 
+  const data = await contract.getAllFundingReqs(ownerAddress)
+  console.log(data)
   let parsedData = JSON.parse(JSON.stringify(data))
+  console.log(parsedData)
   const sortedData = parsedData.map(d => (
     { 
-      reqId: parseInt(Number(d[1].hex)), 
-      amountRequested: ethers.utils.formatEther(d[0].hex),
-      returnRate: parseInt(Number(d[3].hex))/100,
-      reqType: d[4],
-      deadline: parseInt(Number(d[2].hex))
+      reqId: parseInt(Number(d[0].hex)), 
+      amountRequested: ethers.utils.formatEther(d[1].hex),
+      returnRate: parseInt(Number(d[2].hex))/100,
+      reqType: d[3],
+      deadline: parseInt(Number(d[4].hex))
     })
    )
+   console.log(sortedData)
 
   return {
     props: {

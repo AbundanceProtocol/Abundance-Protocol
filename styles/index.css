@@ -601,7 +601,12 @@ blockquote {
 
 .alert-fail {
     background-color: #ecc;
-    border: 1px solid #9c9;
+    border: 1px solid #c99;
+}
+
+.alert-pending {
+    background-color: #ccc;
+    border: 1px solid #999;
 }
 
 .input-button {
