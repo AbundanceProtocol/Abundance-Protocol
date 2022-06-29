@@ -27,7 +27,8 @@
     "react-markdown": "^8.0.1",
     "react-player": "^2.10.1",
     "react-simplemde-editor": "^5.0.2",
-    "web3modal": "^1.9.5"
+    "web3modal": "^1.9.5",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^4.7.1",

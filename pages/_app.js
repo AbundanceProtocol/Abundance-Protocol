@@ -1,5 +1,5 @@
 import '../styles/index.css';
-import { useState, useEffect } from 'react'
+import { useCallback, useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
@@ -10,14 +10,32 @@ import { useRouter } from 'next/router'
 import 'easymde/dist/easymde.min.css'
 import { FaPen } from 'react-icons/fa';
 import { button } from './assets/button';
+import useStore from './utils/store'
 
 function App({ Component, pageProps }) {
   const router = useRouter()
+  const store = useStore()
   const [linkTarget, setLinkTarget] = useState('Vision')
   const [account, setAccount] = useState(null)
   const [accountText, setAccountText] = useState(null)
   const [navMenu, setNavMenu] = useState('Home')
   const [menuHover, setMenuHover] = useState( {in: Date.now(), out: Date.now() } )
+  
+  useEffect(() => {
+    useStore.setState({ router })
+  }, [router])
+
+  const getDeviceSize = useCallback(() => {
+      store.setIsMobile(window.innerWidth <= 768)
+
+  }, [store.setIsMobile])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+
+      window.addEventListener('resize', getDeviceSize)
+    }
+  }, [getDeviceSize])
 
   useEffect(() => {
     let menuLink = targetLink()
@@ -110,7 +128,9 @@ function App({ Component, pageProps }) {
           setMenuHover({ ...menuHover, out: Date.now() })
         }}>
           <div className="flex-row">
-            <Logo />
+            <div className={`logo-wrapper`}>
+              <Logo height={store.isMobile ? '25px' : '45px'} width={store.isMobile ? '25px' : '45px'}/>
+            </div>
             <div style={{ padding: '15px 15px' }}>
               <h2 className="nav-title">Abundance Protocol</h2>
               <p className="nav-subtitle">Building Web 4</p>

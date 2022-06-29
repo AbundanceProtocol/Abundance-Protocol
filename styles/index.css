@@ -1189,6 +1189,28 @@ blockquote {
     border-radius: '0 0 30px 30px';
     justify-content: 'center';
 }
+
+/* Logo */
+.logo-wrapper {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.logo {
+    height: 45px;
+    width: 45px;
+  }
+  
+  .logo-mobile svg {
+    width: 25px;
+    height: 25px;
+  }
+  
+
 /* 
 .mar-t-5 {
     margin-top: 5px;
