@@ -212,7 +212,7 @@ const button = {
         menu: 'Portal',
         description: 'Update your PFP and bio',
         account: true,
-        working: false,
+        working: true,
         icon: FaAddressCard
     },
     'Wallet': {

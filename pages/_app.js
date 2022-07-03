@@ -11,10 +11,27 @@ import 'easymde/dist/easymde.min.css'
 import { FaPen } from 'react-icons/fa';
 import { button } from './assets/button';
 
+import { CeramicClient } from '@ceramicnetwork/http-client'
+import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
+import { DIDDataStore } from '@glazed/did-datastore'
+import { DIDSession } from '@glazed/did-session'
+
+const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
+const aliases = {
+    schemas: {
+        basicProfile: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
+
+    },
+    definitions: {
+        BasicProfile: 'kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
+    },
+    tiles: {},
+}
+const datastore = new DIDDataStore({ ceramic, model: aliases })
+
 function App({ Component, pageProps }) {
   const ref = useRef(null)
   const [navSize, setNavSize] = useState(1060)
-  // const [nav, setNav] = useState()
   const router = useRouter()
   const [linkTarget, setLinkTarget] = useState('Vision')
   const [account, setAccount] = useState(null)
@@ -30,6 +47,7 @@ function App({ Component, pageProps }) {
 
   useEffect(() => {
     let menuLink = targetLink()
+    setNavSize(ref.current.offsetWidth - 60)
     setLinkTarget(menuLink)
     setNavMenu(button[menuLink].menu)
   }, [])
@@ -103,7 +121,7 @@ function App({ Component, pageProps }) {
       <div onClick={!account ? connect : disconnect}>
         <div className="size-button flex-col flex-middle">
           <div className="flex-col flex-middle">
-            <div className="font-12 mar-t-6 min-width" style={{fontWeight: '700', fontSize: '15px', margin: '0', padding: '0'}}>{!account ? "connect" : accountText}</div>
+            <div className="font-12 mar-t-6 min-width" style={{fontWeight: '700', fontSize: '15px', margin: '0', padding: '0'}}>{!account ? "connect" : "disconnect"}</div>
           </div>
         </div>
       </div>
@@ -133,6 +151,10 @@ function App({ Component, pageProps }) {
 
   const TopNav = (props) => {
     let btn = button[props.buttonName]
+    let btnName = props.buttonName
+    if (btnName === 'portal' && account) {
+      btnName = accountText
+    }
     const TopIcon = btn.icon
     let menuState = "nav-link"
     let accountState = !btn.account || (account && btn.account)
@@ -151,7 +173,7 @@ function App({ Component, pageProps }) {
             <div className="flex-col flex-middle">
               <TopIcon className="size-25" />
               <div className="font-15 mar-t-6">
-                {props.buttonName}
+                {btnName}
               </div>
             </div>
           </div>
@@ -185,7 +207,7 @@ function App({ Component, pageProps }) {
     }
     return "Vision"
   }
-  
+
   async function getWeb3Modal() {
     const web3Modal = new Web3Modal({
       cacheProvider: false,
@@ -203,13 +225,22 @@ function App({ Component, pageProps }) {
 
   async function connect() {
     try {
-      const web3Modal = await getWeb3Modal()
-      const connection = await web3Modal.connect()
-      const provider = new ethers.providers.Web3Provider(connection)
-      const accounts = await provider.listAccounts()
+      const ethereumProvider = window.ethereum
+      const accounts = await ethereumProvider.request({method: 'eth_requestAccounts',})
+
+      const authProvider = new EthereumAuthProvider(ethereumProvider, accounts[0])
+      const session = new DIDSession({ authProvider })
+      const did = await session.authorize()
+      ceramic.did = did
+      
       setAccount(accounts[0])
+      let name = await getProfileFromCeramic()
       let accText = accounts[0]
-      setAccountText(accText.slice(0, 5) + '...' + accText.slice(38, 42))
+      if (!name) {
+        setAccountText(accText.slice(0, 5) + '...' + accText.slice(38, 42))
+      } else {
+        setAccountText(name)
+      }
     } catch (err) {
       console.log('error:', err)
     }
@@ -221,6 +252,20 @@ function App({ Component, pageProps }) {
     setTimeout(() => {
       router.push('/')
     }, 100)
+  }
+
+  async function getProfileFromCeramic() {
+    try {
+      //use the DIDDatastore to get profile data from Ceramic
+      const profile = await datastore.get('BasicProfile')
+      if (profile !== null) {
+        return profile.name
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -265,6 +310,4 @@ function App({ Component, pageProps }) {
   )
 }
 
-export default App 
-
-
+export default App

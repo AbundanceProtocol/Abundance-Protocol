@@ -578,6 +578,32 @@ blockquote {
     color: #666;
 }
 
+.edit-toggle-off {
+    border: 1px solid #ddd;
+    background-color: #ddd;
+    color: #666;
+    cursor: default;
+    pointer-events: none;
+}
+
+.edit-toggle-off:hover {
+    border: 1px solid #ddd !important;
+    background-color: #ddd !important;
+    color: #666;
+    cursor: default !important;
+}
+
+.edit-toggle-on {
+    border: 1px solid #999;
+    background-color: #eee;
+    color: #666;
+    cursor: text;
+}
+
+.edit-toggle-on:hover {
+    background-color: #eee;
+}
+
 .toggle-off:hover {
     background-color: #eee;
 }
