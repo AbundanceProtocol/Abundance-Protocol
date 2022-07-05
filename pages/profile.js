@@ -18,7 +18,6 @@ const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const aliases = {
     schemas: {
         basicProfile: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
-
     },
     definitions: {
         BasicProfile: 'kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
@@ -31,7 +30,6 @@ const datastore = new DIDDataStore({ ceramic, model: aliases })
 
 function Profile() {
   let authorAddress = AccountContext._currentValue
-
   if (!authorAddress) {authorAddress = ''}
 	const [editToggle, setEditToggle] = useState(false)
 	const initialState = { name: '', bio: '', url: '' }
@@ -136,7 +134,7 @@ function Profile() {
 	return (
 	<div className="t-p-130">
       <Warning />
-      <div className="input-container flex-middle flex-col">
+      <div className="input-container flex-middle flex-col" style={{margin: '0px auto 50px auto'}}>
         <div className="flex-row" style={{padding: '0 0 10px 0', width: '100%'}}>
           <span className='container-title'>Profile</span>
           <div className="flex-row">
@@ -158,10 +156,8 @@ function Profile() {
           <span className='input-desc'>Website</span>
           <input onChange={onChange} name='url' placeholder='Update website url' value={userProfile.url} className={editToggle ? "input-field edit-toggle-on" : "input-field edit-toggle-off"} />
         </div>
-
         <SaveProfileButton />
       </div>
-          
     </div>
 	)
 }

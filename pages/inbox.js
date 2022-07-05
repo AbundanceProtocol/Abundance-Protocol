@@ -34,7 +34,7 @@ export async function getServerSideProps() {
   if (process.env.ENVIRONMENT === 'local') {
     provider = new ethers.providers.JsonRpcProvider()
   } else if (process.env.ENVIRONMENT === 'testnet') {
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
   } else {
     provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
   }

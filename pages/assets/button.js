@@ -220,7 +220,7 @@ const button = {
         menu: 'Portal',
         description: 'Manage your funds, investments, proposals & bids',
         account: true,
-        working: false,
+        working: true,
         icon: FaWallet
     },
     'Expertise': {

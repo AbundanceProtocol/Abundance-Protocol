@@ -279,7 +279,7 @@ blockquote {
 
 .input-container-wide {
 	width: 800px;
-	margin: 0px auto;
+	margin: 0px auto 50px auto;
 	padding: 30px 30px 25px 30px;
 	border: 1px solid #ccc;
 	border-radius: 15px;

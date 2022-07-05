@@ -20,7 +20,7 @@ async function addFunction() {
   // if (process.env.ENVIRONMENT === 'local') {
   //   provider = new ethers.providers.JsonRpcProvider()
   // } else if (process.env.ENVIRONMENT === 'testnet') {
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
   // } else {
   //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
   // }
@@ -54,7 +54,7 @@ async function replaceFunction() {
   // if (process.env.ENVIRONMENT === 'local') {
   //   provider = new ethers.providers.JsonRpcProvider()
   // } else if (process.env.ENVIRONMENT === 'testnet') {
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
   // } else {
   //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
   // }
@@ -90,7 +90,7 @@ async function removeFunction() {
   // if (process.env.ENVIRONMENT === 'local') {
   //   provider = new ethers.providers.JsonRpcProvider()
   // } else if (process.env.ENVIRONMENT === 'testnet') {
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
   // } else {
   //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
   // }
@@ -126,7 +126,7 @@ async function getFacets() {
   // if (process.env.ENVIRONMENT === 'local') {
     // provider = new ethers.providers.JsonRpcProvider()
   // } else if (process.env.ENVIRONMENT === 'testnet') {
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
   // } else {
   //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
   // }

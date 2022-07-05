@@ -20,7 +20,6 @@ const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const aliases = {
     schemas: {
         basicProfile: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
-
     },
     definitions: {
         BasicProfile: 'kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
@@ -152,6 +151,7 @@ function App({ Component, pageProps }) {
   const TopNav = (props) => {
     let btn = button[props.buttonName]
     let btnName = props.buttonName
+    let textSize = '15px'
     if (btnName === 'portal' && account) {
       btnName = accountText
     }
@@ -164,7 +164,7 @@ function App({ Component, pageProps }) {
       menuState = "inactive-nav-link"
     }
     return (
-      <a onMouseEnter={() => {
+      <a style={{maxWidth: '87px'}} onMouseEnter={() => {
         setNavMenu(btn.menu)
         setMenuHover({ ...menuHover, in: Date.now() })
       }} onMouseLeave={() => { setMenuHover({ ...menuHover, out: Date.now() }) }}>
@@ -172,7 +172,7 @@ function App({ Component, pageProps }) {
           <div className="size-87 flex-col flex-middle">
             <div className="flex-col flex-middle">
               <TopIcon className="size-25" />
-              <div className="font-15 mar-t-6">
+              <div className="font-15 mar-t-6" style={{textAlign: 'center'}}>
                 {btnName}
               </div>
             </div>
@@ -224,15 +224,19 @@ function App({ Component, pageProps }) {
   }
 
   async function connect() {
-    try {
-      const ethereumProvider = window.ethereum
-      const accounts = await ethereumProvider.request({method: 'eth_requestAccounts',})
+    if (window.ethereum == null) {
+      throw new Error('No injected Ethereum provider found')
+    }
+    await authenticate(window.ethereum)
+  }
 
+  async function authenticate(ethereumProvider) {
+    try {
+      const accounts = await ethereumProvider.request({method: 'eth_requestAccounts',})
       const authProvider = new EthereumAuthProvider(ethereumProvider, accounts[0])
       const session = new DIDSession({ authProvider })
       const did = await session.authorize()
       ceramic.did = did
-      
       setAccount(accounts[0])
       let name = await getProfileFromCeramic()
       let accText = accounts[0]
