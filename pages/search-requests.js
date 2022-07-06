@@ -30,6 +30,7 @@ export default function Proposals(props) {
 
   useEffect(() => {
     if (address) { setProfile(address) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function setProfile(userAddress) {

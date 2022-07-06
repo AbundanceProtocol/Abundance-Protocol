@@ -18,11 +18,11 @@ const button = {
     'nav-menu': {
         'Home': ['Vision', 'Roadmap', 'Mechanism', 'Whitepaper', 'FAQ', 'Blog'],
         'Portal': ['Profile', 'Wallet', 'Expertise', 'Portfolio', 'Subscriptions', 'Inbox'],
-        'Fund': ['Project Funding', 'Review Funding', 'Funding Proposal'],
+        'Fund': ['Project Funding', 'Review Funding', 'Funding Proposal', 'Search Requests'],
         'Create': ['Project', 'Post', 'Initial Review', 'Collaboration', 'Reviews'],
         'Search': ['Posts', 'Users', 'Proposals', 'Categories'],
         'Connect': ['GitHub', 'Discord', 'OpenSea', 'YouTube', 'Twitter', 'Email'],
-        'Explore': ['Trending', 'Curated', 'Favorites', 'Feed', 'Search Requests'],
+        'Explore': ['Search', 'Trending', 'Curated', 'Favorites', 'Feed'],
     },
     'GitHub': {
         link: false,
@@ -133,6 +133,14 @@ const button = {
         icon: FaSearch
     },
 
+    'Search': {
+        link: '/searchbar',
+        menu: 'Explore',
+        description: 'Search for posts, users and proposals',
+        account: false,
+        working: false,
+        icon: FaSearch
+    },
     'Trending': {
         link: '/trending',
         menu: 'Explore',

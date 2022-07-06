@@ -1,5 +1,5 @@
 import '../styles/index.css';
-import { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
@@ -38,7 +38,7 @@ function App({ Component, pageProps }) {
   const [navMenu, setNavMenu] = useState('Home')
   const [menuHover, setMenuHover] = useState( {in: Date.now(), out: Date.now() } )
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     handleResize()
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -49,6 +49,7 @@ function App({ Component, pageProps }) {
     setNavSize(ref.current.offsetWidth - 60)
     setLinkTarget(menuLink)
     setNavMenu(button[menuLink].menu)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect( () => {

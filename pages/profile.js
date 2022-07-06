@@ -45,6 +45,7 @@ function Profile() {
     } else {
       setUserProfile({name: '', bio: '', url: ''})
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 	function onChange(e) {
