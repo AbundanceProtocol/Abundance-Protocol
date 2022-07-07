@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require('hardhat-contract-sizer');
+require('./tasks/generateDiamondABI.js')
 const fs = require('fs')
 const privateKey = fs.readFileSync('.secret').toString()
 

@@ -26,13 +26,13 @@ function Wallet() {
 	async function getBalance() {
     try {
       let provider 
-      // if (process.env.ENVIRONMENT === 'local') {
-        // provider = new ethers.providers.JsonRpcProvider()
-      // } else if (process.env.ENVIRONMENT === 'testnet') {
+      if (process.env.ENVIRONMENT === 'local') {
+        provider = new ethers.providers.JsonRpcProvider()
+      } else if (process.env.ENVIRONMENT === 'testnet') {
         provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-      // } else {
-      //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-      // }
+      } else {
+        provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+      }
       const contract = new ethers.Contract(contractAddress, AbundanceFacet.abi, provider)
       let balance = await contract.balanceOf(authorAddress)
       setUserWallet(() => ({ ...userWallet, total: Number(balance._hex) }))
@@ -45,7 +45,6 @@ function Wallet() {
 	function refreshButton() {
     getBalance()
 	}
-
 
 	return (
 	<div className="t-p-130">

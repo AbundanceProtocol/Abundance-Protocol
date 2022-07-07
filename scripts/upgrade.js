@@ -17,13 +17,13 @@ const UserFundingFacet = require('../artifacts/contracts/facets/UserFundingFacet
 //////    ADD FUNCTIONS   //////
 async function addFunction() {
   let provider 
-  // if (process.env.ENVIRONMENT === 'local') {
-  //   provider = new ethers.providers.JsonRpcProvider()
-  // } else if (process.env.ENVIRONMENT === 'testnet') {
+  if (process.env.ENVIRONMENT === 'local') {
+    provider = new ethers.providers.JsonRpcProvider()
+  } else if (process.env.ENVIRONMENT === 'testnet') {
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  // } else {
-  //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  // }
+  } else {
+    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  }
   const signer = provider.getSigner(ownerAddress)
   const diamondCutFacet = new ethers.Contract(contractAddress, DiamondCutFacet.abi, signer)
   const diamondLoupeFacet = new ethers.Contract(contractAddress, DiamondLoupeFacet.abi, provider)
@@ -51,13 +51,13 @@ async function addFunction() {
 //////    REPLACE FUNCTIONS   //////
 async function replaceFunction() {
   let provider 
-  // if (process.env.ENVIRONMENT === 'local') {
-  //   provider = new ethers.providers.JsonRpcProvider()
-  // } else if (process.env.ENVIRONMENT === 'testnet') {
+  if (process.env.ENVIRONMENT === 'local') {
+    provider = new ethers.providers.JsonRpcProvider()
+  } else if (process.env.ENVIRONMENT === 'testnet') {
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  // } else {
-  //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  // }
+  } else {
+    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  }
   const signer = provider.getSigner(ownerAddress)
   const diamondCutFacet = new ethers.Contract(contractAddress, DiamondCutFacet.abi, signer)
   const diamondLoupeFacet = new ethers.Contract(contractAddress, DiamondLoupeFacet.abi, provider)
@@ -87,13 +87,13 @@ async function replaceFunction() {
 //////    REMOVE FUNCTIONS   //////
 async function removeFunction() {
   let provider 
-  // if (process.env.ENVIRONMENT === 'local') {
-  //   provider = new ethers.providers.JsonRpcProvider()
-  // } else if (process.env.ENVIRONMENT === 'testnet') {
+  if (process.env.ENVIRONMENT === 'local') {
+    provider = new ethers.providers.JsonRpcProvider()
+  } else if (process.env.ENVIRONMENT === 'testnet') {
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  // } else {
-  //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  // }
+  } else {
+    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  }
   const signer = provider.getSigner()
   const diamondCutFacet = new ethers.Contract(contractAddress, DiamondCutFacet.abi, signer)
   const diamondLoupeFacet = new ethers.Contract(contractAddress, DiamondLoupeFacet.abi, provider)
@@ -123,13 +123,13 @@ async function removeFunction() {
 //////    CHECK FACETS   //////
 async function getFacets() {
   let provider 
-  // if (process.env.ENVIRONMENT === 'local') {
-    // provider = new ethers.providers.JsonRpcProvider()
-  // } else if (process.env.ENVIRONMENT === 'testnet') {
+  if (process.env.ENVIRONMENT === 'local') {
+    provider = new ethers.providers.JsonRpcProvider()
+  } else if (process.env.ENVIRONMENT === 'testnet') {
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  // } else {
-  //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  // }
+  } else {
+    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  }
   const diamondLoupeFacet = new ethers.Contract(contractAddress, DiamondLoupeFacet.abi, provider)
   let facets = await diamondLoupeFacet.facets()
   console.log(facets)

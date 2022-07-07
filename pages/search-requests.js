@@ -102,13 +102,13 @@ export default function Proposals(props) {
 
 export async function getServerSideProps() {
   let provider 
-  // if (process.env.ENVIRONMENT === 'local') {
-  //   provider = new ethers.providers.JsonRpcProvider()
-  // } else if (process.env.ENVIRONMENT === 'testnet') {
+  if (process.env.ENVIRONMENT === 'local') {
+    provider = new ethers.providers.JsonRpcProvider()
+  } else if (process.env.ENVIRONMENT === 'testnet') {
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  // } else {
-  //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  // }
+  } else {
+    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  }
   const contract = new ethers.Contract(contractAddress, UserFundingFacet.abi, provider)
   const data = await contract.getAllFundingReqs(ownerAddress)
   console.log(data)
