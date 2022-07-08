@@ -17,11 +17,32 @@ function Wallet() {
   const [userWallet, setUserWallet] = useState(initialBalances)
 	const [, updateState] = useState();
 	const forceUpdate = useCallback(() => updateState({}), []);
+  const walletFields = {
+    'walletParams': ['Project earnings', 'Review earnings', 'Funding received', 'Locked funds', 'Investments'],
+    'Project earnings': userWallet.projects,
+    'Review earnings': userWallet.reviews,
+    'Funding received': userWallet.funding,
+    'Locked funds': userWallet.locked,
+    'Investments': userWallet.investments
+  }
 
   useEffect(() => {
     if (authorAddress) { getBalance() } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const WalletField = (props) => {
+    let field = props.fieldName
+    return (
+      <div className="inner-container">
+        <div className="flex-row" style={{padding: '0', width: '100%'}}>
+          <span className='input-desc' style={{width: '100%'}}>{field}</span>
+          <FaChevronCircleDown style={{fontSize: '18px', color: '#999'}} />
+        </div>
+        <input placeholder='0 WEB' value={walletFields[field] + ' WEB'} className="input-field edit-toggle-off" style={{margin: '0', fontSize: '16px', height: '28px'}} readOnly />
+      </div>
+    )
+  }
 
 	async function getBalance() {
     try {
@@ -56,51 +77,12 @@ function Wallet() {
           <MdRefresh onClick={refreshButton} className="input-toggle-button toggle-on" style={{fontSize: '22px', padding: '5px 10px'}} />
         </div>
       </div>
-
       <div className="inner-container" style={{marginBottom: '25px'}}>
         <span className='input-desc'>Total account balance</span>
-        <input name='total' placeholder='0 WEB' value={userWallet.total + ' WEB'} className="input-field edit-toggle-off" />
+        <input placeholder='0 WEB' value={userWallet.total + ' WEB'} className="input-field edit-toggle-off" readOnly />
       </div>
-
-      <div className="inner-container">
-        <div className="flex-row" style={{padding: '0', width: '100%'}}>
-          <span className='input-desc' style={{width: '100%'}}>Project earnings</span>
-          <FaChevronCircleDown style={{fontSize: '18px', color: '#999'}} />
-        </div>
-        <input name='projects' placeholder='0 WEB' value={userWallet.projects + ' WEB'} className="input-field edit-toggle-off" style={{margin: '0', fontSize: '16px', height: '28px'}} />
-      </div>
-
-      <div className="inner-container">
-        <div className="flex-row" style={{padding: '0', width: '100%'}}>
-          <span className='input-desc' style={{width: '100%'}}>Review earnings</span>
-          <FaChevronCircleDown style={{fontSize: '18px', color: '#999'}} />
-        </div>
-        <input name='reviews' placeholder='0 WEB' value={userWallet.reviews + ' WEB'} className="input-field edit-toggle-off" style={{margin: '0', fontSize: '16px', height: '28px'}} />
-      </div>
-
-      <div className="inner-container">
-        <div className="flex-row" style={{padding: '0', width: '100%'}}>
-          <span className='input-desc' style={{width: '100%'}}>Funding received</span>
-          <FaChevronCircleDown style={{fontSize: '18px', color: '#999'}} />
-        </div>
-        <input name='funding' placeholder='0 WEB' value={userWallet.funding + ' WEB'} className="input-field edit-toggle-off" style={{margin: '0', fontSize: '16px', height: '28px'}} />
-      </div>
-
-      <div className="inner-container">
-        <div className="flex-row" style={{padding: '0', width: '100%'}}>
-          <span className='input-desc' style={{width: '100%'}}>Locked funds</span>
-          <FaChevronCircleDown style={{fontSize: '18px', color: '#999'}} />
-        </div>
-        <input name='locked' placeholder='0 WEB' value={userWallet.locked + ' WEB'} className="input-field edit-toggle-off" style={{margin: '0', fontSize: '16px', height: '28px'}} />
-      </div>
-
-      <div className="inner-container">
-        <div className="flex-row" style={{padding: '0', width: '100%'}}>
-          <span className='input-desc' style={{width: '100%'}}>Investments</span>
-          <FaChevronCircleDown style={{fontSize: '18px', color: '#999'}} />
-        </div>
-        <input name='investments' placeholder='0 WEB' value={userWallet.investments + ' WEB'} className="input-field edit-toggle-off" style={{margin: '0', fontSize: '16px', height: '28px'}} />
-      </div>
+      { walletFields['walletParams'].map((field, index) => (
+        <WalletField fieldName={field} key={index} /> ))}
     </div>
   </div>
 	)
