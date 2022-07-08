@@ -245,7 +245,7 @@ function App({ Component, pageProps }) {
     }, 100)
   }
 
-  return (
+  return store.isMobile ? (
     <div>
       <nav className="nav-bar">
         <div className="flex-row top-nav-wrap">
@@ -253,13 +253,9 @@ function App({ Component, pageProps }) {
           <div className="nav-head">
             <HomeButton />
             <Space />
-            {!store.isMobile && (
-              <>
-                {button['top-menu'].map((btn, index) => (
+            {button['top-menu'].map((btn, index) => (
                   <TopNav buttonName={btn} key={index} /> ))}
                 <ConnectButton />
-              </>
-              )}
           </div>
           <Space />
         </div>
@@ -291,20 +287,12 @@ function App({ Component, pageProps }) {
               </div>
             ) : (
               <div className="flex-row flex-middle" style={{width: '100%', margin: '0', height:  '48px', justifyContent: 'center'}}>
-                {store.isMobile
-                  ?  <div className="sub-nav-box grid-col centered" style={{position: 'relative', cursor: 'pointer', width: 'calc(100vw - 48px)', justifyContent: 'center' }}
-                        onClick={() => setMobileMenuOpen(true)}>
-                        <div style={{position: 'absolute', left: '50%'}}>
-                          <DropdownIcon color="#eee" />
-                        </div>
+                <div className="sub-nav-box grid-col centered" style={{position: 'relative', cursor: 'pointer', width: 'calc(100vw - 48px)', justifyContent: 'center' }}
+                    onClick={() => setMobileMenuOpen(true)}>
+                    <div style={{position: 'absolute', left: '50%'}}>
+                      <DropdownIcon color="#eee" />
                     </div>
-                  : <div className="sub-nav-box flex-row flex-wr" style={{width: 'max-content', maxWidth: '1060px', backgroundColor: '#dddddde6', borderRadius: '20px', margin: '0 10px 10px 10px'}} onMouseEnter={() => {
-                      setMenuHover({ ...menuHover, in: Date.now() })
-                      }} onMouseLeave={() => {
-                      setMenuHover({ ...menuHover, out: Date.now() })}}>
-                        <SubCat />
-                    </div>
-                  }
+                </div>
               </div>
             )} 
           </div>
@@ -319,6 +307,45 @@ function App({ Component, pageProps }) {
         </AccountContext.Provider>
       </div>
     </div>
+  ) : (
+    <div>
+    <nav className="nav-bar">
+      <div className="flex-row top-nav-wrap">
+        <Space />
+        <div className="nav-head">
+          <HomeButton />
+          <Space />
+          { button['top-menu'].map((btn, index) => (
+            <TopNav buttonName={btn} key={index} /> ))}
+          <ConnectButton />
+        </div>
+        <Space />
+      </div>
+      <div className="flex-row" style={{width: '100%', alignItems: 'flex-start' }}>
+        <div className="nav-shadow" style={{width: '100%', height: '1px', backgroundColor: ''}}>
+          <div className="flex-row flex-right"><RightCorner /></div>
+        </div>
+        <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
+          <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
+            <div className="sub-nav-box flex-row flex-wr" style={{width: 'max-content', maxWidth: '1060px', backgroundColor: '#dddddde6', borderRadius: '20px', margin: '0 10px 10px 10px'}} onMouseEnter={() => {
+            setMenuHover({ ...menuHover, in: Date.now() })
+            }} onMouseLeave={() => {
+            setMenuHover({ ...menuHover, out: Date.now() })}}>
+              <SubCat />
+            </div>
+          </div>
+        </div>
+        <div className="nav-shadow" style={{height: '1px', backgroundColor: '', width: '100%'}}>
+          <div className="flex-row flex-left"><LeftCorner /></div>
+        </div>
+      </div>
+    </nav>
+    <div className="container">
+      <AccountContext.Provider value={account}>
+        <Component {...pageProps} connect={connect} />
+      </AccountContext.Provider>
+    </div>
+  </div>
   )
 }
 

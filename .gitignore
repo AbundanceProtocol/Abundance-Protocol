@@ -46,3 +46,6 @@ cache
 
 # Local Netlify folder
 .netlify
+
+# scraps
+.scraps.*
