@@ -91,13 +91,13 @@ function App({ Component, pageProps }) {
     const isEnlarge = btnHover || mobileMenuOpen
     return (
       <Link href={(btn.link && btn.working) ? btn.link : {}}>
-        <a className={topBox} style={{width: isEnlarge ? '333px' : 'min-content', padding: isEnlarge ? '10px' : '3px 5px 2px 10px', margin: isEnlarge ? '10px' : '5px 10px', borderRadius: '15px'}} {...attributes} onClick={() => {
+        <a className={topBox} style={{width: !isEnlarge ? 'min-content' : store.isMobile ? '333px' : 'calc(100vw / 3.5)', padding: isEnlarge ? '10px 0' : '3px 5px 2px 10px', margin: isEnlarge ? '10px' : '5px 10px', borderRadius: '15px'}} {...attributes} onClick={() => {
           setLinkTarget(props.buttonName)
           }}>
           <div className="sub-cat-box" style={{margin: isEnlarge ? '8px 0 8px 8px' : '0 10px 0 0', minWidth: isEnlarge ? '50px' : '15px'}}>
             <Icon className={iconClass} iconsize={isEnlarge ? '30' : '15'} style={{height: isEnlarge ? '30px' : '15px', width: isEnlarge ? '30px' : '15px'}} />
           </div>
-          <div className="sub-cat-text flex-col" style={{width: isEnlarge ? 'auto' : 'min-content', minWidth: isEnlarge ? '260px' : '50px', pointerEvents: 'none'}}>
+          <div className="sub-cat-text flex-col" style={{pointerEvents: 'none'}}>
             <span className={titleClass} style={{fontSize: isEnlarge ?  '19px' : '15px', fontWeight: isEnlarge ? '800' : '600', paddingRight: '10px', pointerEvents: 'none', width: isEnlarge ? '100%' : 'max-content'}}>{props.buttonName}</span>
             <span className={textClass} style={{fontSize: isEnlarge ? '15px' : '0', opacity: isEnlarge ? '1' : '0', paddingRight: '10px', pointerEvents: 'none'}}>{btn.description}</span>
           </div>
@@ -327,7 +327,15 @@ function App({ Component, pageProps }) {
         </div>
         <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
           <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
-            <div className="sub-nav-box flex-row flex-wr" style={{width: 'max-content', maxWidth: '1060px', backgroundColor: '#dddddde6', borderRadius: '20px', margin: '0 10px 10px 10px'}} onMouseEnter={() => {
+            <div className="sub-nav-box flex-row flex-wr" style={{
+              width: 'max-content', 
+              maxWidth: '1060px', 
+              backgroundColor: '#dddddde6', 
+              borderRadius: '20px', 
+              margin: '0 10px 10px 10px',
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr 1fr',
+            }} onMouseEnter={() => {
             setMenuHover({ ...menuHover, in: Date.now() })
             }} onMouseLeave={() => {
             setMenuHover({ ...menuHover, out: Date.now() })}}>
