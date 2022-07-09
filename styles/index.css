@@ -462,6 +462,13 @@ blockquote {
     padding: 10px 40px;
 }
 
+.large-font-mobile {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+}
+
 .title-font {
     font-size: 46px;
     font-weight: 700;
@@ -841,7 +848,7 @@ blockquote {
     font-weight: 600;
     margin: 0;
     text-align: left;
-    white-space: nowrap;
+    white-space: nowrap; 
 }
 
 .nav-subtitle {
@@ -917,8 +924,9 @@ blockquote {
 .nav-head {
     display: flex;
     width: 100%;
-    max-width: 1440px;
-    padding: 0px 20px;
+    /* max-width: 1440px; */
+    /* max-width: calc(100vw - 48px); */
+    padding: 0 24px 0 16px;
     align-items: center;
     /* background-color: #1D3244dd; */
 }
@@ -926,12 +934,12 @@ blockquote {
 .nav-head-mobile {
     display: flex;
     width: 100%;
-    padding: 0px 20px;
+    padding: 0 24px 0 8px;
 }
 
 .active-nav-link {
     color: #ddd425;
-    min-width: 87px;
+    /* min-width: 87px; */
     display: flex;
     cursor: pointer;
     justify-content: center;
@@ -943,7 +951,7 @@ blockquote {
 
 .nav-link {
     color: #e6e6e6;
-    min-width: 87px;
+    /* min-width: 87px; */
     display: flex;
     cursor: pointer;
     justify-content: center;
@@ -951,7 +959,7 @@ blockquote {
 
 .inactive-nav-link {
     color: #aaa;
-    min-width: 87px;
+    /* min-width: 87px; */
     display: flex;
     cursor: pointer;
     justify-content: center;
@@ -1251,18 +1259,20 @@ blockquote {
     grid-template-rows: 1fr;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 .logo {
     height: 45px;
-    width: 45px;
+    width: 45px
+    
+    
   }
   
-  .logo-mobile svg {
-    width: 25px;
-    height: 25px;
-  }
+.logo-mobile svg {
+width: 25px;
+height: 25px;
+}
   
 /* Menu */
 .expanding-menu {
