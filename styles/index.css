@@ -127,15 +127,30 @@ blockquote {
 }
 
 .size-button {
-    height: 36px;
-    margin: 24px 0 24px 25px;
-    padding: 0 20px 0 20px;
+    /* height: 36px; */
+    /* margin: 24px 0 24px 25px; */
+    padding: 10px 20px;
     color: #123;
     cursor: pointer;
     min-width: 75px;
     border-radius: 20px;
     border: 1px solid #999;
     background-color: #dcb;
+    transition: all ease-in-out 0.1s;
+}
+
+.size-icon-button {
+    color: #eee;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: rgba(221, 204, 187, 0.144);
+    display: grid;
+    grid-template-columns: auto;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-top: 4px;
+    transition: all ease-in-out 0.1s;
 }
 
 .min-width {
@@ -144,8 +159,14 @@ blockquote {
 }
 
 .size-button:hover {
-    background-color: #3b556b;
-    color: #fed;
+    background-color: #fed;
+    color: #123;
+    transition: all ease-in-out 0.2s;
+}
+.size-icon-button:hover {
+    background-color: rgba(255, 238, 221, 0.342);
+    color: #eee;
+    transition: all ease-in-out 0.2s;
 }
 
 .size-16 {
@@ -898,7 +919,14 @@ blockquote {
     width: 100%;
     max-width: 1440px;
     padding: 0px 20px;
+    align-items: center;
     /* background-color: #1D3244dd; */
+}
+
+.nav-head-mobile {
+    display: flex;
+    width: 100%;
+    padding: 0px 20px;
 }
 
 .active-nav-link {

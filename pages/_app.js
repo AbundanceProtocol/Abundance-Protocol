@@ -1,20 +1,29 @@
 import '../styles/index.css';
-import { useCallback, useState, useEffect } from 'react'
+import 'easymde/dist/easymde.min.css'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useCallback, useState, useEffect, useRef } from 'react'
+import styled from '@emotion/styled'
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import { AccountContext } from '../context.js'
-import { CollapseIcon, DropdownIcon, Logo, LeftCorner, RightCorner, Space } from './assets'
-import { useRouter } from 'next/router'
-import 'easymde/dist/easymde.min.css'
+import { HiChevronUp as CollapseIcon, HiMenu } from 'react-icons/hi';
+import { BiWalletAlt as WalletIcon } from 'react-icons/bi';
 import { FaPen } from 'react-icons/fa';
-import { button } from './assets/button';
+import { AccountContext } from '../context.js'
 import useStore from './utils/store'
+import {Logo, LeftCorner, RightCorner, Space } from './assets'
+import { button } from './assets/button';
 
 function App({ Component, pageProps }) {
   const router = useRouter()
   const store = useStore()
+  const ref = useRef(null)
+  const [navSize, setNavSize] = useState(1060)
   const [linkTarget, setLinkTarget] = useState('Vision')
   const [account, setAccount] = useState(null)
   const [accountText, setAccountText] = useState(null)
@@ -27,11 +36,16 @@ function App({ Component, pageProps }) {
   }, [router])
 
   const setDeviceSize = useCallback(() => {
-      store.setIsMobile(window.innerWidth <= 768)
+    const isMobile = window.innerWidth <= 768;
+    store.setIsMobile(isMobile)
+    if (!isMobile) {
+      handleResize();
+    }
   }, [store.setIsMobile])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+
       window.addEventListener('resize', setDeviceSize)
     }
   }, [setDeviceSize])
@@ -45,13 +59,24 @@ function App({ Component, pageProps }) {
   useEffect( () => {
     if (menuHover.in > menuHover.out) {
       let subNavBox = document.getElementsByClassName("sub-nav-box")
-      subNavBox[0].style.justifyContent = "left";  
+      subNavBox[0].style.justifyContent = "left";
+      subNavBox[0].style.padding = "8px 8px";
+      subNavBox[0].style.gridGap = "8px";
+      subNavBox[0].style.gridTemplateColumns =!store.isMobile && 'auto auto auto'  
     } else {
       if (typeof linkTarget !== 'object') {
         setNavMenu(button[linkTarget].menu)
+        let subNavBox = document.getElementsByClassName("sub-nav-box")
+        subNavBox[0].style.padding = "0 8px";
+        subNavBox[0].style.gridGap = "4px";
+        subNavBox[0].style.gridTemplateColumns =!store.isMobile && "repeat(6, 1fr)";
       }
     }
   }, [menuHover, linkTarget])
+
+  function handleResize() {
+    setNavSize(ref.current.offsetWidth - 60)
+  }
 
   const NavItem = (props) => {
     let btnHover = menuHover.in > menuHover.out
@@ -88,18 +113,37 @@ function App({ Component, pageProps }) {
     if (!btn.link) {
       attributes = {target: '_blank', rel: 'noopener noreferrer', href: btn.url}
     }
-    const isEnlarge = btnHover || mobileMenuOpen
-    return (
+    // const isEnlarge = !store.isMobile && btnHover
+    return store.isMobile ? (
       <Link href={(btn.link && btn.working) ? btn.link : {}}>
-        <a className={topBox} style={{width: !isEnlarge ? 'min-content' : store.isMobile ? '333px' : 'calc(100vw / 3.5)', padding: isEnlarge ? '10px 0' : '3px 5px 2px 10px', margin: isEnlarge ? '10px' : '5px 10px', borderRadius: '15px'}} {...attributes} onClick={() => {
+        <a className={topBox} style={{borderRadius: '18px', padding: '16px 8px'}} {...attributes} onClick={() => {
+          setLinkTarget(props.buttonName)
+          if (btn.link && btn.working) {
+            setMobileMenuOpen(false)
+          }
+          }}>
+            <div style={{display: 'grid', gridTemplateColumns: 'auto 1fr', gridGap: '8px', alignItems: 'center'}}>
+              <div className="sub-cat-box" >
+                <Icon className={iconClass} style={{width: '25px', height: '25px'}}/>
+              </div>
+              <div className="sub-cat-text flex-col" style={{pointerEvents: 'none'}}>
+                <span className={titleClass} style={{fontSize: '15px', fontWeight:'800', paddingRight: '10px', pointerEvents: 'none', width: 'max-content'}}>{props.buttonName}</span>
+                <span className={textClass} style={{fontSize: '12px', paddingRight: '10px', pointerEvents: 'none'}}>{btn.description}</span>
+              </div>
+            </div>
+        </a>
+      </Link>
+    ) : (
+      <Link href={(btn.link && btn.working) ? btn.link : {}}>
+        <a className={topBox} style={{width: btnHover ? 'calc(100vw / 3.4)' : 'min-content', padding: btnHover ? '8px 16px' : '3px 5px 2px 10px', margin: btnHover ? '0' : '5px 10px', borderRadius: '15px'}} {...attributes} onClick={() => {
           setLinkTarget(props.buttonName)
           }}>
-          <div className="sub-cat-box" style={{margin: isEnlarge ? '8px 0 8px 8px' : '0 10px 0 0', minWidth: isEnlarge ? '50px' : '15px'}}>
-            <Icon className={iconClass} iconsize={isEnlarge ? '30' : '15'} style={{height: isEnlarge ? '30px' : '15px', width: isEnlarge ? '30px' : '15px'}} />
+          <div className="sub-cat-box" style={{margin: btnHover ? '8px 0' : '0 10px 0 0', minWidth: btnHover ? '50px' : '15px'}}>
+            <Icon className={iconClass} iconsize={btnHover ? '30' : '15'} style={{height: btnHover ? '30px' : '15px', width: btnHover ? '30px' : '15px'}} />
           </div>
-          <div className="sub-cat-text flex-col" style={{pointerEvents: 'none'}}>
-            <span className={titleClass} style={{fontSize: isEnlarge ?  '19px' : '15px', fontWeight: isEnlarge ? '800' : '600', paddingRight: '10px', pointerEvents: 'none', width: isEnlarge ? '100%' : 'max-content'}}>{props.buttonName}</span>
-            <span className={textClass} style={{fontSize: isEnlarge ? '15px' : '0', opacity: isEnlarge ? '1' : '0', paddingRight: '10px', pointerEvents: 'none'}}>{btn.description}</span>
+          <div className="sub-cat-text flex-col" style={{width: btnHover ? 'auto' : 'min-content', minWidth: btnHover ? null : '50px', pointerEvents: 'none'}}>
+            <span className={titleClass} style={{fontSize: btnHover ?  '19px' : '15px', fontWeight: btnHover ? '800' : '600',  pointerEvents: 'none', width: btnHover ? '100%' : 'max-content'}}>{props.buttonName}</span>
+            <span className={textClass} style={{fontSize: btnHover ? '15px' : '0', opacity: btnHover ? '1' : '0', pointerEvents: 'none'}}>{btn.description}</span>
           </div>
         </a>
       </Link>
@@ -107,7 +151,13 @@ function App({ Component, pageProps }) {
   }
 
   const ConnectButton = () => {
-    return (
+    return store.isMobile ? (
+      <div className="size-icon-button flex-col flex-middle" style={{height: '48px', width: '48px'}}>
+          <WalletIconButton onClick={!account ? connect : disconnect}>
+            <WalletIcon style={{fontSize: '24px',}}/>
+          </WalletIconButton>
+      </div>
+    ) : (
       <div onClick={!account ? connect : disconnect}>
         <div className="size-button flex-col flex-middle">
           <div className="flex-col flex-middle">
@@ -140,15 +190,6 @@ function App({ Component, pageProps }) {
       </Link>
     )
   }
-  
-  const MobileNavMenu = ({children}) => {
-    return (
-      <div className="grid-row centered"
-      >
-       {children}
-      </div>
-    )
-  }
 
   const TopNav = (props) => {
     let btn = button[props.buttonName]
@@ -166,9 +207,9 @@ function App({ Component, pageProps }) {
         setNavMenu(btn.menu)
         setMenuHover({ ...menuHover, in: Date.now() })
       }}
-      onMouseLeave={() => !mobileMenuOpen && setMenuHover({ ...menuHover, out: Date.now() }) } 
+      onMouseLeave={() => setMenuHover({ ...menuHover, out: Date.now() }) } 
       >
-        <div className={menuState}>
+        <div className={menuState} style={{paddingRight: store.isMobile && '16px' }}>
           <div className="size-87 flex-col flex-middle">
             <div className="flex-col flex-middle">
               <TopIcon className="size-25" />
@@ -245,17 +286,99 @@ function App({ Component, pageProps }) {
     }, 100)
   }
 
+  const toggleDrawer =
+  () =>
+  (e) => {
+    if (
+      e.type === 'keydown' &&
+      (e.key === 'Tab' ||
+        e.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setMobileMenuOpen( !mobileMenuOpen );
+  };
+
+  const MobileNavMenu = () => {
+    return (
+      <div className="mobile-menu-wrapper" style={{display: 'grid', gridAutoFlow: 'column', height: '100%', justifyContent: 'start', width: 'fit-content'}}>
+        <Box height="100%" width="100%">
+          <div style={{display: 'grid', gridAutoFlow: 'row'}}>
+            {button['top-menu'].map((btn, index) => (
+                <TopNav buttonName={btn} key={index} /> ))}
+          </div>
+        </Box>
+        <Box style={{width: 'calc(100vw / 1.5)'}}>
+          <div className="sub-nav-box" 
+              style={{ 
+                marginRight: '16px',
+                padding: '24px 32px 32px 32px',
+                backgroundColor: '#dddddde6', 
+                borderRadius: '20px', 
+                display: 'grid',
+                gridAutoFlow: 'row',
+                gridGap: '8px',
+                justifyContent: 'start',
+                alignItems: 'start',
+              }} 
+              onMouseEnter={() => {
+              setMenuHover({ ...menuHover, in: Date.now() })
+              }} onMouseLeave={() => {
+              setMenuHover({ ...menuHover, out: Date.now() })}}>
+              <SubCat />
+            </div>
+        </Box>
+      </div>
+    )
+  }
+
   return store.isMobile ? (
     <div>
+      <nav className="nav-bar-mobile">
+        <React.Fragment key="top">
+          <MobileAppbar position="fixed" elevation={0}>
+            <NavbarHeader>
+              <div className="navbar-header">
+                <HomeButton />
+                <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridGap: '16px', alignItems: 'center'}}>
+                  <ConnectButton />
+                  <MenuButton onClick={toggleDrawer()}>
+                    {mobileMenuOpen ? <CollapseIcon style={{fontSize: '25px', color: '#eee'}}/> : <HiMenu style={{fontSize: '25px', color: '#eee'}} />}
+                  </MenuButton>
+                </Box>
+              </div>
+            </NavbarHeader>
+          </MobileAppbar> 
+          <Drawer elevation={0} anchor="top" variant="temporary" open={mobileMenuOpen} onClose={toggleDrawer()}  
+            sx={{
+              transform: 'translateY(62px)',
+              zIndex: 1,
+              background: '#1D3244dd',
+              '& .MuiDrawer-paper': { width: 'fit-content',backgroundColor: 'transparent', padding: '16px 8px', overflowX: 'hidden'}
+            }}
+            >
+            <MobileNavMenu />
+          </Drawer>
+        </React.Fragment>
+      </nav>
+      <div className="container">
+        <AccountContext.Provider value={account}>
+          <Component {...pageProps} connect={connect} />
+        </AccountContext.Provider>
+      </div>
+    </div>
+  ) : (
+    <div>
       <nav className="nav-bar">
-        <div className="flex-row top-nav-wrap">
+        <div className="flex-row top-nav-wrap" ref={ref}>
           <Space />
           <div className="nav-head">
             <HomeButton />
             <Space />
-            {button['top-menu'].map((btn, index) => (
-                  <TopNav buttonName={btn} key={index} /> ))}
-                <ConnectButton />
+            { button['top-menu'].map((btn, index) => (
+              <TopNav buttonName={btn} key={index} /> ))}
+            <ConnectButton />
           </div>
           <Space />
         </div>
@@ -263,38 +386,21 @@ function App({ Component, pageProps }) {
           <div className="nav-shadow" style={{width: '100%', height: '1px', backgroundColor: ''}}>
             <div className="flex-row flex-right"><RightCorner /></div>
           </div>
-          <div className="nav-shadow" style={{height: mobileMenuOpen ? '100%' : 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
-            {mobileMenuOpen ? (
-              <div className="grid-row">
-                <div className="sub-nav-mobile">
-                  <MobileNavMenu>
-                    <ConnectButton />
-                    {button['top-menu'].map((btn, index) => (
-                      <TopNav buttonName={btn} key={index} /> ))}
-                  </MobileNavMenu>
-                  <div className="grid-row" style={{padding: '16px', margin: '0', justifyContent: 'start', alignItems: 'start'}}>
-                    <div className="sub-nav-box" style={{width: '100%', height: '100%', backgroundColor: '#dddddde6', borderRadius: '20px', margin: '0 10px 10px 10px'}} onMouseEnter={() => {
-                      setMenuHover({ ...menuHover, in: Date.now() })
-                      }} onMouseLeave={() => {
-                      setMenuHover({ ...menuHover, out: Date.now() })}}>
-                      <SubCat />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid-col centered"style={{justifyContent: 'center', cursor: 'pointer', padding: '8px'}} onClick={() => setMobileMenuOpen(false)}>
-                  <CollapseIcon color="#eee" />
-                </div>
+          <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
+            <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
+            <div className="sub-nav-box flex-row flex-wr" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(6, 1fr)',
+                backgroundColor: '#dddddde6', 
+                borderRadius: '20px', 
+                margin: '0 10px 10px 10px',
+              }} onMouseEnter={() => {
+              setMenuHover({ ...menuHover, in: Date.now() })
+              }} onMouseLeave={() => {
+              setMenuHover({ ...menuHover, out: Date.now() })}}>
+                <SubCat />
               </div>
-            ) : (
-              <div className="flex-row flex-middle" style={{width: '100%', margin: '0', height:  '48px', justifyContent: 'center'}}>
-                <div className="sub-nav-box grid-col centered" style={{position: 'relative', cursor: 'pointer', width: 'calc(100vw - 48px)', justifyContent: 'center' }}
-                    onClick={() => setMobileMenuOpen(true)}>
-                    <div style={{position: 'absolute', left: '50%'}}>
-                      <DropdownIcon color="#eee" />
-                    </div>
-                </div>
-              </div>
-            )} 
+            </div>
           </div>
           <div className="nav-shadow" style={{height: '1px', backgroundColor: '', width: '100%'}}>
             <div className="flex-row flex-left"><LeftCorner /></div>
@@ -307,56 +413,40 @@ function App({ Component, pageProps }) {
         </AccountContext.Provider>
       </div>
     </div>
-  ) : (
-    <div>
-    <nav className="nav-bar">
-      <div className="flex-row top-nav-wrap">
-        <Space />
-        <div className="nav-head">
-          <HomeButton />
-          <Space />
-          { button['top-menu'].map((btn, index) => (
-            <TopNav buttonName={btn} key={index} /> ))}
-          <ConnectButton />
-        </div>
-        <Space />
-      </div>
-      <div className="flex-row" style={{width: '100%', alignItems: 'flex-start' }}>
-        <div className="nav-shadow" style={{width: '100%', height: '1px', backgroundColor: ''}}>
-          <div className="flex-row flex-right"><RightCorner /></div>
-        </div>
-        <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
-          <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
-            <div className="sub-nav-box flex-row flex-wr" style={{
-              width: 'max-content', 
-              maxWidth: '1060px', 
-              backgroundColor: '#dddddde6', 
-              borderRadius: '20px', 
-              margin: '0 10px 10px 10px',
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr',
-            }} onMouseEnter={() => {
-            setMenuHover({ ...menuHover, in: Date.now() })
-            }} onMouseLeave={() => {
-            setMenuHover({ ...menuHover, out: Date.now() })}}>
-              <SubCat />
-            </div>
-          </div>
-        </div>
-        <div className="nav-shadow" style={{height: '1px', backgroundColor: '', width: '100%'}}>
-          <div className="flex-row flex-left"><LeftCorner /></div>
-        </div>
-      </div>
-    </nav>
-    <div className="container">
-      <AccountContext.Provider value={account}>
-        <Component {...pageProps} connect={connect} />
-      </AccountContext.Provider>
-    </div>
-  </div>
   )
 }
 
-export default App 
+const MobileAppbar = styled(AppBar)`
+  background: #1D3244dd;
+  z-index: 2;
+  padding: 0 24px;
+`;
 
+const NavbarHeader = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  background: transparent;
 
+  .navbar-header {
+
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+`;
+
+const MenuButton = styled(Button)`
+  width: 100%; 
+  justify-content: flex-end; 
+  align-items: start; 
+  background: transparent;
+`;
+
+const WalletIconButton = styled.div`
+  cursor: pointer;
+`;
+
+export default App;
