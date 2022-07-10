@@ -1,0 +1,16 @@
+{
+  "name": "abundance-protocol",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ buildingweb4/abundance-protocol",
+    "create-local": "graph create --node http://localhost:8020/ buildingweb4/abundance-protocol",
+    "remove-local": "graph remove --node http://localhost:8020/ buildingweb4/abundance-protocol",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 buildingweb4/abundance-protocol"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.32.0",
+    "@graphprotocol/graph-ts": "0.27.0"
+  }
+}

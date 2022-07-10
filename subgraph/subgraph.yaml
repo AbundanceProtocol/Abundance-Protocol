@@ -1,0 +1,27 @@
+specVersion: 0.0.4
+features:
+  - ipfsOnEthereumContracts
+  - fullTextSearch
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Diamond
+    network: mumbai
+    source:
+      address: "0x10278e8cC7Ff81Dd20D2E6bCD8E4B1EC9b9Db8D3"
+      abi: Diamond
+      startBlock: 26737530
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Post
+      abis:
+        - name: Diamond
+          file: ./abis/Diamond.json
+      eventHandlers:
+        - event: PostCreated(uint256,string,string)
+          handler: handlePostCreated
+      file: ./src/diamond.ts
