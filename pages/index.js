@@ -8,8 +8,7 @@ import { AccountContext } from '../context'
 import { contractAddress, ownerAddress } from '../config'
 import { FaBalanceScale, FaCheckCircle, FaChartLine, FaHandHoldingUsd, FaMoneyBillAlt, FaGithub, FaMediumM, FaYoutube, FaTwitter, FaAt, FaDiscord, FaUsers, FaListAlt, FaCode } from 'react-icons/fa';
 import { MdScience } from 'react-icons/md'
-import useStore from './utils/store'
-import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
+// import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
 
 export default function Home(props) {
   const store = useStore()
@@ -248,28 +247,28 @@ export default function Home(props) {
   )
 }
 
-export async function getServerSideProps() {
-  try {
-    let provider 
-    if (process.env.ENVIRONMENT === 'local') {
-      provider = new ethers.providers.JsonRpcProvider()
-    } else if (process.env.ENVIRONMENT === 'testnet') {
-      provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
-    } else {
-      provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-    }
-    const contract = new ethers.Contract(contractAddress, Abundance.abi, provider)
-    // const data = await contract.numReturn()
-    // const time = await contract.progress()
-    // console.log(time)
-    // let stringData = JSON.parse(JSON.stringify(data)).hex
-    return {
-      props: {
-        posts: ''
-      }
-    }
-  } catch (err) {
-    console.log('error:', err)
-    return { props: { posts: null } }  
-  }
-}
+// export async function getServerSideProps() {
+//   try {
+//     let provider 
+//     if (process.env.ENVIRONMENT === 'local') {
+//       provider = new ethers.providers.JsonRpcProvider()
+//     } else if (process.env.ENVIRONMENT === 'testnet') {
+//       provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+//     } else {
+//       provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+//     }
+//     const contract = new ethers.Contract(contractAddress, Abundance.abi, provider)
+//     // const data = await contract.numReturn()
+//     // const time = await contract.progress()
+//     // console.log(time)
+//     // let stringData = JSON.parse(JSON.stringify(data)).hex
+//     return {
+//       props: {
+//         posts: ''
+//       }
+//     }
+//   } catch (err) {
+//     console.log('error:', err)
+//     return { props: { posts: null } }  
+//   }
+// }

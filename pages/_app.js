@@ -1,5 +1,5 @@
 import '../styles/index.css';
-import 'easymde/dist/easymde.min.css'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState, useEffect, useRef } from 'react'
@@ -50,6 +50,12 @@ function App({ Component, pageProps }) {
     }
   }, [setDeviceSize])
 
+  useLayoutEffect(() => {
+    handleResize()
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [])
+
   useEffect(() => {
     let menuLink = targetLink()
     setLinkTarget(menuLink)
@@ -79,6 +85,10 @@ function App({ Component, pageProps }) {
     setNavSize(ref.current.offsetWidth - 60)
   }
 
+  function handleResize() {
+    setNavSize(ref.current.offsetWidth - 60)
+  }
+
   const NavItem = (props) => {
     let btnHover = menuHover.in > menuHover.out
     let btn = button[props.buttonName]
@@ -87,9 +97,7 @@ function App({ Component, pageProps }) {
     let contentVar = "bg-blue"
     let textVar = ""
     let accountState = !btn.account || (account && btn.account)
-
-
-    if (button[linkTarget].link === btn.link && btn.working && accountState) {
+    if (button[linkTarget].link === btn.link && btn.link && btn.working && accountState) {
       menuVar = "red-menu"
       contentVar = "bg-red"
       textVar = "bg-red"
@@ -104,7 +112,6 @@ function App({ Component, pageProps }) {
       contentVar = "bg-grey"
       textVar = "bg-grey"
     }
-
     let topBox = `sub-cat-top-box flex-row ${menuVar}`
     let iconClass = `sub-cat-icon ${contentVar} size-30`
     let titleClass = `sub-cat-title nav-frame-title ${textVar} full-w`
