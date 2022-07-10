@@ -134,7 +134,7 @@ blockquote {
     cursor: pointer;
     min-width: 75px;
     border-radius: 20px;
-    border: 1px solid #999;
+    border: 1px solid #dcb;
     background-color: #dcb;
     transition: all ease-in-out 0.1s;
 }
@@ -160,13 +160,14 @@ blockquote {
 
 .size-button:hover {
     background-color: #fed;
+    border: 1px solid #fed;
     color: #123;
-    transition: all ease-in-out 0.2s;
+    transition: all ease-in-out 0.1s;
 }
 .size-icon-button:hover {
     background-color: rgba(255, 238, 221, 0.342);
     color: #eee;
-    transition: all ease-in-out 0.2s;
+    transition: all ease-in-out 0.1s;
 }
 
 .size-16 {

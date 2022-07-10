@@ -1,5 +1,4 @@
 import '../styles/index.css';
-import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState, useEffect, useRef } from 'react'
@@ -8,16 +7,13 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
-import { ethers } from 'ethers'
-import Web3Modal from 'web3modal'
-import WalletConnectProvider from '@walletconnect/web3-provider'
 import { HiChevronUp as CollapseIcon, HiMenu } from 'react-icons/hi';
-import { BiWalletAlt as WalletIcon } from 'react-icons/bi';
 import { FaPen } from 'react-icons/fa';
 import { AccountContext } from '../context.js'
-import useStore from './utils/store'
+import useStore from '../utils/store'
 import {Logo, LeftCorner, RightCorner, Space } from './assets'
 import { button } from './assets/button';
+import ConnectButton from '../components/ConnectButton';
 
 function App({ Component, pageProps }) {
   const router = useRouter()
@@ -26,7 +22,6 @@ function App({ Component, pageProps }) {
   const [navSize, setNavSize] = useState(1060)
   const [linkTarget, setLinkTarget] = useState('Vision')
   const [account, setAccount] = useState(null)
-  const [accountText, setAccountText] = useState(null)
   const [navMenu, setNavMenu] = useState('Home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [menuHover, setMenuHover] = useState( {in: Date.now(), out: Date.now() } )
@@ -38,29 +33,34 @@ function App({ Component, pageProps }) {
   const setDeviceSize = useCallback(() => {
     const isMobile = window.innerWidth <= 768;
     store.setIsMobile(isMobile)
-    if (!isMobile) {
-      handleResize();
-    }
-  }, [store.setIsMobile])
+
+  }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-
+      if (!store.isMobile) {
+            handleResize();
+          }
       window.addEventListener('resize', setDeviceSize)
     }
-  }, [setDeviceSize])
-
-  useLayoutEffect(() => {
-    handleResize()
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [])
+  }, [setDeviceSize, store.isMobile])
 
   useEffect(() => {
     let menuLink = targetLink()
     setLinkTarget(menuLink)
     setNavMenu(button[menuLink].menu)
   }, [])
+
+  const onAccount = useCallback(() => {
+    if (!account && store.account) {
+      console.log('account', store.account)
+      setAccount(store.account)
+    }
+  }, [store.account,setAccount])
+
+    useEffect(() => {
+      onAccount()
+    }, [onAccount])
 
   useEffect( () => {
     if (store.isMobile) return;
@@ -82,11 +82,7 @@ function App({ Component, pageProps }) {
   }, [menuHover, linkTarget, store.isMobile])
 
   function handleResize() {
-    setNavSize(ref.current.offsetWidth - 60)
-  }
-
-  function handleResize() {
-    setNavSize(ref.current.offsetWidth - 60)
+    setNavSize(ref?.current?.offsetWidth - 60)
   }
 
   const NavItem = (props) => {
@@ -155,24 +151,6 @@ function App({ Component, pageProps }) {
           </div>
         </a>
       </Link>
-    );
-  }
-
-  const ConnectButton = () => {
-    return store.isMobile ? (
-      <WalletButtonWrapper >
-          <WalletIconButton onClick={!account ? connect : disconnect}>
-            <WalletIcon />
-          </WalletIconButton>
-      </WalletButtonWrapper>
-    ) : (
-      <div onClick={!account ? connect : disconnect} style={{width: '150px'}}>
-        <div className="size-button flex-col flex-middle">
-          <div className="flex-col flex-middle">
-            <div className="font-12 mar-t-6 min-width" style={{fontWeight: '700', fontSize: '15px', margin: '0', padding: '0'}}>{!account ? "connect" : accountText}</div>
-          </div>
-        </div>
-      </div>
     );
   }
 
@@ -257,38 +235,14 @@ function App({ Component, pageProps }) {
     return "Vision"
   }
   
-  async function getWeb3Modal() {
-    const web3Modal = new Web3Modal({
-      cacheProvider: false,
-      providerOptions: {
-        walletconnect: {
-          package: WalletConnectProvider,
-          options: {
-            infuraId: "f7b15f0b1a2d49e2b9f0e9b666842ff1"
-          },
-        },
-      },
-    })
-    return web3Modal
-  }
-
-  async function connect() {
-    try {
-      const web3Modal = await getWeb3Modal()
-      const connection = await web3Modal.connect()
-      const provider = new ethers.providers.Web3Provider(connection)
-      const accounts = await provider.listAccounts()
-      setAccount(accounts[0])
-      let accText = accounts[0]
-      setAccountText(accText.slice(0, 5) + '...' + accText.slice(38, 42))
-    } catch (err) {
-      console.log('error:', err)
-    }
+  const connect = (accounts) => {
+    store.setAccount(accounts[0])
   }
 
   async function disconnect() {
-    setAccountText(null)
-    setAccount(null)
+    useStore.setState((state) => {
+      state.account = null;
+    })
     setTimeout(() => {
       router.push('/')
     }, 100)
@@ -319,17 +273,6 @@ function App({ Component, pageProps }) {
         </Box>
         <Box style={{width: 'calc(100vw / 1.4)'}}>
           <MobileNavBox className="sub-nav-box" 
-              // style={{ 
-              //   marginRight: '16px',
-              //   padding: '24px 32px 32px 32px',
-              //   backgroundColor: '#dddddde6', 
-              //   borderRadius: '20px', 
-              //   display: 'grid',
-              //   gridAutoFlow: 'row',
-              //   gridGap: '8px',
-              //   justifyContent: 'start',
-              //   alignItems: 'start',
-              // }} 
               onMouseEnter={() => {
               setMenuHover({ ...menuHover, in: Date.now() })
               }} onMouseLeave={() => {
@@ -350,7 +293,12 @@ function App({ Component, pageProps }) {
               <div className="navbar-header">
                 <HomeButton />
                 <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <ConnectButton />
+                  <ConnectButton 
+                    account={store.account}
+                    isMobile={store.isMobile}
+                    onConnect={connect}
+                    onDisconnect={disconnect}
+                    />
                   <MenuButton onClick={toggleDrawer()}>
                     {mobileMenuOpen ? <CollapseIcon/> : <HiMenu />}
                   </MenuButton>
@@ -389,7 +337,12 @@ function App({ Component, pageProps }) {
                   { button['top-menu'].map((btn, index) => (
                     <TopNav buttonName={btn} key={index} /> ))}
                 </TopNavWrapper>
-                <ConnectButton />
+                <ConnectButton 
+                  account={store.account}
+                  isMobile={store.isMobile}
+                  onConnect={connect}
+                  onDisconnect={disconnect}
+                />
             </Col>
           </div>
           <Space />
@@ -500,35 +453,6 @@ const MenuButton = styled(Button)`
     font-size: 22px;
     min-width: 40px;
     max-width: 40px;
-  }
-`;
-
-const WalletButtonWrapper = styled.div`
-  height: 48px; 
-  width: 48px;
-  color: #eee;
-  cursor: pointer;
-  border-radius: 50%;
-  background-color: rgba(221, 204, 187, 0.144);
-  display: grid;
-  grid-template-columns: auto;
-  align-items: center;
-  justify-content: center;
-  padding-top: 4px;
-  transition: all ease-in-out 0.1s;
-
-  @media(max-width: 360px) {
-    height: 36px; 
-    width: 36px;
-  }
-`;
-
-const WalletIconButton = styled.div`
-  cursor: pointer;
-  font-size: 25px;
-
-  @media(max-width: 360px) {
-    font-size: 22px;
   }
 `;
 

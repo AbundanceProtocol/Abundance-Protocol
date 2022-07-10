@@ -8,6 +8,7 @@ import { AccountContext } from '../context'
 import { contractAddress, ownerAddress } from '../config'
 import { FaBalanceScale, FaCheckCircle, FaChartLine, FaHandHoldingUsd, FaMoneyBillAlt, FaGithub, FaMediumM, FaYoutube, FaTwitter, FaAt, FaDiscord, FaUsers, FaListAlt, FaCode } from 'react-icons/fa';
 import { MdScience } from 'react-icons/md'
+import useStore from '../utils/store';
 // import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
 
 export default function Home(props) {
