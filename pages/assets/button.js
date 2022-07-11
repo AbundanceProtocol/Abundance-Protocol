@@ -18,11 +18,11 @@ const button = {
     'nav-menu': {
         'Home': ['Vision', 'Roadmap', 'Mechanism', 'Whitepaper', 'FAQ', 'Blog'],
         'Portal': ['Profile', 'Wallet', 'Expertise', 'Portfolio', 'Subscriptions', 'Inbox'],
-        'Fund': ['Project Funding', 'Review Funding', 'Funding Proposal'],
+        'Fund': ['Project Funding', 'Review Funding', 'Funding Proposal', 'Search Requests'],
         'Create': ['Project', 'Post', 'Initial Review', 'Collaboration', 'Reviews'],
         'Search': ['Posts', 'Users', 'Proposals', 'Categories'],
         'Connect': ['GitHub', 'Discord', 'OpenSea', 'YouTube', 'Twitter', 'Email'],
-        'Explore': ['Trending', 'Curated', 'Favorites', 'Feed', 'Search Requests'],
+        'Explore': ['Search', 'Trending', 'Curated', 'Favorites', 'Feed'],
     },
     'GitHub': {
         link: false,
@@ -133,6 +133,14 @@ const button = {
         icon: FaSearch
     },
 
+    'Search': {
+        link: '/searchbar',
+        menu: 'Explore',
+        description: 'Search for posts, users and proposals',
+        account: false,
+        working: false,
+        icon: FaSearch
+    },
     'Trending': {
         link: '/trending',
         menu: 'Explore',
@@ -212,7 +220,7 @@ const button = {
         menu: 'Portal',
         description: 'Update your PFP and bio',
         account: true,
-        working: false,
+        working: true,
         icon: FaAddressCard
     },
     'Wallet': {
@@ -220,7 +228,7 @@ const button = {
         menu: 'Portal',
         description: 'Manage your funds, investments, proposals & bids',
         account: true,
-        working: false,
+        working: true,
         icon: FaWallet
     },
     'Expertise': {
@@ -236,7 +244,7 @@ const button = {
         menu: 'Portal',
         description: 'Check your projects, posts and reviews',
         account: true,
-        working: false,
+        working: true,
         icon: FaFolderOpen
     },
     'Subscriptions': {

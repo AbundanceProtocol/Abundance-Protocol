@@ -1,30 +1,49 @@
 
-import { useContext, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useContext, useState, useEffect } from 'react'
 import { ethers } from 'ethers'
-import Link from 'next/link'
 import { AccountContext } from '../context'
 import { contractAddress, ownerAddress } from '../config'
 import { Warning } from './assets'
 import UserFundingFacet from '../artifacts/contracts/facets/UserFundingFacet.sol/UserFundingFacet.json'
 
+import { CeramicClient } from '@ceramicnetwork/http-client'
+import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
+import { DIDDataStore } from '@glazed/did-datastore'
+import { DIDSession } from '@glazed/did-session'
+
+const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
+const aliases = {
+    schemas: {
+        basicProfile: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
+    },
+    definitions: {
+        BasicProfile: 'kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
+    },
+    tiles: {},
+}
+const datastore = new DIDDataStore({ ceramic, model: aliases })
+
 export default function Proposals(props) {
   const { proposals, address } = props
   const [searchAddress, setSearchAddress] = useState(address)
   const account = useContext(AccountContext)
-  const router = useRouter()
-  async function navigate() {
-    router.push('/create-post')
+
+  useEffect(() => {
+    if (address) { setProfile(address) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  async function setProfile(userAddress) {
+    const data = await datastore.get('BasicProfile', `did:pkh:eip155:80001:${userAddress}`)
+    // console.log(userAddress)
+    // console.log(data)
+    if (data !== null && data.name.length > 0) {
+      setSearchAddress(data.name)
+    } else {
+      let shortAddress = (userAddress.slice(0, 5) + '...' + userAddress.slice(38, 42))
+      setSearchAddress(shortAddress)
+    }
   }
-
-	function shortenName(longName) {
-		if (longName) {
-			let shortName = (longName.slice(0, 5) + '...' + longName.slice(38, 42))
-			return shortName
-		}
-		return null
-	}
-
 
   async function proposalBid(e) {
     console.log('bid on', e.target.name)
@@ -55,7 +74,7 @@ export default function Proposals(props) {
           proposals.map((proposal, index) => (
             <div className="flex-row data-container" key={index}>
               <div className="flex-col" style={{width: '100%'}}>
-                <span className=""><span style={{fontWeight: '600'}}>User: </span>{shortenName(searchAddress)}</span>
+                <span className=""><span style={{fontWeight: '600'}}>User: </span>{searchAddress}</span>
                 <span className=""><span style={{fontWeight: '600'}}>Amout requested: </span>{proposal.amountRequested} WEB</span>
                 <span className=""><span style={{fontWeight: '600'}}>Return rate: </span>{proposal.returnRate}%</span>
                 <span className=""><span style={{fontWeight: '600'}}>Funding type: </span>{proposal.reqType === 0 ? "Auction" : "Request"}</span>
@@ -83,17 +102,14 @@ export default function Proposals(props) {
 
 export async function getServerSideProps() {
   let provider 
-  // if (process.env.ENVIRONMENT === 'local') {
-  //   provider = new ethers.providers.JsonRpcProvider()
-  // } else if (process.env.ENVIRONMENT === 'testnet') {
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
-  // } else {
-  //   provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  // }
-  // console.log(provider)
+  if (process.env.ENVIRONMENT === 'local') {
+    provider = new ethers.providers.JsonRpcProvider()
+  } else if (process.env.ENVIRONMENT === 'testnet') {
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
+  } else {
+    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
+  }
   const contract = new ethers.Contract(contractAddress, UserFundingFacet.abi, provider)
-  // console.log(contract)
-
   const data = await contract.getAllFundingReqs(ownerAddress)
   console.log(data)
   let parsedData = JSON.parse(JSON.stringify(data))
@@ -112,7 +128,7 @@ export async function getServerSideProps() {
   return {
     props: {
       proposals: sortedData,
-      address: '0xc6FD734790E83820e311211B6d9A682BCa4ac97b'
+      address: ownerAddress
     }
   }
 }

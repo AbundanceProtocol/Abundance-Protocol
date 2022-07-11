@@ -12,6 +12,23 @@ import { Warning } from './assets'
 const client = create('https://ipfs.infura.io:5001/api/v0')
 const SimpleMDE = dynamic( () => import('react-simplemde-editor'), { ssr: false } )
 
+import { CeramicClient } from '@ceramicnetwork/http-client'
+import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
+import { DIDDataStore } from '@glazed/did-datastore'
+import { DIDSession } from '@glazed/did-session'
+
+const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
+const aliases = {
+    schemas: {
+        basicProfile: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
+    },
+    definitions: {
+        BasicProfile: 'kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
+    },
+    tiles: {},
+}
+const datastore = new DIDDataStore({ ceramic, model: aliases })
+
 function CreatePost() {
 	let authorAddress = AccountContext._currentValue
 	if (!authorAddress) {authorAddress = ''}
@@ -24,13 +41,32 @@ function CreatePost() {
 	const router = useRouter()
 	const [, updateState] = useState();
 	const forceUpdate = useCallback(() => updateState({}), []);
-
+	const [submitMessage, setSubmitMessage] = useState({message: '', status: 'none'})
 
 	function onChange(e) {
 		setPost( () => ({ ...post, [e.target.name]: e.target.value }) )
+		if (submitMessage.status !== 'none') {
+			setSubmitMessage({message: '', status: 'none'})
+		}
 	}
 
+  async function getAuthorName(userAddress) {
+    console.log(userAddress)
+    const data = await datastore.get('BasicProfile', `did:pkh:eip155:80001:${userAddress}`)
+    console.log(data)
+    if (data !== null && data.name.length > 0) {
+      console.log(data.name)
+      return data.name
+    } else {
+      let shortAddress = (userAddress.slice(0, 5) + '...' + userAddress.slice(38, 42))
+      console.log(shortAddress)
+      return shortAddress
+    }
+  }
+
+
 	async function savePostToIpfs() {
+		setSubmitMessage({...submitMessage, status: 'pending'})
 		try {
 			const added = await client.add(JSON.stringify(post))
 			return added.path
@@ -44,30 +80,21 @@ function CreatePost() {
 			const provider = new ethers.providers.Web3Provider(window.ethereum)
 			const signer = provider.getSigner()
 			const contract = new ethers.Contract(contractAddress, PostsFacet.abi, signer)
-			console.log('contract: ', contract)
-			try {
-				const val = await contract.fetchCategory(hash)
-				console.log(val)
-				console.log('val: ', val)
-			} catch (err) {
-				console.log('Error: ', err)
+			let _post = String(post.title)
+			let _hash = String(hash)
+			let _author = []
+			for (let i = 0; i < authorList.length; i++) {
+				_author.push([authorList[i], String(''), parseInt(10000/authorList.length)])
 			}
-		}    
-	}
-
-	async function createPost(_title, _hash, _authors) {
-		if (typeof window.ethereum !== 'undefined') {
-			const provider = new ethers.providers.Web3Provider(window.ethereum)
-			const signer = provider.getSigner()
-			const contract = new ethers.Contract(contractAddress, PostsFacet.abi, signer)
-			console.log('contract: ', contract)
+			console.log(_post, _hash, _author)
 			try {
-				const val = await contract.createPost(_title, _hash, _authors)
-				console.log(val)
-				// await provider.waitForTransaction(val.hash)
-				console.log('val: ', val)
+				const val = await contract.createPost(_post, _hash, _author)
+				const blockHash = await provider.waitForTransaction(val.hash)
+				setSubmitMessage({message: blockHash.transactionHash, status: 'success'})
+
 			} catch (err) {
 				console.log('Error: ', err)
+				setSubmitMessage({message: '', status: 'failed'})
 			}
 		}    
 	}
@@ -76,7 +103,6 @@ function CreatePost() {
 		if (!title || !content) return
 		const hash = await savePostToIpfs()
 		await savePost(hash)
-		router.push('/')
 	}
   
 	function removeAuthor(e) {
@@ -115,7 +141,7 @@ function CreatePost() {
 	}
 
 	const SubmitPost = () => {
-		if (title && content && authorList.length > 0 ) {
+		if (title && content && authorList.length > 0 && submitMessage.status !== 'pending') {
 			return (
 				<button className="input-button" type='button' onClick={createNewPost}>Submit Post</button>
 			)
@@ -154,15 +180,41 @@ function CreatePost() {
 		}
 	}
 
+	const RequestMessage = () => {
+		return (
+			<>
+				{ (submitMessage.status === 'pending') && (
+					<div className="alert-button alert-pending">
+						<p className="alert-text">Processing...</p>
+					</div>)
+				}
+				{ (submitMessage.status === 'success') && (
+					<div className="alert-button flex-col alert-success">
+						<span className="alert-text">Funding request submitted successfully!</span>
+						<span className="alert-text">Transaction hash:</span>
+						<span className="alert-text-tx">{submitMessage.message}</span>
+					</div>)
+				}
+				{ (submitMessage.status === 'failed') && (
+					<div className="alert-button alert-fail">
+						<p className="alert-text">Funding request failed</p>
+					</div>)
+				}
+			</>
+		)
+	}
+
+
 	return (
 	<div className="t-p-130">
       <Warning />
       <div className="input-container-wide flex-middle flex-col">
+		{ (submitMessage.status !== 'none') && <RequestMessage /> }
         <div className="flex-row" style={{padding: '0 0 10px 0', width: '100%'}}>
           <span className='container-title'>Create Post</span>
-          <div className="flex-row">
+          {/* <div className="flex-row">
             <input type="button" onClick={selfReviewToggle} name='self-review' value="Self-Review" className={reviewToggle ? "input-toggle-button toggle-off" : "input-toggle-button toggle-on"} />
-          </div>
+          </div> */}
         </div>
 
         <div className="inner-container">
