@@ -1,12 +1,9 @@
-
 import { useContext, useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import { AccountContext } from '../context'
 import { contractAddress, ownerAddress } from '../config'
 import { Warning } from './assets'
 import { MdRefresh } from 'react-icons/md';
-import UserFundingFacet from '../artifacts/contracts/facets/UserFundingFacet.sol/UserFundingFacet.json'
-
 import { createClient } from 'urql'
 
 import { CeramicClient } from '@ceramicnetwork/http-client'
@@ -32,8 +29,8 @@ const aliases = {
 }
 const datastore = new DIDDataStore({ ceramic, model: aliases })
 
-export default function Proposals(props) {
-  const { proposals, address } = props
+export default function Portfolio() {
+  let address = AccountContext._currentValue
   const [searchAddress, setSearchAddress] = useState(address)
   const [ userPosts, setUserPosts] = useState([])
   const account = useContext(AccountContext)
@@ -78,19 +75,8 @@ export default function Proposals(props) {
   useEffect(() => {
     fetchData()
     console.log(userPosts)
-    if (address) { setProfile(address) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  async function setProfile(address) {
-    const data = await datastore.get('BasicProfile', `did:pkh:eip155:80001:${address}`)
-    if (data !== null && data.name.length > 0) {
-      setSearchAddress(data.name)
-    } else {
-      let shortAddress = (address.slice(0, 5) + '...' + address.slice(38, 42))
-      setSearchAddress(shortAddress)
-    }
-  }
 
 	function refreshButton() {
     fetchData()
@@ -104,13 +90,6 @@ export default function Proposals(props) {
   return (
     <div className="t-p-130">
     <Warning />
-    {/* <div className="top-frame">
-        {
-          <div className="data-container">
-            <span className="container-title">Portfolio</span>
-          </div>
-        }
-      </div> */}
     <div className="input-container-wide flex-middle flex-col" style={{margin: '0px auto 50px auto'}}>
       <div className="flex-row" style={{padding: '0 0 10px 0', width: '100%'}}>
         <span className='container-title'>Posts</span>
@@ -120,7 +99,7 @@ export default function Proposals(props) {
       </div>
       {
           userPosts.map((post, index) => (
-            <div className="inner-container flex-row" key={index} style={{width: '100%'}}>
+            <div className="inner-container" key={index} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>
               <div className="flex-col" style={{width: '100%'}}>
                 <span className=""><span style={{fontWeight: '600'}}>Post title: </span>{post.title}</span>
                 <span className=""><span style={{fontWeight: '600'}}></span>{post.content.slice(0, 50)}{(post.content.length > 50) ? '...' : ''}</span>
@@ -161,36 +140,4 @@ export default function Proposals(props) {
   )
 }
 
-
-export async function getServerSideProps() {
-  let provider 
-  if (process.env.ENVIRONMENT === 'local') {
-    provider = new ethers.providers.JsonRpcProvider()
-  } else if (process.env.ENVIRONMENT === 'testnet') {
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  } else {
-    provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
-  }
-  const contract = new ethers.Contract(contractAddress, UserFundingFacet.abi, provider)
-  const data = await contract.getAllFundingReqs(ownerAddress)
-  console.log(data)
-  let parsedData = JSON.parse(JSON.stringify(data))
-  console.log(parsedData)
-  const sortedData = parsedData.map(d => (
-    { 
-      reqId: parseInt(Number(d[0].hex)), 
-      amountRequested: ethers.utils.formatEther(d[1].hex),
-      returnRate: parseInt(Number(d[2].hex))/100,
-      reqType: d[3],
-      deadline: parseInt(Number(d[4].hex))
-    })
-   )
-   console.log(sortedData)
-
-  return {
-    props: {
-      proposals: sortedData,
-      address: ownerAddress
-    }
-  }
-}
+Portfolio.provider = AccountContext
