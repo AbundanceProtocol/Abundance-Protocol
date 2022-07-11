@@ -13,11 +13,15 @@ export function handlePostCreated(event: PostCreatedEvent): void {
   if (postData.reverted) {
     log.info('fetchPost reverted', [])
   } else {
-    let postValues = postData.value
-    // log.info(postValues.toString(), [])
-    // if (postValues) {
-      // post.CrS = postValues.value2
-    // }
+    post.initialReview = postData.value.initialReview
+    post.challenged = postData.value.challenged
+    post.reqExpertise = postData.value.reqExpertise
+    post.lockExpiration = postData.value.lockExpiration
+    post.CrS = postData.value.CrS
+    post.IS = postData.value.IS
+    post.postValue = postData.value.postValue
+    post.timestamp = postData.value.timestamp
+    post.author = postData.value.postAuth[0].author
   }
   let data = ipfs.cat(event.params.hash);
   if (data) {

@@ -3,7 +3,7 @@ type _Schema_
     name: "postSearch"
     language: en
     algorithm: rank
-    include: [{ entity: "Post", fields: [{ name: "title" }, { name: "postContent" }, { name: "postAuth" }] }]
+    include: [{ entity: "Post", fields: [{ name: "title" }, { name: "postContent" }] }]
   )
 
 type Post @entity {
@@ -19,5 +19,5 @@ type Post @entity {
   IS: BigInt
   postValue: BigInt
   timestamp: BigInt
-  postAuth: [String!]
+  author: Bytes
 }

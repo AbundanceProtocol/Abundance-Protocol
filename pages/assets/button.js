@@ -244,7 +244,7 @@ const button = {
         menu: 'Portal',
         description: 'Check your projects, posts and reviews',
         account: true,
-        working: false,
+        working: true,
         icon: FaFolderOpen
     },
     'Subscriptions': {

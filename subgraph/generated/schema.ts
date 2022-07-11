@@ -205,20 +205,20 @@ export class Post extends Entity {
     }
   }
 
-  get postAuth(): Array<string> | null {
-    let value = this.get("postAuth");
+  get author(): Bytes | null {
+    let value = this.get("author");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toStringArray();
+      return value.toBytes();
     }
   }
 
-  set postAuth(value: Array<string> | null) {
+  set author(value: Bytes | null) {
     if (!value) {
-      this.unset("postAuth");
+      this.unset("author");
     } else {
-      this.set("postAuth", Value.fromStringArray(<Array<string>>value));
+      this.set("author", Value.fromBytes(<Bytes>value));
     }
   }
 }
