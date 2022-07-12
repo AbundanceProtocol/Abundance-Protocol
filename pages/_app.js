@@ -15,11 +15,28 @@ import {Logo, LeftCorner, RightCorner, Space } from './assets'
 import { button } from './assets/button';
 import ConnectButton from '../components/ConnectButton';
 
+import { CeramicClient } from '@ceramicnetwork/http-client'
+import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
+import { DIDDataStore } from '@glazed/did-datastore'
+import { DIDSession } from '@glazed/did-session'
+
+const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
+const aliases = {
+    schemas: {
+        basicProfile: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
+    },
+    definitions: {
+        BasicProfile: 'kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
+    },
+    tiles: {},
+}
+const datastore = new DIDDataStore({ ceramic, model: aliases })
+
 function App({ Component, pageProps }) {
-  const router = useRouter()
   const store = useStore()
   const ref = useRef(null)
   const [navSize, setNavSize] = useState(1060)
+  const router = useRouter()
   const [linkTarget, setLinkTarget] = useState('Vision')
   const [account, setAccount] = useState(null)
   const [navMenu, setNavMenu] = useState('Home')
@@ -30,25 +47,28 @@ function App({ Component, pageProps }) {
     useStore.setState({ router })
   }, [router])
 
-  const setDeviceSize = useCallback(() => {
+  const setDeviceSize = () => {
     const isMobile = window.innerWidth <= 768;
     store.setIsMobile(isMobile)
-
-  }, [])
+    if (!store.isMobile) {
+      handleResize();
+    }
+  }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (!store.isMobile) {
-            handleResize();
-          }
+      setDeviceSize()
       window.addEventListener('resize', setDeviceSize)
+      return () => window.removeEventListener("resize", setDeviceSize);
     }
-  }, [setDeviceSize, store.isMobile])
+  }, [])
 
   useEffect(() => {
     let menuLink = targetLink()
+    setNavSize(ref.current.offsetWidth - 60)
     setLinkTarget(menuLink)
     setNavMenu(button[menuLink].menu)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onAccount = useCallback(() => {
@@ -179,6 +199,11 @@ function App({ Component, pageProps }) {
 
   const TopNav = (props) => {
     let btn = button[props.buttonName]
+    let btnName = props.buttonName
+    let textSize = '15px'
+    if (btnName === 'portal' && account) {
+      btnName = accountText
+    }
     const TopIcon = btn.icon
     let menuState = "nav-link"
     let accountState = !btn.account || (account && btn.account)
@@ -189,7 +214,7 @@ function App({ Component, pageProps }) {
     }
 
     return (
-      <a onMouseEnter={() => {
+      <a style={{maxWidth: '87px'}} onMouseEnter={() => {
         setNavMenu(btn.menu)
         setMenuHover({ ...menuHover, in: Date.now() })
       }}
@@ -199,8 +224,8 @@ function App({ Component, pageProps }) {
           <div className="flex-col flex-middle" style={{height: '87px'}}>
             <div className="flex-col flex-middle">
               <TopIcon className="size-25" />
-              <div className="font-15 mar-t-6">
-                {props.buttonName}
+              <div className="font-15 mar-t-6" style={{textAlign: 'center'}}>
+                {btnName}
               </div>
             </div>
           </div>
@@ -381,8 +406,7 @@ function App({ Component, pageProps }) {
   )
 }
 
-  
-  
+
 const MobileAppbar = styled(AppBar)`
   background: #1D3244dd;
   z-index: 2;

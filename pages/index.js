@@ -1,4 +1,4 @@
-import { useContext, useState, useRef, useEffect, useLayoutEffect } from 'react'
+import { useContext, useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
 import { ExpandIcon, ScienceIcon, CollabIcon, KnowledgeIcon, LogoHD, OpenSeaIcon, PublicGoodsIcon, CodeIcon } from './assets'
@@ -19,7 +19,7 @@ export default function Home(props) {
   const account = useContext(AccountContext)
   const [viewToggle, setViewToggle] = useState({record: false, source: false, media: false, science: false})
   const router = useRouter()
-  useLayoutEffect(() => {
+  useEffect(() => {
     handleResize()
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -254,7 +254,7 @@ export default function Home(props) {
 //     if (process.env.ENVIRONMENT === 'local') {
 //       provider = new ethers.providers.JsonRpcProvider()
 //     } else if (process.env.ENVIRONMENT === 'testnet') {
-//       provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+//       provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
 //     } else {
 //       provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com/')
 //     }
