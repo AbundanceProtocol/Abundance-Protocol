@@ -146,7 +146,7 @@ const button = {
         menu: 'Explore',
         description: 'Trending projects and posts',
         account: false,
-        working: false,
+        working: true,
         icon: BsBarChartFill
     },
     'Curated': {

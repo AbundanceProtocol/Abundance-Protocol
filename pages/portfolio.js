@@ -39,11 +39,12 @@ export default function Portfolio() {
     console.log(address)
     const query = `
     query {
-      posts (where: {author: "${address}"}) {
+      posts (first: 10, orderBy: timestamp, orderDirection: desc, where: {author: "${address}"}) {
         contentHash
         initialReview
         CrS
         IS
+        timestamp
       }
     }  
   `
@@ -64,6 +65,9 @@ export default function Portfolio() {
         if (ipfsData.content) {
           responseData[i].content = ipfsData.content
         }
+        let date = new Date(0)
+        date.setUTCSeconds(responseData[i].timestamp)
+        responseData[i].timestamp = date.toLocaleString()
       }
       await setUserPosts(responseData)
       console.log(userPosts)
@@ -101,8 +105,9 @@ export default function Portfolio() {
           userPosts.map((post, index) => (
             <div className="inner-container" key={index} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>
               <div className="flex-col" style={{width: '100%'}}>
-                <span className=""><span style={{fontWeight: '600'}}>Post title: </span>{post.title}</span>
-                <span className=""><span style={{fontWeight: '600'}}></span>{post.content.slice(0, 50)}{(post.content.length > 50) ? '...' : ''}</span>
+                <span className="" style={{fontWeight: '800', fontSize: '18px'}}>{post.title}</span>
+                <span className="" style={{fontSize: '15px', margin: '5px 0 0 0'}}>{post.content.slice(0, 50)}{(post.content.length > 50) ? '...' : ''}</span>
+                <span className="" style={{fontSize: '12px', margin: '10px 0 0 0', color: '#555'}}><span style={{fontWeight: '600'}}>Created: </span>{post.timestamp}</span>
               </div>
               { (post.initialReview) &&
                 (
@@ -114,7 +119,7 @@ export default function Portfolio() {
               }
               { (!post.initialReview) &&
                 (
-                  <input type="button" onClick={createInitialReview} name={post.contentHash} value="Create Initial Review" className="input-toggle-button toggle-on" />
+                  <input type="button" onClick={createInitialReview} name={post.contentHash} value="Initial Review" className="input-toggle-button toggle-on" />
                 )
               }
             </div>

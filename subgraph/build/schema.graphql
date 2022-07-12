@@ -21,3 +21,12 @@ type Post @entity {
   timestamp: BigInt
   author: Bytes
 }
+
+type FundingReq @entity {
+  id: ID!
+  amountRequested: BigInt
+  returnRate: BigInt
+  reqType: Int
+  deadline: BigInt
+  user: Bytes
+}

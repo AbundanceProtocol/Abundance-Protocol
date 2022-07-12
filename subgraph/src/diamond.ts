@@ -2,8 +2,9 @@ import { BigInt, ipfs, json, log } from "@graphprotocol/graph-ts"
 import {
   Diamond,
   PostCreated as PostCreatedEvent,
+  FundingRequested as FundingRequestedEvent
 } from "../generated/Diamond/Diamond"
-import { Post } from "../generated/schema"
+import { Post, FundingReq } from "../generated/schema"
 
 export function handlePostCreated(event: PostCreatedEvent): void {
   let post = new Post(event.params.id.toString());
@@ -40,4 +41,21 @@ export function handlePostCreated(event: PostCreatedEvent): void {
     }
   }
   post.save()
+}
+
+export function handleFundingRequested(event: FundingRequestedEvent): void {
+  let contract = Diamond.bind(event.address)
+  let userFundingReqsData = contract.try_getAllFundingReqs(event.params.user)
+  for (let i = 0; i < userFundingReqsData.value.length; i++) {
+    let fundingReqData = FundingReq.load(userFundingReqsData.value[i].reqId.toString())
+    if (!fundingReqData) {
+      let fundingReq = new FundingReq(userFundingReqsData.value[i].reqId.toString());
+      fundingReq.user = event.params.user
+      fundingReq.amountRequested = userFundingReqsData.value[i].amountRequested
+      fundingReq.returnRate = userFundingReqsData.value[i].returnRate
+      fundingReq.deadline = userFundingReqsData.value[i].deadline
+      fundingReq.reqType = userFundingReqsData.value[i].reqType
+      fundingReq.save()
+    }
+  }
 }
