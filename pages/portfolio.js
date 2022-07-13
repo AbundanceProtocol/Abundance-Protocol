@@ -39,7 +39,7 @@ export default function Portfolio() {
     console.log(address)
     const query = `
     query {
-      posts (first: 10, orderBy: timestamp, orderDirection: desc, where: {author: "${address}"}) {
+      posts (first: 10, orderBy: timestamp, orderDirection: desc, where: {authors: ["${address}"]}) {
         contentHash
         initialReview
         CrS

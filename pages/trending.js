@@ -45,7 +45,7 @@ export default function Trending() {
           CrS
           IS
           timestamp
-          author
+          authors
         }
       }  
     `
@@ -65,10 +65,10 @@ export default function Trending() {
         if (ipfsData.content) {
           responseData[i].content = ipfsData.content
         }
-        let date = new Date(0)
+        let date = new Date()
         date.setUTCSeconds(responseData[i].timestamp)
         responseData[i].timestamp = date.toLocaleString()
-        responseData[i].authorName = await setProfile(responseData[i].author)
+        responseData[i].authorName = await setProfile(responseData[i].authors[0])
       }
       await setUserPosts(responseData)
       console.log(userPosts)
@@ -140,7 +140,7 @@ export default function Trending() {
                 <span className="" style={{fontSize: '15px', margin: '5px 0 0 0'}}>{post.content.slice(0, 50)}{(post.content.length > 50) ? '...' : ''}</span>
                 <span className="flex-row" style={{fontSize: '12px', margin: '10px 0 0 0', color: '#555'}}>
                   <span style={{fontWeight: '600', margin: '0 5px 0 0'}}>By: </span>
-                  <span style={{fontWeight: '700', color: '#000'}} title={post.author} >{post.authorName} </span>
+                  <span style={{fontWeight: '700', color: '#000'}} title={post.authors[0]} >{post.authorName} </span>
                   <span style={{fontWeight: '600', margin: '0 5px 0 0', width: '100%', textAlign: 'right'}}>Created: </span>
                   <span style={{fontWeight: '400', minWidth: 'max-content', }}>{post.timestamp}</span>
                   </span>

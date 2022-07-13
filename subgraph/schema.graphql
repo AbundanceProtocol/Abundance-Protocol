@@ -19,7 +19,8 @@ type Post @entity {
   IS: BigInt
   postValue: BigInt
   timestamp: BigInt
-  author: Bytes
+  authors: [Bytes!]
+  categories: [String!]
 }
 
 type FundingReq @entity {

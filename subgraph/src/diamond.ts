@@ -1,4 +1,4 @@
-import { BigInt, ipfs, json, log } from "@graphprotocol/graph-ts"
+import { BigInt, ipfs, json, log, Bytes } from "@graphprotocol/graph-ts"
 import {
   Diamond,
   PostCreated as PostCreatedEvent,
@@ -22,7 +22,16 @@ export function handlePostCreated(event: PostCreatedEvent): void {
     post.IS = postData.value.IS
     post.postValue = postData.value.postValue
     post.timestamp = postData.value.timestamp
-    post.author = postData.value.postAuth[0].author
+    let authors = new Array<Bytes>(0)
+    for (let i = 0; i < postData.value.postAuth.length; i++) {
+      authors.push(postData.value.postAuth[i].author)
+    }
+    post.authors = authors
+    let categories = new Array<string>(0)
+    for (let i = 0; i < postData.value.postCat.length; i++) {
+      categories.push(postData.value.postCat[i].catId)
+    }
+    post.categories = categories
   }
   let data = ipfs.cat(event.params.hash);
   if (data) {

@@ -205,20 +205,37 @@ export class Post extends Entity {
     }
   }
 
-  get author(): Bytes | null {
-    let value = this.get("author");
+  get authors(): Array<Bytes> | null {
+    let value = this.get("authors");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBytes();
+      return value.toBytesArray();
     }
   }
 
-  set author(value: Bytes | null) {
+  set authors(value: Array<Bytes> | null) {
     if (!value) {
-      this.unset("author");
+      this.unset("authors");
     } else {
-      this.set("author", Value.fromBytes(<Bytes>value));
+      this.set("authors", Value.fromBytesArray(<Array<Bytes>>value));
+    }
+  }
+
+  get categories(): Array<string> | null {
+    let value = this.get("categories");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set categories(value: Array<string> | null) {
+    if (!value) {
+      this.unset("categories");
+    } else {
+      this.set("categories", Value.fromStringArray(<Array<string>>value));
     }
   }
 }
