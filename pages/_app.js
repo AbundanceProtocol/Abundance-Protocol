@@ -31,16 +31,6 @@ function App({ Component, pageProps }) {
   useEffect(() => {
     useStore.setState({ router })
   }, [router])
-  
-
-  useEffect(() => {
-    console.log('username', auth.username)
-    if (!store.username && auth.username) {
-
-      store.setUsername(auth.username)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.username, store.username])
 
   const setDeviceSize = () => {
     const isMobile = window.innerWidth <= 768;
@@ -68,14 +58,10 @@ function App({ Component, pageProps }) {
   }, [])
   
   const onAccount = useCallback(() => {
-    if (!store.account && auth.account) {
-      const _acct = auth.account;
-
-      store.setAccount(_acct)
-    } 
-    setAccount(store.account)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.account, store.account, setAccount])
+    store.setAccount(auth.account)
+    store.setUsername(auth.username)
+    setAccount(auth.account)
+  }, [auth.account, auth.username, setAccount])
 
     useEffect(() => {
       onAccount()

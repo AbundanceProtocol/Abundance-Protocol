@@ -54,6 +54,7 @@ const useAuth = () => {
     const [connecting, setConnecting] = useState(false);
     const [disconnecting, setDisconnecting] = useState(false);
     const [connected, setConnected] = useState(false);
+    // const []
     const [provider, setProvider] = useState(null);
     const [authSession, setAuthSession] = useState(null);
     const [username, setUsername] = useState(null);
@@ -77,22 +78,24 @@ const useAuth = () => {
     //     return null;
     // }
     useEffect(() => {
-        if (provider) {
-            provider.on('accountsChanged', () => {
-                console.log('account changed')
-            })
-        }
-        console.log('provider', provider)
+        // if (provider) {
+        //     provider.on("accountsChanged", (accounts) => {
+        //         console.log(accounts)
+        //     })
+        // }
+
+
     }, [provider])
     
 
     async function connect() {
 
         const web3Modal = await getWeb3Modal()
-        const connection = await web3Modal.connect()
+        const ethProvider = await web3Modal.connect()
         // // console.log('connection', connection.cachedProvider)
-        const ethProvider = new ethers.providers.Web3Provider(connection)
-        const accounts = await ethProvider.listAccounts()
+        // const ethProvider = new ethers.providers.Web3Provider(connection)
+        console.log('eth provider', ethProvider)
+        const accounts = await ethProvider.accounts
        
         setProvider(ethProvider)
         const { ethereum } = window;
@@ -137,7 +140,7 @@ const useAuth = () => {
 
       function getWeb3Modal() {
         const web3Modal = new Web3Modal({
-          cacheProvider: false,
+          cacheProvider: true,
           providerOptions: {
             walletconnect: {
               package: WalletConnectProvider,
