@@ -12,7 +12,7 @@ import { FaPen } from 'react-icons/fa';
 import { AccountContext } from '../context.js'
 import useStore from '../utils/store'
 import useAuth from '../hooks/useAuth';
-import {Logo, LeftCorner, RightCorner, Space } from './assets'
+import {Logo, LeftCorner, RightCorner, Space, OpenSeaIcon } from './assets'
 import { button } from './assets/button';
 import ConnectButton from '../components/ConnectButton';
 
@@ -148,7 +148,8 @@ function App({ Component, pageProps }) {
           }}>
             <div style={{display: 'grid', gridTemplateColumns: 'auto 1fr', gridGap: '8px', alignItems: 'center'}}>
               <div className="sub-cat-box" >
-                <Icon className={iconClass} style={{width: '25px', height: '25px'}}/>
+              
+                <Icon className={iconClass} iconsize="25" style={{width: '25px', height: '25px'}}/>
               </div>
               <div className="sub-cat-text flex-col" style={{pointerEvents: 'none'}}>
                 <span className={titleClass} style={{fontSize: '15px', fontWeight:'800', paddingRight: '10px', pointerEvents: 'none', width: 'max-content'}}>{props.buttonName}</span>
@@ -322,6 +323,7 @@ function App({ Component, pageProps }) {
             <NavbarHeader>
               <div className="navbar-header">
                 <HomeButton />
+                
                 <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
                   <ConnectButton 
                     account={store.account}
