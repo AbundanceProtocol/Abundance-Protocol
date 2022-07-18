@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import Web3Modal from 'web3modal';
 import { BiWalletAlt as WalletIcon } from 'react-icons/bi';
 import { shortenAddress } from '../../utils/utils';
-import WalletConnectProvider from '@walletconnect/web3-provider';
 import { Button, Text } from "../Foundation";
 import { buttonVariants } from '../Foundation/Button';
 import DropdownMenu from '../DropdownMenu';
-import useAuth from '../../hooks/useAuth';
 
 const ConnectButton = ({
     isMobile=false, 
@@ -21,15 +18,7 @@ const ConnectButton = ({
     
       try {
 
-        await onConnect();
-        
-        // const web3Modal = await getWeb3Modal()
-        // const connection = await web3Modal.connect()
-        // const provider = new ethers.providers.Web3Provider(connection)
-        // const accounts = await provider.listAccounts()
-        // if (accounts) {
-        //   onConnect(accounts)
-        // }
+        onConnect();
 
       } catch (err) {
         console.error('error:', err)
@@ -37,7 +26,6 @@ const ConnectButton = ({
     }
   
   function disconnect () {
-      // setAccount(null)
       onDisconnect();
   }
 
@@ -63,23 +51,9 @@ const ConnectButton = ({
 
   useEffect(() => {
     updateBalance()
+    return () => {}
   }, [updateBalance])
    
-    // async function getWeb3Modal() {
-    //     const web3Modal = new Web3Modal({
-    //       cacheProvider: false,
-    //       providerOptions: {
-    //         walletconnect: {
-    //           package: WalletConnectProvider,
-    //           options: {
-    //             infuraId: "f7b15f0b1a2d49e2b9f0e9b666842ff1"
-    //           },
-    //         },
-    //       },
-    //     })
-    //     return web3Modal
-    //   }
-
     const AccountMenuButton = () => {
       return (
         <DropdownMenu 

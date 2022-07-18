@@ -73,10 +73,12 @@ function App({ Component, pageProps }) {
 
       store.setAccount(_acct)
       setAccount(auth.account)
-    } else if (store.account && !account) {
-      // console.log('store account', store.account);
-      setAccount(store.account)
-    }
+    } 
+    setAccount(store.account)
+    // else if (store.account && !account) {
+    //   setAccount(store.account)
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.account, store.account, setAccount])
 
     useEffect(() => {
