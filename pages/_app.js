@@ -268,11 +268,9 @@ function App({ Component, pageProps }) {
 
 
   async function disconnect() {
-    await auth.disconnect();
+    auth.disconnect();
     store.setAccount(null)
-    // useStore.setState((state) => {
-    //   state.account = null;
-    // })
+
     setAccount(null)
     setTimeout(() => {
       console.log('rerouting')
@@ -491,7 +489,7 @@ const TopNavWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  grid-gap: 16px;
+  // grid-gap: 16px;
 `;
 
 const Col = styled.div`

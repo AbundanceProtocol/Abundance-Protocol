@@ -58,6 +58,7 @@ const useAuth = () => {
     const [authSession, setAuthSession] = useState(null);
     const [username, setUsername] = useState(null);
     const [chain, setChain] = useState('eth')
+
     
     // useEffect(() => {
     //     if (chain === 'eth') {
@@ -75,6 +76,15 @@ const useAuth = () => {
 
     //     return null;
     // }
+    useEffect(() => {
+        if (provider) {
+            provider.on('accountsChanged', () => {
+                console.log('account changed')
+            })
+        }
+        console.log('provider', provider)
+    }, [provider])
+    
 
     async function connect() {
 
