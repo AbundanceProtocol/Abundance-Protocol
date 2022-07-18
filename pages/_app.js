@@ -77,7 +77,7 @@ function App({ Component, pageProps }) {
 
   useEffect(() => {
     let menuLink = targetLink()
-    setNavSize(ref.current.offsetWidth - 60)
+    setNavSize(ref?.current?.offsetWidth - 60)
     setLinkTarget(menuLink)
     setNavMenu(button[menuLink].menu)
     // eslint-disable-next-line react-hooks/exhaustive-deps
