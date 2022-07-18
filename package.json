@@ -9,13 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@mui/material": "^5.8.7",
     "@ceramicnetwork/blockchain-utils-linking": "^2.0.6",
     "@ceramicnetwork/http-client": "^2.2.1",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@glazed/did-datastore": "^0.3.2",
     "@glazed/did-session": "^0.1.1",
+    "@mui/material": "^5.8.7",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^4.5.0",

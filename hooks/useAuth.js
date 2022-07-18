@@ -8,35 +8,6 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import React, { useEffect, useState } from 'react';
 import { shortenAddress } from '../utils/utils';
 
-// const defaultState = {
-//     account: undefined,
-//     username: undefined,
-//     provider: undefined,
-//     chainId: undefined,
-//     connect: async () => {
-//         throw new Error("Must override connect function")
-//     },
-//     disconnect: async () => {
-//         throw new Error("Must override connect function")
-//     },
-//     getBalance: async () => {
-//         throw new Error("Must override connect function")
-//     },
-//     getAccounts: async () => {
-//         throw new Error("Must override connect function")
-//     },
-//     connected: false,
-//     disconnected: true,
-//     isConnecting: false,
-//     isDisconnecting: false,
-// } 
-
-// const AuthContext = React.createContext(defaultState);
-
-// export function useAuth() {
-//     return useContext(AuthContext);
-// }
-
 const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const aliases = {
     schemas: {
@@ -54,7 +25,6 @@ const useAuth = () => {
     const [connecting, setConnecting] = useState(false);
     const [disconnecting, setDisconnecting] = useState(false);
     const [connected, setConnected] = useState(false);
-    // const []
     const [provider, setProvider] = useState(null);
     const [authSession, setAuthSession] = useState(null);
     const [username, setUsername] = useState(null);
@@ -62,36 +32,29 @@ const useAuth = () => {
 
     
     // useEffect(() => {
-    //     if (chain === 'eth') {
-    //         getEthProvider();
-    //     }
-    // }, [chain])
+    //     // if (provider) {
+    //     //     provider.on("accountsChanged", (accounts) => {
+    //     //         console.log(accounts)
+    //     //     })
+    //     // }
 
-    // function getEthProvider() {
-    //     const { ethereum } = window;
-    //     if (ethereum && typeof ethereum !== "undefined") {
-    //         console.log('ethereum', ethereum)
-    //         setEthProvider(ethereum);
-    //         return ethereum;
-    //     }
-
-    //     return null;
-    // }
-    useEffect(() => {
-        // if (provider) {
-        //     provider.on("accountsChanged", (accounts) => {
-        //         console.log(accounts)
-        //     })
-        // }
-
-
-    }, [provider])
+    //     getWeb3Modal()
+    //         .then((web3modal) => {
+    //             web3modal.on('accountCha')
+    //         })
+    // }, [provider])
     
 
     async function connect() {
 
         const web3Modal = await getWeb3Modal()
         const ethProvider = await web3Modal.connect()
+
+        // subscribe provider
+        // provider.enable()
+        // web3 = initWeb3(provider)
+        // accounts = await web3.eth.getAccounts()
+
         // // console.log('connection', connection.cachedProvider)
         // const ethProvider = new ethers.providers.Web3Provider(connection)
         console.log('eth provider', ethProvider)
