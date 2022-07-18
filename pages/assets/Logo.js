@@ -1,8 +1,8 @@
-const Logo = () => {
+const Logo = (props) => {
     return (
         <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg"
-            x="0px" y="0px" width="184.082px" height="177.917px" viewBox="0 0 184.082 177.917" enableBackground="new 0 0 184.082 177.917" style={{ width: '45px', height: '80px', padding: '15px 0' }}>
+            x="0px" y="0px" width="184.082px" height="177.917px" viewBox="0 0 184.082 177.917" enableBackground="new 0 0 184.082 177.917"  {...props}>
             <defs>
             </defs>
             <path fill="current" d="M106.856,50.874L92.009,63.612L79.106,51.374L92.249,0L106.856,50.874z M120.231,82.999

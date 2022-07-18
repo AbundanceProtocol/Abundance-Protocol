@@ -14,7 +14,7 @@ const Buttons = () => {
 export default Buttons;
 
 const button = {
-    'top-menu': ['portal', 'create', 'fund', 'explore', 'connect'],
+    'top-menu': ['portal', 'studio', 'fund', 'ecosystem', 'connect'],
     'nav-menu': {
         'Home': ['Vision', 'Roadmap', 'Mechanism', 'Whitepaper', 'FAQ', 'Blog'],
         'Portal': ['Profile', 'Wallet', 'Expertise', 'Portfolio', 'Subscriptions', 'Inbox'],
@@ -88,7 +88,7 @@ const button = {
         icon: FaAt
     },
 
-    'create': {
+    'studio': {
         link: '/create',
         menu: 'Create',
         account: true,
@@ -109,7 +109,7 @@ const button = {
         working: true,
         icon: FaLink
     },
-    'explore': {
+    'ecosystem': {
         link: '/explore',
         menu: 'Explore',
         account: false,
@@ -146,7 +146,7 @@ const button = {
         menu: 'Explore',
         description: 'Trending projects and posts',
         account: false,
-        working: false,
+        working: true,
         icon: BsBarChartFill
     },
     'Curated': {
@@ -170,7 +170,7 @@ const button = {
         menu: 'Explore',
         description: 'Latest projects and posts',
         account: true,
-        working: false,
+        working: true,
         icon: FaScroll
     },
     'Vision': {

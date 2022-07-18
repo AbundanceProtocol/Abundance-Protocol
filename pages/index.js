@@ -8,9 +8,11 @@ import { AccountContext } from '../context'
 import { contractAddress, ownerAddress } from '../config'
 import { FaBalanceScale, FaCheckCircle, FaChartLine, FaHandHoldingUsd, FaMoneyBillAlt, FaGithub, FaMediumM, FaYoutube, FaTwitter, FaAt, FaDiscord, FaUsers, FaListAlt, FaCode } from 'react-icons/fa';
 import { MdScience } from 'react-icons/md'
+import useStore from '../utils/store';
 // import Abundance from '../artifacts/contracts/Abundance.sol/Abundance.json'
 
 export default function Home(props) {
+  const store = useStore()
   const ref = useRef(null)
   const [vidSize, setVidSize] = useState({w: 1220 + 'px', h: 1220/16*9 + 'px'})
   const { posts } = props
@@ -37,7 +39,7 @@ export default function Home(props) {
       <div className="top-frame flex-middle">
         <div className="border-style wrap bg-grd6 flex-middle flex-row flex-wr" ref={ref}>
           <div className='flex-col flex-2'>
-            <p className="large-font">Powering the Abundance Economy</p>
+            <p className={store.isMobile ? "large-font-mobile" : "large-font"}>Powering the Abundance Economy</p>
             <p className="mid-font">Building the decentralized economy for digital content and public goods</p>
           </div>
           <div style={{padding: '0 20px 0 0'}}>

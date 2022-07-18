@@ -1,9 +1,9 @@
 
-const ExpandIcon = () => {
+const ExpandIcon = (props) => {
     return (
         <svg version="1.1"
              xmlns="http://www.w3.org/2000/svg"
-             x="0px" y="0px" width="185.271px" height="179.045px" viewBox="0 0 185.271 179.045" enableBackground="new 0 0 185.271 179.045">
+             x="0px" y="0px" width="185.271px" height="179.045px" viewBox="0 0 185.271 179.045" enableBackground="new 0 0 185.271 179.045" {...props}>
         <defs>
         </defs>
         <g>

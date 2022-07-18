@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.8.7",
     "@ceramicnetwork/blockchain-utils-linking": "^2.0.6",
     "@ceramicnetwork/http-client": "^2.2.1",
     "@glazed/did-datastore": "^0.3.2",
@@ -27,6 +30,7 @@
     "graphql": "^16.5.0",
     "hardhat": "^2.9.1",
     "hardhat-contract-sizer": "^2.5.1",
+    "immer": "^9.0.15",
     "ipfs-http-client": "^56.0.1",
     "key-did-provider-ed25519": "^2.0.0",
     "key-did-resolver": "^2.0.4",
@@ -37,13 +41,15 @@
     "react-markdown": "^8.0.1",
     "react-player": "^2.10.1",
     "react-simplemde-editor": "^5.0.2",
-    "urql": "^2.2.2",
-    "web3modal": "^1.9.5"
+    "web3modal": "^1.9.5",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.32.0",
     "@netlify/plugin-nextjs": "^4.7.1",
     "eslint": "8.11.0",
-    "eslint-config-next": "12.1.0"
+    "eslint-config-next": "12.1.0",
+    "urql": "^2.2.2",
+    "web3modal": "^1.9.5"
   }
 }

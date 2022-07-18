@@ -1,11 +1,14 @@
 import button from './button';
 import CodeIcon from './CodeIcon';
 import CollabIcon from './CollabIcon';
+import CollapseIcon from './CollapseIcon';
+import DropdownIcon from './DropdownIcon';
 import ExpandIcon from './ExpandIcon';
 import KnowledgeIcon from './KnowledgeIcon';
 import LeftCorner from './LeftCorner';
 import Logo from './Logo';
 import LogoHD from './LogoHD';
+import MenuIcon from './MenuIcon';
 import OpenSeaIcon from './OpenSeaIcon';
 import PublicGoodsIcon from './PublicGoodsIcon';
 import RightCorner from './RightCorner';
@@ -22,11 +25,14 @@ export {
   button,
   CodeIcon,
   CollabIcon,
+  CollapseIcon,
+  DropdownIcon,
   ExpandIcon,
   KnowledgeIcon,
   LeftCorner,
   Logo,
   LogoHD,
+  MenuIcon,
   OpenSeaIcon,
   PublicGoodsIcon,
   RightCorner,
