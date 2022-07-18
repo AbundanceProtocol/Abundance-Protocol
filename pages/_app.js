@@ -12,7 +12,7 @@ import { FaPen } from 'react-icons/fa';
 import { AccountContext } from '../context.js'
 import useStore from '../utils/store'
 import useAuth from '../hooks/useAuth';
-import {Logo, LeftCorner, RightCorner, Space, OpenSeaIcon } from './assets'
+import {Logo, LeftCorner, RightCorner, Space } from './assets'
 import { button } from './assets/button';
 import ConnectButton from '../components/ConnectButton';
 
@@ -72,12 +72,8 @@ function App({ Component, pageProps }) {
       const _acct = auth.account;
 
       store.setAccount(_acct)
-      setAccount(auth.account)
     } 
     setAccount(store.account)
-    // else if (store.account && !account) {
-    //   setAccount(store.account)
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.account, store.account, setAccount])
 
