@@ -39,6 +39,7 @@ function App({ Component, pageProps }) {
 
       store.setUsername(auth.username)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.username, store.username])
 
   const setDeviceSize = () => {
@@ -55,6 +56,7 @@ function App({ Component, pageProps }) {
       window.addEventListener('resize', setDeviceSize)
       return () => window.removeEventListener("resize", setDeviceSize);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -68,15 +70,14 @@ function App({ Component, pageProps }) {
   const onAccount = useCallback(() => {
     if (!store.account && auth.account) {
       const _acct = auth.account;
-      console.log('account', _acct);
 
       store.setAccount(_acct)
       setAccount(auth.account)
     } else if (store.account && !account) {
-      console.log('store account', store.account);
+      // console.log('store account', store.account);
       setAccount(store.account)
     }
-  }, [auth.account, store.account])
+  }, [auth.account, store.account, setAccount])
 
     useEffect(() => {
       onAccount()
