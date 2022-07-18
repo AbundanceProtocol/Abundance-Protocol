@@ -565,7 +565,7 @@ const SubNavBoxWrapper = styled.div`
           margin: ${props => props.isHover ? '0' : '5px 10px'};
           border-radius: 15px;
           justify-content: start;
-          
+
         }
       
     }

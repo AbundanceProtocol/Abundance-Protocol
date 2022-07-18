@@ -29,20 +29,6 @@ const useAuth = () => {
     const [authSession, setAuthSession] = useState(null);
     const [username, setUsername] = useState(null);
     const [chain, setChain] = useState('eth')
-
-    
-    // useEffect(() => {
-    //     // if (provider) {
-    //     //     provider.on("accountsChanged", (accounts) => {
-    //     //         console.log(accounts)
-    //     //     })
-    //     // }
-
-    //     getWeb3Modal()
-    //         .then((web3modal) => {
-    //             web3modal.on('accountCha')
-    //         })
-    // }, [provider])
     
 
     async function connect() {
@@ -55,7 +41,6 @@ const useAuth = () => {
         // web3 = initWeb3(provider)
         // accounts = await web3.eth.getAccounts()
 
-        // // console.log('connection', connection.cachedProvider)
         // const ethProvider = new ethers.providers.Web3Provider(connection)
         console.log('eth provider', ethProvider)
         const accounts = await ethProvider.accounts
