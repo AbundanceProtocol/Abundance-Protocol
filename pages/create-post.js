@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
+import styled from '@emotion/styled';
 import { AccountContext } from '../context.js'
 import { ethers } from 'ethers'
 import { create } from 'ipfs-http-client'
@@ -233,10 +234,10 @@ function CreatePost() {
             )
           }
         </div>
-        <div className="inner-container">
+        <InnerContainer className="inner-container">
           <span className='input-desc'>Post content</span>
-          <SimpleMDE className="input-field stretch-field" placeholder="Post text" value={post.content} onChange={value => setPost({ ...post, content: value })} />
-        </div>
+          <SimpleMDE className="input-field stretch-field" placeholder="Post text" value={post.content} onChange={value => setPost({ ...post, content: value })} style={{whiteSpace: 'break-spaces'}}/>
+        </InnerContainer>
         <SubmitPost />
       </div>
           
@@ -244,6 +245,13 @@ function CreatePost() {
 	)
 }
 
+const InnerContainer = styled.div`
+	> * {
+		.CodeMirror-line {
+			white-space: break-spaces;
+		}
+	}
+`;
 export default CreatePost
 
 CreatePost.provider = AccountContext
