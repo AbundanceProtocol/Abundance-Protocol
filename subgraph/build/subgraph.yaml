@@ -18,10 +18,13 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Post
+        - FundingReq
       abis:
         - name: Diamond
           file: Diamond\abis\Diamond.json
       eventHandlers:
         - event: PostCreated(uint256,string,string)
           handler: handlePostCreated
+        - event: FundingRequested(address,uint256,uint256,uint256,uint8)
+          handler: handleFundingRequested
       file: Diamond\Diamond.wasm

@@ -205,8 +205,134 @@ export class Post extends Entity {
     }
   }
 
-  get author(): Bytes | null {
-    let value = this.get("author");
+  get authors(): Array<Bytes> | null {
+    let value = this.get("authors");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytesArray();
+    }
+  }
+
+  set authors(value: Array<Bytes> | null) {
+    if (!value) {
+      this.unset("authors");
+    } else {
+      this.set("authors", Value.fromBytesArray(<Array<Bytes>>value));
+    }
+  }
+
+  get categories(): Array<string> | null {
+    let value = this.get("categories");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set categories(value: Array<string> | null) {
+    if (!value) {
+      this.unset("categories");
+    } else {
+      this.set("categories", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+}
+
+export class FundingReq extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save FundingReq entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type FundingReq must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("FundingReq", id.toString(), this);
+    }
+  }
+
+  static load(id: string): FundingReq | null {
+    return changetype<FundingReq | null>(store.get("FundingReq", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get amountRequested(): BigInt | null {
+    let value = this.get("amountRequested");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amountRequested(value: BigInt | null) {
+    if (!value) {
+      this.unset("amountRequested");
+    } else {
+      this.set("amountRequested", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get returnRate(): BigInt | null {
+    let value = this.get("returnRate");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set returnRate(value: BigInt | null) {
+    if (!value) {
+      this.unset("returnRate");
+    } else {
+      this.set("returnRate", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get reqType(): i32 {
+    let value = this.get("reqType");
+    return value!.toI32();
+  }
+
+  set reqType(value: i32) {
+    this.set("reqType", Value.fromI32(value));
+  }
+
+  get deadline(): BigInt | null {
+    let value = this.get("deadline");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set deadline(value: BigInt | null) {
+    if (!value) {
+      this.unset("deadline");
+    } else {
+      this.set("deadline", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get user(): Bytes | null {
+    let value = this.get("user");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -214,11 +340,11 @@ export class Post extends Entity {
     }
   }
 
-  set author(value: Bytes | null) {
+  set user(value: Bytes | null) {
     if (!value) {
-      this.unset("author");
+      this.unset("user");
     } else {
-      this.set("author", Value.fromBytes(<Bytes>value));
+      this.set("user", Value.fromBytes(<Bytes>value));
     }
   }
 }
