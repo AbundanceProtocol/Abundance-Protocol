@@ -13,9 +13,7 @@ const client = create('https://ipfs.infura.io:5001/api/v0')
 const SimpleMDE = dynamic( () => import('react-simplemde-editor'), { ssr: false } )
 
 import { CeramicClient } from '@ceramicnetwork/http-client'
-import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
 import { DIDDataStore } from '@glazed/did-datastore'
-import { DIDSession } from '@glazed/did-session'
 
 const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const aliases = {
@@ -172,14 +170,6 @@ function CreatePost() {
 		)
 	}
 
-	function selfReviewToggle(e) {
-		if (reviewToggle) {
-			setReviewToggle(false)
-		} else if (!reviewToggle) {
-			setReviewToggle(true)
-		}
-	}
-
 	const RequestMessage = () => {
 		return (
 			<>
@@ -204,6 +194,10 @@ function CreatePost() {
 		)
 	}
 
+	useEffect(() => {
+		console.log('post', post)
+	}, [post])
+
 
 	return (
 	<div className="t-p-130">
@@ -212,9 +206,9 @@ function CreatePost() {
 		{ (submitMessage.status !== 'none') && <RequestMessage /> }
         <div className="flex-row" style={{padding: '0 0 10px 0', width: '100%'}}>
           <span className='container-title'>Create Post</span>
-          {/* <div className="flex-row">
-            <input type="button" onClick={selfReviewToggle} name='self-review' value="Self-Review" className={reviewToggle ? "input-toggle-button toggle-off" : "input-toggle-button toggle-on"} />
-          </div> */}
+          <div className="flex-row">
+            <input type="button" onClick={() => setReviewToggle(!reviewToggle)} name='self-review' value={`Self Review ${reviewToggle ? "(ON)" : "(OFF)"}`} className={reviewToggle ? "input-toggle-button toggle-on" : "input-toggle-button toggle-off"} />
+          </div>
         </div>
 
         <div className="inner-container">
