@@ -11,28 +11,10 @@ import { HiChevronUp as CollapseIcon, HiMenu } from 'react-icons/hi';
 import { FaPen } from 'react-icons/fa';
 import { AccountContext } from '../context.js'
 import useStore from '../utils/store'
+import useAuth from '../hooks/useAuth';
 import {Logo, LeftCorner, RightCorner, Space } from './assets'
 import { button } from './assets/button';
 import ConnectButton from '../components/ConnectButton';
-
-import { CeramicClient } from '@ceramicnetwork/http-client'
-import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
-import { DIDDataStore } from '@glazed/did-datastore'
-import { DIDSession } from '@glazed/did-session'
-import useAuth from '../hooks/useAuth';
-import { shortenAddress } from '../utils/utils';
-
-const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
-const aliases = {
-    schemas: {
-        basicProfile: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
-    },
-    definitions: {
-        BasicProfile: 'kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
-    },
-    tiles: {},
-}
-const datastore = new DIDDataStore({ ceramic, model: aliases })
 
 function App({ Component, pageProps }) {
   const store = useStore()
@@ -83,16 +65,6 @@ function App({ Component, pageProps }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
-  // useEffect(() => {
-  //   auth.getAccounts()
-  //     .then((res) => {
-
-  //       console.log('accounts ', res)
-  //       if (res) {
-  //         setAccount(res)
-  //       }
-  //   })
-  // }, [])
   const onAccount = useCallback(() => {
     if (!store.account && auth.account) {
       const _acct = auth.account;
@@ -242,23 +214,25 @@ function App({ Component, pageProps }) {
     }
 
     return (
-      <a style={{maxWidth: '87px'}} onMouseEnter={() => {
+      <div style={{padding: '0 8px'}} onMouseEnter={() => {
         setNavMenu(btn.menu)
         setMenuHover({ ...menuHover, in: Date.now() })
       }}
-      onMouseLeave={() => setMenuHover({ ...menuHover, out: Date.now() }) } 
-      >
-        <div className={menuState} style={{paddingRight: store.isMobile && '24px' }}>
-          <div className="flex-col flex-middle" style={{height: '87px'}}>
-            <div className="flex-col flex-middle">
-              <TopIcon className="size-25" />
-              <div className="font-15 mar-t-6" style={{textAlign: 'center'}}>
-                {btnName}
+      onMouseLeave={() => setMenuHover({ ...menuHover, out: Date.now() }) }>
+        <a style={{maxWidth: '87px'}}  
+        >
+          <div className={menuState} style={{paddingRight: store.isMobile && '24px' }}>
+            <div className="flex-col flex-middle" style={{height: '87px'}}>
+              <div className="flex-col flex-middle">
+                <TopIcon className="size-25" />
+                <div className="font-15 mar-t-6" style={{textAlign: 'center'}}>
+                  {btnName}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     )
   }
 
@@ -294,11 +268,9 @@ function App({ Component, pageProps }) {
 
 
   async function disconnect() {
-    await auth.disconnect();
+    auth.disconnect();
     store.setAccount(null)
-    // useStore.setState((state) => {
-    //   state.account = null;
-    // })
+
     setAccount(null)
     setTimeout(() => {
       console.log('rerouting')
@@ -386,10 +358,8 @@ function App({ Component, pageProps }) {
       <div>
         <nav className="nav-bar">
           <div className="flex-row top-nav-wrap" ref={ref}>
-            {/* <Space /> */}
-            <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'stretch', alignItems: 'center', gridGap: '16px'}}>
+            <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'space-between', alignItems: 'center', gridGap: '16px'}}>
               <HomeButton />
-              {/* <Space /> */}
               <Col>
                 <TopNavWrapper>
                     { button['top-menu'].map((btn, index) => (
@@ -464,11 +434,11 @@ const NavbarHeader = styled.div`
     grid-auto-flow: column;
     justify-content: space-between;
     align-items: center;
-    grid-gap: 16px;
+    // grid-gap: 16px;
 
-    @media(max-width: 360px) {
-      grid-gap: 4px;
-    }
+    // @media(max-width: 360px) {
+    //   grid-gap: 4px;
+    // }
   
     .navbar-header-end {
       grid-gap: 16px;
@@ -519,7 +489,7 @@ const TopNavWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  grid-gap: 16px;
+  // grid-gap: 16px;
 `;
 
 const Col = styled.div`
