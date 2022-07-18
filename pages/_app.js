@@ -19,6 +19,8 @@ import { CeramicClient } from '@ceramicnetwork/http-client'
 import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
 import { DIDDataStore } from '@glazed/did-datastore'
 import { DIDSession } from '@glazed/did-session'
+import useAuth from '../hooks/useAuth';
+import { shortenAddress } from '../utils/utils';
 
 const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com")
 const aliases = {
@@ -34,6 +36,7 @@ const datastore = new DIDDataStore({ ceramic, model: aliases })
 
 function App({ Component, pageProps }) {
   const store = useStore()
+  const auth = useAuth();
   const ref = useRef(null)
   const [navSize, setNavSize] = useState(1060)
   const router = useRouter()
@@ -46,6 +49,15 @@ function App({ Component, pageProps }) {
   useEffect(() => {
     useStore.setState({ router })
   }, [router])
+  
+
+  useEffect(() => {
+    console.log('username', auth.username)
+    if (!store.username && auth.username) {
+
+      store.setUsername(auth.username)
+    }
+  }, [auth.username, store.username])
 
   const setDeviceSize = () => {
     const isMobile = window.innerWidth <= 768;
@@ -70,13 +82,29 @@ function App({ Component, pageProps }) {
     setNavMenu(button[menuLink].menu)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  
+  // useEffect(() => {
+  //   auth.getAccounts()
+  //     .then((res) => {
 
+  //       console.log('accounts ', res)
+  //       if (res) {
+  //         setAccount(res)
+  //       }
+  //   })
+  // }, [])
   const onAccount = useCallback(() => {
-    if (!account && store.account) {
-      console.log('account', store.account)
+    if (!store.account && auth.account) {
+      const _acct = auth.account;
+      console.log('account', _acct);
+
+      store.setAccount(_acct)
+      setAccount(auth.account)
+    } else if (store.account && !account) {
+      console.log('store account', store.account);
       setAccount(store.account)
     }
-  }, [store.account,setAccount])
+  }, [auth.account, store.account])
 
     useEffect(() => {
       onAccount()
@@ -202,7 +230,7 @@ function App({ Component, pageProps }) {
     let btnName = props.buttonName
     let textSize = '15px'
     if (btnName === 'portal' && account) {
-      btnName = accountText
+      btnName = store.username
     }
     const TopIcon = btn.icon
     let menuState = "nav-link"
@@ -260,15 +288,20 @@ function App({ Component, pageProps }) {
     return "Vision"
   }
   
-  const connect = (accounts) => {
-    store.setAccount(accounts[0])
+  const connect = async () => {
+    await auth.connect()
   }
 
+
   async function disconnect() {
-    useStore.setState((state) => {
-      state.account = null;
-    })
+    await auth.disconnect();
+    store.setAccount(null)
+    // useStore.setState((state) => {
+    //   state.account = null;
+    // })
+    setAccount(null)
     setTimeout(() => {
+      console.log('rerouting')
       router.push('/')
     }, 100)
   }
@@ -344,65 +377,65 @@ function App({ Component, pageProps }) {
         </React.Fragment>
       </nav>
       <div className="container">
-        <AccountContext.Provider value={account}>
+        <AccountContext.Provider value={store.account}>
           <Component {...pageProps} connect={connect} />
         </AccountContext.Provider>
       </div>
     </div>
   ) : (
-    <div>
-      <nav className="nav-bar">
-        <div className="flex-row top-nav-wrap" ref={ref}>
-          {/* <Space /> */}
-          <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'stretch', alignItems: 'center', gridGap: '16px'}}>
-            <HomeButton />
+      <div>
+        <nav className="nav-bar">
+          <div className="flex-row top-nav-wrap" ref={ref}>
             {/* <Space /> */}
-            <Col>
-              <TopNavWrapper>
-                  { button['top-menu'].map((btn, index) => (
-                    <TopNav buttonName={btn} key={index} /> ))}
-                </TopNavWrapper>
-                <ConnectButton 
-                  account={store.account}
-                  isMobile={store.isMobile}
-                  onConnect={connect}
-                  onDisconnect={disconnect}
-                />
-            </Col>
+            <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'stretch', alignItems: 'center', gridGap: '16px'}}>
+              <HomeButton />
+              {/* <Space /> */}
+              <Col>
+                <TopNavWrapper>
+                    { button['top-menu'].map((btn, index) => (
+                      <TopNav buttonName={btn} key={index} /> ))}
+                  </TopNavWrapper>
+                  <ConnectButton 
+                    account={account}
+                    isMobile={store.isMobile}
+                    onConnect={connect}
+                    onDisconnect={disconnect}
+                  />
+              </Col>
+            </div>
+            <Space />
           </div>
-          <Space />
-        </div>
-        <div className="flex-row" style={{width: '100%', alignItems: 'flex-start' }}>
-          <div className="nav-shadow" style={{width: '100%', height: '1px', backgroundColor: ''}}>
-            <div className="flex-row flex-right"><RightCorner /></div>
-          </div>
-          <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
-            <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
-            <div className="sub-nav-box flex-row flex-wr" style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(6, 1fr)',
-                backgroundColor: '#dddddde6', 
-                borderRadius: '20px', 
-                margin: '0 10px 10px 10px',
-              }} onMouseEnter={() => {
-              setMenuHover({ ...menuHover, in: Date.now() })
-              }} onMouseLeave={() => {
-              setMenuHover({ ...menuHover, out: Date.now() })}}>
-                <SubCat />
+          <div className="flex-row" style={{width: '100%', alignItems: 'flex-start' }}>
+            <div className="nav-shadow" style={{width: '100%', height: '1px', backgroundColor: ''}}>
+              <div className="flex-row flex-right"><RightCorner /></div>
+            </div>
+            <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
+              <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
+              <div className="sub-nav-box flex-row flex-wr" style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(6, 1fr)',
+                  backgroundColor: '#dddddde6', 
+                  borderRadius: '20px', 
+                  margin: '0 10px 10px 10px',
+                }} onMouseEnter={() => {
+                setMenuHover({ ...menuHover, in: Date.now() })
+                }} onMouseLeave={() => {
+                setMenuHover({ ...menuHover, out: Date.now() })}}>
+                  <SubCat />
+                </div>
               </div>
             </div>
+            <div className="nav-shadow" style={{height: '1px', backgroundColor: '', width: '100%'}}>
+              <div className="flex-row flex-left"><LeftCorner /></div>
+            </div>
           </div>
-          <div className="nav-shadow" style={{height: '1px', backgroundColor: '', width: '100%'}}>
-            <div className="flex-row flex-left"><LeftCorner /></div>
-          </div>
+        </nav>
+        <div className="container">
+          <AccountContext.Provider value={store.account}>
+            <Component {...pageProps} connect={connect} />
+          </AccountContext.Provider>
         </div>
-      </nav>
-      <div className="container">
-        <AccountContext.Provider value={account}>
-          <Component {...pageProps} connect={connect} />
-        </AccountContext.Provider>
       </div>
-    </div>
   )
 }
 

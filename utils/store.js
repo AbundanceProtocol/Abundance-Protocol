@@ -11,8 +11,10 @@ const useStore = create(persist((set, get) => {
         },
         isMobile: false,
         account: null,
+        username: null,
         // set: (fn) => set(produce(fn)),
         setAccount: (account) => set({ account: get().account = account }), 
+        setUsername: (username) => set({ username: get().username = username }), 
         setIsMobile: (isMobile) => set({ isMobile })
     }
 }));

@@ -7,24 +7,29 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import { Button, Text } from "../Foundation";
 import { buttonVariants } from '../Foundation/Button';
 import DropdownMenu from '../DropdownMenu';
+import useAuth from '../../hooks/useAuth';
 
 const ConnectButton = ({
     isMobile=false, 
     account=null,
-    onConnect = (accounts) => {}, 
+    onConnect = () => {}, 
     onDisconnect = () => {}
 }) => {
   const [balance, setBalance] = useState('0');
 
   async function connect() {
+    
       try {
-        const web3Modal = await getWeb3Modal()
-        const connection = await web3Modal.connect()
-        const provider = new ethers.providers.Web3Provider(connection)
-        const accounts = await provider.listAccounts()
-        if (accounts) {
-          onConnect(accounts)
-        }
+
+        await onConnect();
+        
+        // const web3Modal = await getWeb3Modal()
+        // const connection = await web3Modal.connect()
+        // const provider = new ethers.providers.Web3Provider(connection)
+        // const accounts = await provider.listAccounts()
+        // if (accounts) {
+        //   onConnect(accounts)
+        // }
 
       } catch (err) {
         console.error('error:', err)
@@ -60,20 +65,20 @@ const ConnectButton = ({
     updateBalance()
   }, [updateBalance])
    
-    async function getWeb3Modal() {
-        const web3Modal = new Web3Modal({
-          cacheProvider: false,
-          providerOptions: {
-            walletconnect: {
-              package: WalletConnectProvider,
-              options: {
-                infuraId: "f7b15f0b1a2d49e2b9f0e9b666842ff1"
-              },
-            },
-          },
-        })
-        return web3Modal
-      }
+    // async function getWeb3Modal() {
+    //     const web3Modal = new Web3Modal({
+    //       cacheProvider: false,
+    //       providerOptions: {
+    //         walletconnect: {
+    //           package: WalletConnectProvider,
+    //           options: {
+    //             infuraId: "f7b15f0b1a2d49e2b9f0e9b666842ff1"
+    //           },
+    //         },
+    //       },
+    //     })
+    //     return web3Modal
+    //   }
 
     const AccountMenuButton = () => {
       return (
@@ -111,7 +116,7 @@ const ConnectButton = ({
     ) : (account ? (
         <AccountMenuButton />
       ) : (
-        <Button onClick={connect} variant={buttonVariants.default}>
+        <Button onClick={onConnect} variant={buttonVariants.default}>
           <Text>Connect</Text>
         </Button>
       )
