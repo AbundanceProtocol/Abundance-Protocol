@@ -358,7 +358,7 @@ function App({ Component, pageProps }) {
       <div>
         <nav className="nav-bar">
           <div className="flex-row top-nav-wrap" ref={ref}>
-            <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'stretch', alignItems: 'center', gridGap: '16px'}}>
+            <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'space-between', alignItems: 'center', gridGap: '16px'}}>
               <HomeButton />
               <Col>
                 <TopNavWrapper>
