@@ -50,12 +50,13 @@ export default function Feed() {
     `
     
     try {
-      const ipfsURI = 'https://ipfs.io/ipfs/'
+      const ipfsURI = 'https://ipfs.io/ipfs'
       let responseData = []
-      const response = await client.query(query).toPromise()
+      let response = await client.query(query).toPromise()
       responseData = response.data.posts
       for (let i = 0; i < responseData.length; i++) {
         const ipfsUrl = `${ipfsURI}/${responseData[i].contentHash}`
+        console.log('ipfs url', ipfsUrl)
         const ipfsResponse = await fetch(ipfsUrl)
         const ipfsData = await ipfsResponse.json()
         if (ipfsData.title) {
@@ -69,7 +70,7 @@ export default function Feed() {
         responseData[i].timestamp = date.toLocaleString()
         responseData[i].authorName = await setProfile(responseData[i].authors[0])
       }
-      await setUserPosts(responseData)
+      setUserPosts(responseData)
       console.log(userPosts)
     } catch (err) {
       console.log('error:', err)
@@ -133,7 +134,7 @@ export default function Feed() {
         </div>
       </div>
       {
-          userPosts.map((post, index) => (
+          userPosts.length > 0 && userPosts.map((post, index) => (
             <div className="inner-container" key={index} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>
               <div className="flex-col" style={{width: '100%'}}>
                 <span className="" style={{fontWeight: '800', fontSize: '18px'}}>{post.title}</span>
