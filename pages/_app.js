@@ -36,10 +36,6 @@ function App({ Component, pageProps }) {
   }, [router])
 
   useEffect(() => {
-    console.log('menu ', menuHover.in, menuHover.out)
-  }, [menuHover.in, menuHover.out])
-
-  useEffect(() => {
     let menuLink = targetLink()
     setNavSize(ref?.current?.offsetWidth - 60)
     setLinkTarget(menuLink)
@@ -51,6 +47,7 @@ function App({ Component, pageProps }) {
     store.setAccount(auth.account)
     store.setUsername(auth.username)
     setAccount(auth.account)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.account, auth.username, setAccount])
 
     useEffect(() => {
