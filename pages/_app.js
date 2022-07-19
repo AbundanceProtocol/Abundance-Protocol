@@ -35,21 +35,9 @@ function App({ Component, pageProps }) {
     useStore.setState({ router })
   }, [router])
 
-  // const setDeviceSize = () => {
-  //   const isMobile = window.innerWidth <= 768;
-  //   store.setIsMobile(isMobile)
-  //   if (isMobile) {
-  //     handleResize();
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     setDeviceSize()
-  //     window.addEventListener('resize', setDeviceSize)
-  //     return () => window.removeEventListener("resize", setDeviceSize);
-  //   }
-  // }, [setDeviceSize])
+  useEffect(() => {
+    console.log('menu ', menuHover.in, menuHover.out)
+  }, [menuHover.in, menuHover.out])
 
   useEffect(() => {
     let menuLink = targetLink()
@@ -69,24 +57,13 @@ function App({ Component, pageProps }) {
       onAccount()
     }, [onAccount])
 
-  useEffect( () => {
-    if (isMobile) return;
-    if (menuHover.in > menuHover.out) {
-      let subNavBox = document.getElementsByClassName("sub-nav-box")
-      subNavBox[0].style.justifyContent = "left";
-      subNavBox[0].style.padding = "8px 8px";
-      subNavBox[0].style.gridGap = "8px";
-      subNavBox[0].style.gridTemplateColumns = 'auto auto auto'  
-    } else {
-      if (typeof linkTarget !== 'object') {
-        setNavMenu(button[linkTarget].menu)
-        let subNavBox = document.getElementsByClassName("sub-nav-box")
-        subNavBox[0].style.padding = "0 8px";
-        subNavBox[0].style.gridGap = "4px";
-        subNavBox[0].style.gridTemplateColumns ="repeat(6, 1fr)";
-      }
-    }
-  }, [menuHover, linkTarget, isMobile])
+    
+
+useEffect( () => {
+  if (menuHover.in <= menuHover.out && typeof linkTarget !== 'object') {
+    setNavMenu(button[linkTarget].menu)
+  }
+}, [linkTarget, menuHover.in, menuHover.out])
 
   function handleResize() {
     setNavSize(ref?.current?.offsetWidth - 60)
@@ -135,8 +112,7 @@ function App({ Component, pageProps }) {
           }}>
             <div style={{display: 'grid', gridTemplateColumns: 'auto 1fr', gridGap: '8px', alignItems: 'center'}}>
               <div className="sub-cat-box" >
-              
-                <Icon className={iconClass} iconsize="25" style={{width: '25px', height: '25px'}}/>
+                <Icon className={iconClass} iconsize="25"  style={{width: '25px', height: '25px'}}/>
               </div>
               <div className="sub-cat-text flex-col" style={{pointerEvents: 'none'}}>
                 <span className={titleClass} style={{fontSize: '15px', fontWeight:'800', paddingRight: '10px', pointerEvents: 'none', width: 'max-content'}}>{props.buttonName}</span>
@@ -210,7 +186,7 @@ function App({ Component, pageProps }) {
       onMouseLeave={() => setMenuHover({ ...menuHover, out: Date.now() }) }>
         <a style={{maxWidth: '87px'}}  
         >
-          <div className={menuState} style={{paddingRight: isMobile ? '24px' : 'unset' }}>
+          <div className={menuState} style={{paddingRight: isMobile ? '1em' : 'unset' }}>
             <div className="flex-col flex-middle" style={{height: '87px'}}>
               <div className="flex-col flex-middle">
                 <TopIcon className="size-25" />
@@ -283,7 +259,7 @@ function App({ Component, pageProps }) {
 
   const MobileNavMenu = () => {
     return (
-      <div className="mobile-menu-wrapper" style={{display: 'grid', gridAutoFlow: 'column', height: '100%', justifyContent: 'start', width: 'fit-content'}}>
+      <div className="mobile-menu-wrapper" style={{display: 'grid', gridAutoFlow: 'column', height: '100%', justifyContent: 'start', width: '100%'}}>
         <Box height="100%" width="100%">
           <div style={{display: 'grid', gridAutoFlow: 'row'}}>
             {button['top-menu'].map((btn, index) => (
@@ -332,7 +308,7 @@ function App({ Component, pageProps }) {
               transform: window.innerWidth <= 360 ? 'translateY(56px)' :'translateY(62px)',
               zIndex: 1,
               background: '#1D3244dd',
-              '& .MuiDrawer-paper': { width: 'fit-content',backgroundColor: 'transparent', padding: '24px', overflowX: 'hidden'}
+              '& .MuiDrawer-paper': { width: 'fit-content',backgroundColor: 'transparent', padding: '16px', overflowX: 'hidden'}
             }}
             >
             <MobileNavMenu />
@@ -370,14 +346,8 @@ function App({ Component, pageProps }) {
               <div className="flex-row flex-right"><RightCorner /></div>
             </div>
             <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
-              <SubNavBoxWrapper isHover={menuHover.in > menuHover.out} className="flex-row flex-middle" >
-              <div className="sub-nav-box flex-row flex-wr" style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(6, 1fr)',
-                  backgroundColor: '#dddddde6', 
-                  borderRadius: '20px', 
-                  margin: '0 10px 10px 10px',
-                }} onMouseEnter={() => {
+              <SubNavBoxWrapper isHover={menuHover.in > menuHover.out} className="flex-row flex-middle">
+              <div className="sub-nav-box" onMouseEnter={() => {
                 setMenuHover({ ...menuHover, in: Date.now() })
                 }} onMouseLeave={() => {
                 setMenuHover({ ...menuHover, out: Date.now() })}}>
@@ -442,12 +412,12 @@ const NavbarHeader = styled.div`
 
 const MobileNavBox = styled.div`
   margin-right: 16px;
-  padding: 24px 32px 32px 32px;
+  padding: 16px 24px 24px 24px;
   background-color: #dddddde6; 
   border-radius: 20px; 
   display: grid;
   grid-auto-flow: row;
-  gridGap: 8px;
+  grid-gap: 8px;
   justify-content: start;
   alignItems: start;
   
@@ -527,9 +497,19 @@ const SubNavBoxWrapper = styled.div`
   margin: 0;
   justify-content: center;
 
-  > * {
-    
-      a {
+  @media(min-width: 638px) {
+    .sub-nav-box {
+      background: #dddddde6;
+      border-radius: 20px;
+      margin: 0 10px 10px 10px;
+      padding: ${props => props.isHover ? '8px' : '0 8px'};
+      display: grid;
+
+      grid-gap: ${props => props.isHover ? '8px' : '4px'};
+      grid-template-columns:${props => props.isHover ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)'};
+      transition: all ease-in-out 0.1s;
+      
+      .sub-cat-top-box {
         border-radius: 15px;
         display: grid;
         grid-auto-flow: column;
@@ -540,36 +520,29 @@ const SubNavBoxWrapper = styled.div`
         width: ${props => props.isHover ? 'calc(100vw / 3.4)' : '100%'};
         justify-content: start;
       }
-  }
-  @media(min-width: 1024px) {
-    > * {
-      
-        a {
-          width: ${props => props.isHover ? 'calc(100vw / 3.4)' : 'min-content'};
-          padding: ${props => props.isHover ? '4px 8px' : '3px 5px 2px 10px'};
-          margin: ${props => props.isHover ? '0' : '5px 10px'};
-          border-radius: 15px;
-          justify-content: start;
-          
+      @media(min-width: 1024px) {
+        .sub-cat-top-box {
+            width: ${props => props.isHover ? 'calc(100vw / 3.4)' : '100%'};
+            padding: ${props => props.isHover ? '4px 8px' : '3px 5px 2px 10px'};
+            margin: ${props => props.isHover ? '0' : '5px 10px'};
+            border-radius: 15px;
+            justify-content: start;
         }
-      
-    }
-  }
-
-  @media(min-width: 1440px) {
-    > * {
-      
-        a {
+      }
+  
+      @media(min-width: 1440px) {
+        .sub-cat-top-box {
           width: ${props => props.isHover ? 'calc(100vw / 4.8)' : 'min-content'};
           padding: ${props => props.isHover ? '4px 8px' : '3px 5px 2px 10px'};
           margin: ${props => props.isHover ? '0' : '5px 10px'};
           border-radius: 15px;
           justify-content: start;
-
         }
-      
+      }
+  
     }
   }
+
 `;
 
 export default App;
