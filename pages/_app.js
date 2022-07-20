@@ -11,14 +11,16 @@ import { HiChevronUp as CollapseIcon, HiMenu } from 'react-icons/hi';
 import { FaPen } from 'react-icons/fa';
 import { AccountContext } from '../context.js'
 import useStore from '../utils/store'
+import useMatchBreakpoints from '../hooks/useMatchBreakpoints';
 import useAuth from '../hooks/useAuth';
-import {Logo, LeftCorner, RightCorner, Space, OpenSeaIcon } from './assets'
+import {Logo, LeftCorner, RightCorner, Space } from './assets'
 import { button } from './assets/button';
 import ConnectButton from '../components/ConnectButton';
 
 function App({ Component, pageProps }) {
   const store = useStore()
   const auth = useAuth();
+  const { isMobile, isTablet } = useMatchBreakpoints();
   const ref = useRef(null)
   const [navSize, setNavSize] = useState(1060)
   const router = useRouter()
@@ -27,37 +29,11 @@ function App({ Component, pageProps }) {
   const [navMenu, setNavMenu] = useState('Home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [menuHover, setMenuHover] = useState( {in: Date.now(), out: Date.now() } )
-  
+
   useEffect(() => {
+    console.log('route', router.route)
     useStore.setState({ router })
   }, [router])
-  
-
-  useEffect(() => {
-    console.log('username', auth.username)
-    if (!store.username && auth.username) {
-
-      store.setUsername(auth.username)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.username, store.username])
-
-  const setDeviceSize = () => {
-    const isMobile = window.innerWidth <= 768;
-    store.setIsMobile(isMobile)
-    if (!store.isMobile) {
-      handleResize();
-    }
-  }
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setDeviceSize()
-      window.addEventListener('resize', setDeviceSize)
-      return () => window.removeEventListener("resize", setDeviceSize);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     let menuLink = targetLink()
@@ -68,41 +44,23 @@ function App({ Component, pageProps }) {
   }, [])
   
   const onAccount = useCallback(() => {
-    if (!store.account && auth.account) {
-      const _acct = auth.account;
-
-      store.setAccount(_acct)
-      setAccount(auth.account)
-    } 
-    setAccount(store.account)
-    // else if (store.account && !account) {
-    //   setAccount(store.account)
-    // }
+    store.setAccount(auth.account)
+    store.setUsername(auth.username)
+    setAccount(auth.account)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.account, store.account, setAccount])
+  }, [auth.account, auth.username, setAccount])
 
     useEffect(() => {
       onAccount()
     }, [onAccount])
 
-  useEffect( () => {
-    if (store.isMobile) return;
-    if (menuHover.in > menuHover.out) {
-      let subNavBox = document.getElementsByClassName("sub-nav-box")
-      subNavBox[0].style.justifyContent = "left";
-      subNavBox[0].style.padding = "8px 8px";
-      subNavBox[0].style.gridGap = "8px";
-      subNavBox[0].style.gridTemplateColumns = 'auto auto auto'  
-    } else {
-      if (typeof linkTarget !== 'object') {
-        setNavMenu(button[linkTarget].menu)
-        let subNavBox = document.getElementsByClassName("sub-nav-box")
-        subNavBox[0].style.padding = "0 8px";
-        subNavBox[0].style.gridGap = "4px";
-        subNavBox[0].style.gridTemplateColumns ="repeat(6, 1fr)";
-      }
-    }
-  }, [menuHover, linkTarget, store.isMobile])
+    
+
+useEffect( () => {
+  if (menuHover.in <= menuHover.out && typeof linkTarget !== 'object') {
+    setNavMenu(button[linkTarget].menu)
+  }
+}, [linkTarget, menuHover.in, menuHover.out])
 
   function handleResize() {
     setNavSize(ref?.current?.offsetWidth - 60)
@@ -141,8 +99,8 @@ function App({ Component, pageProps }) {
       attributes = {target: '_blank', rel: 'noopener noreferrer', href: btn.url}
     }
 
-    return store.isMobile ? (
-      <Link href={(btn.link && btn.working) ? btn.link : {}}>
+    return isMobile ? (
+      <Link href={(btn.link && btn.working) ? btn.link : router.route}>
         <a className={topBox} style={{borderRadius: '18px', padding: '16px 8px'}} {...attributes} onClick={() => {
           setLinkTarget(props.buttonName)
           if (btn.link && btn.working) {
@@ -151,8 +109,7 @@ function App({ Component, pageProps }) {
           }}>
             <div style={{display: 'grid', gridTemplateColumns: 'auto 1fr', gridGap: '8px', alignItems: 'center'}}>
               <div className="sub-cat-box" >
-              
-                <Icon className={iconClass} iconsize="25" style={{width: '25px', height: '25px'}}/>
+                <Icon className={iconClass} iconsize="25"  style={{width: '25px', height: '25px'}}/>
               </div>
               <div className="sub-cat-text flex-col" style={{pointerEvents: 'none'}}>
                 <span className={titleClass} style={{fontSize: '15px', fontWeight:'800', paddingRight: '10px', pointerEvents: 'none', width: 'max-content'}}>{props.buttonName}</span>
@@ -162,16 +119,16 @@ function App({ Component, pageProps }) {
         </a>
       </Link>
     ) : (
-      <Link href={(btn.link && btn.working) ? btn.link : {}}>
-        <a className={topBox} style={{width: btnHover ? 'calc(100vw / 3.4)' : 'min-content', padding: btnHover ? '8px 16px' : '3px 5px 2px 10px', margin: btnHover ? '0' : '5px 10px', borderRadius: '15px'}} {...attributes} onClick={() => {
+      <Link href={(btn.link && btn.working) ? btn.link : router.route}>
+        <a className={topBox}  {...attributes} onClick={() => {
           setLinkTarget(props.buttonName)
           }}>
           <div className="sub-cat-box" style={{margin: btnHover ? '8px 0' : '0 10px 0 0', minWidth: btnHover ? '50px' : '15px'}}>
-            <Icon className={iconClass} iconsize={btnHover ? '30' : '15'} style={{height: btnHover ? '30px' : '15px', width: btnHover ? '30px' : '15px'}} />
+            <Icon className={iconClass} iconsize={btnHover ? isTablet ? '25' : '30' : '15'} style={{height: btnHover ? '30px' : '15px', width: btnHover ? '30px' : '15px'}} />
           </div>
           <div className="sub-cat-text flex-col" style={{width: btnHover ? 'auto' : 'min-content', minWidth: btnHover ? null : '50px', pointerEvents: 'none'}}>
-            <span className={titleClass} style={{fontSize: btnHover ?  '19px' : '15px', fontWeight: btnHover ? '800' : '600',  pointerEvents: 'none', width: btnHover ? '100%' : 'max-content'}}>{props.buttonName}</span>
-            <span className={textClass} style={{fontSize: btnHover ? '15px' : '0', opacity: btnHover ? '1' : '0', pointerEvents: 'none'}}>{btn.description}</span>
+            <span className={titleClass} style={{fontSize: btnHover ?  isTablet ? '15px' : '19px' : isTablet ? '13px' : '15px', fontWeight: btnHover ? '800' : '600',  pointerEvents: 'none', width: btnHover ? '100%' : 'max-content'}}>{props.buttonName}</span>
+            <span className={textClass} style={{fontSize: btnHover ? isTablet ? '12px' : '15px' : '0', opacity: btnHover ? '1' : '0', pointerEvents: 'none'}}>{btn.description}</span>
           </div>
         </a>
       </Link>
@@ -179,6 +136,7 @@ function App({ Component, pageProps }) {
   }
 
   const HomeButton = () => {
+    const isSmall = isMobile || isTablet;
     return (
       <Link href="/">
         <a className={navMenu === "Home" ? "nav-home-button-active" : "nav-home-button"} onMouseEnter={() => {
@@ -188,12 +146,12 @@ function App({ Component, pageProps }) {
           setMenuHover({ ...menuHover, out: Date.now() })
         }}>
           <div className="grid-col centered">
-            <div className={`logo-wrapper`}>
-              <Logo height={store.isMobile ? '25px' : '45px'} width={store.isMobile ? '25px' : '45px'}/>
+            <div className="logo-wrapper">
+              <Logo height={isSmall ? '25px' : '45px'} width={isSmall ? '25px' : '45px'}/>
             </div>
             <TitleWrapper >
-              <h2 className={`nav-title${store.isMobile ? ' mid-frame-font' : ''}`}>Abundance Protocol</h2>
-              <p className={`nav-subtitle${store.isMobile ? ' small-font' : ''}`}>Building Web 4</p>
+              <h2 className={`nav-title${isSmall ? ' mid-frame-font' : ''}`}>Abundance Protocol</h2>
+              <p className={`nav-subtitle${isSmall ? ' small-font' : ''}`}>Building Web 4</p>
             </TitleWrapper>
           </div>
         </a>
@@ -204,7 +162,7 @@ function App({ Component, pageProps }) {
   const TopNav = (props) => {
     let btn = button[props.buttonName]
     let btnName = props.buttonName
-    let textSize = '15px'
+    // let textSize = '15px'
     if (btnName === 'portal' && account) {
       btnName = store.username
     }
@@ -225,11 +183,11 @@ function App({ Component, pageProps }) {
       onMouseLeave={() => setMenuHover({ ...menuHover, out: Date.now() }) }>
         <a style={{maxWidth: '87px'}}  
         >
-          <div className={menuState} style={{paddingRight: store.isMobile && '24px' }}>
+          <div className={menuState} style={{paddingRight: isMobile ? '1em' : 'unset' }}>
             <div className="flex-col flex-middle" style={{height: '87px'}}>
               <div className="flex-col flex-middle">
                 <TopIcon className="size-25" />
-                <div className="font-15 mar-t-6" style={{textAlign: 'center'}}>
+                <div className="font-15 mar-t-6" style={{textAlign: 'center', fontSize: isTablet ? '12px' : '15px'}}>
                   {btnName}
                 </div>
               </div>
@@ -298,7 +256,7 @@ function App({ Component, pageProps }) {
 
   const MobileNavMenu = () => {
     return (
-      <div className="mobile-menu-wrapper" style={{display: 'grid', gridAutoFlow: 'column', height: '100%', justifyContent: 'start', width: 'fit-content'}}>
+      <div className="mobile-menu-wrapper" style={{display: 'grid', gridAutoFlow: 'column', height: '100%', justifyContent: 'start', width: '100%'}}>
         <Box height="100%" width="100%">
           <div style={{display: 'grid', gridAutoFlow: 'row'}}>
             {button['top-menu'].map((btn, index) => (
@@ -318,11 +276,11 @@ function App({ Component, pageProps }) {
     )
   }
 
-  return store.isMobile ? (
+  return isMobile ? (
     <div>
-      <nav className="nav-bar-mobile">
         <React.Fragment key="top">
-          <MobileAppbar position="fixed" elevation={0} sx={{paddingRight: 0}}>
+        <MobileAppbar position="fixed" elevation={0} sx={{paddingRight: 0}}>
+      <nav className="nav-bar-mobile">
             <NavbarHeader>
               <div className="navbar-header">
                 <HomeButton />
@@ -330,7 +288,7 @@ function App({ Component, pageProps }) {
                 <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
                   <ConnectButton 
                     account={store.account}
-                    isMobile={store.isMobile}
+                    isMobile={isMobile}
                     onConnect={connect}
                     onDisconnect={disconnect}
                     />
@@ -340,19 +298,19 @@ function App({ Component, pageProps }) {
                 </Box>
               </div>
             </NavbarHeader>
+          </nav>
           </MobileAppbar> 
           <Drawer elevation={0} anchor="top" variant="temporary" open={mobileMenuOpen} onClose={toggleDrawer()}  
             sx={{
               transform: window.innerWidth <= 360 ? 'translateY(56px)' :'translateY(62px)',
               zIndex: 1,
               background: '#1D3244dd',
-              '& .MuiDrawer-paper': { width: 'fit-content',backgroundColor: 'transparent', padding: '24px', overflowX: 'hidden'}
+              '& .MuiDrawer-paper': { width: 'fit-content',backgroundColor: 'transparent', padding: '16px', overflowX: 'hidden'}
             }}
             >
             <MobileNavMenu />
           </Drawer>
         </React.Fragment>
-      </nav>
       <div className="container">
         <AccountContext.Provider value={store.account}>
           <Component {...pageProps} connect={connect} />
@@ -372,7 +330,7 @@ function App({ Component, pageProps }) {
                   </TopNavWrapper>
                   <ConnectButton 
                     account={account}
-                    isMobile={store.isMobile}
+                    isMobile={isMobile}
                     onConnect={connect}
                     onDisconnect={disconnect}
                   />
@@ -385,20 +343,14 @@ function App({ Component, pageProps }) {
               <div className="flex-row flex-right"><RightCorner /></div>
             </div>
             <div className="nav-shadow" style={{height: 'min-content', width: 'min-content', backgroundColor: '#1D3244dd', borderRadius: '0 0 30px 30px', justifyContent: 'center'}}>
-              <div className="flex-row flex-middle" style={{width: '100%', margin: '0', justifyContent: 'center'}}>
-              <div className="sub-nav-box flex-row flex-wr" style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(6, 1fr)',
-                  backgroundColor: '#dddddde6', 
-                  borderRadius: '20px', 
-                  margin: '0 10px 10px 10px',
-                }} onMouseEnter={() => {
+              <SubNavBoxWrapper isHover={menuHover.in > menuHover.out} className="flex-row flex-middle">
+              <div className="sub-nav-box" onMouseEnter={() => {
                 setMenuHover({ ...menuHover, in: Date.now() })
                 }} onMouseLeave={() => {
                 setMenuHover({ ...menuHover, out: Date.now() })}}>
                   <SubCat />
                 </div>
-              </div>
+              </SubNavBoxWrapper>
             </div>
             <div className="nav-shadow" style={{height: '1px', backgroundColor: '', width: '100%'}}>
               <div className="flex-row flex-left"><LeftCorner /></div>
@@ -457,12 +409,12 @@ const NavbarHeader = styled.div`
 
 const MobileNavBox = styled.div`
   margin-right: 16px;
-  padding: 24px 32px 32px 32px;
+  padding: 16px 24px 24px 24px;
   background-color: #dddddde6; 
   border-radius: 20px; 
   display: grid;
   grid-auto-flow: row;
-  gridGap: 8px;
+  grid-gap: 8px;
   justify-content: start;
   alignItems: start;
   
@@ -494,7 +446,17 @@ const TopNavWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  // grid-gap: 16px;
+
+  > * svg {
+    width: 24px;
+    height: 24px;
+  }
+  @media(min-width: 1024px) {
+    > * svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
 `;
 
 const Col = styled.div`
@@ -504,6 +466,10 @@ const Col = styled.div`
   justify-content: space-between;
   grid-gap: 32px;
   width: 100%;
+
+  @media(min-width: 1440px) {
+    grid-gap: 96px;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -521,6 +487,59 @@ const TitleWrapper = styled.div`
   }
 
   
+`;
+
+const SubNavBoxWrapper = styled.div`
+  width: 100%;
+  margin: 0;
+  justify-content: center;
+
+  @media(min-width: 638px) {
+    .sub-nav-box {
+      background: #dddddde6;
+      border-radius: 20px;
+      margin: 0 10px 10px 10px;
+      padding: ${props => props.isHover ? '8px' : '0 8px'};
+      display: grid;
+
+      grid-gap: ${props => props.isHover ? '8px' : '4px'};
+      grid-template-columns:${props => props.isHover ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)'};
+      transition: all ease-in-out 0.1s;
+      
+      .sub-cat-top-box {
+        border-radius: 15px;
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: center;
+        align-items: center;
+        padding: ${props => props.isHover ? '8px 16px' : '4px 8px'};
+        margin: ${props => props.isHover ? '0' : '5px 0'};
+        width: ${props => props.isHover ? 'calc(100vw / 3.4)' : '100%'};
+        justify-content: start;
+      }
+      @media(min-width: 1024px) {
+        .sub-cat-top-box {
+            width: ${props => props.isHover ? 'calc(100vw / 3.4)' : '100%'};
+            padding: ${props => props.isHover ? '4px 8px' : '3px 5px 2px 10px'};
+            margin: ${props => props.isHover ? '0' : '5px 10px'};
+            border-radius: 15px;
+            justify-content: start;
+        }
+      }
+  
+      @media(min-width: 1440px) {
+        .sub-cat-top-box {
+          width: ${props => props.isHover ? 'calc(100vw / 4.8)' : 'min-content'};
+          padding: ${props => props.isHover ? '4px 8px' : '3px 5px 2px 10px'};
+          margin: ${props => props.isHover ? '0' : '5px 10px'};
+          border-radius: 15px;
+          justify-content: start;
+        }
+      }
+  
+    }
+  }
+
 `;
 
 export default App;
