@@ -36,6 +36,9 @@ export default function Feed() {
 
   async function fetchData() {
     let filters = await getUserFilters(address)
+    if (typeof filters == 'undefined') {
+      filters = ''
+    }
     const query = `
       query {
         posts (first: 20, orderBy: timestamp, orderDirection: desc${filters}) {
