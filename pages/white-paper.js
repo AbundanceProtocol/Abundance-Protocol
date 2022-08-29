@@ -5,7 +5,7 @@ export default function Whitepaper() {
         <div className="flex-row" style={{padding: '0 0 10px 0', width: '100%'}}>
           <span className='container-title'>Download Abundance Protocol Whitepaper</span>
           <div className="flex-row">
-            <a className="input-toggle-button toggle-on" href="/Web4-White-Paper.pdf" alt="alt text" target="_blank" rel="noopener noreferrer" download>Download</a>
+            <a className="input-toggle-button toggle-on" href="/Abundance-Protocol-Whitepaper.pdf" alt="alt text" target="_blank" rel="noopener noreferrer" download>Download</a>
           </div>
         </div>
       </div>

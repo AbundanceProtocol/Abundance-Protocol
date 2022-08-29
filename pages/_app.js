@@ -143,7 +143,7 @@ useEffect( () => {
           setNavMenu('Home')
           setMenuHover({ ...menuHover, in: Date.now() })
         }} onMouseLeave={() => {
-          setMenuHover({ ...menuHover, out: Date.now() })
+          // setMenuHover({ ...menuHover, out: Date.now() })
         }}>
           <div className="grid-col centered">
             <div className="logo-wrapper">
