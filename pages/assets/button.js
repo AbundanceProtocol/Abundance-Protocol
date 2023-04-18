@@ -6,6 +6,7 @@ import { MdCastConnected, MdNotifications, MdFavorite, MdFilterFrames, MdMail, M
 import { RiTeamFill } from 'react-icons/ri'
 import { HiBadgeCheck } from 'react-icons/hi'
 import { IoReader } from 'react-icons/io5'
+import { SiSubstack } from 'react-icons/si'
 
 const Buttons = () => {
     return <div className="button" />
@@ -26,7 +27,7 @@ const button = {
     },
     'GitHub': {
         link: false,
-        url: 'https://github.com/buildingweb4/buildingweb4',
+        url: 'https://github.com/buildingweb4/abundance-protocol',
         menu: 'Connect',
         description: 'Help us develop the protocol on GitHub',
         account: false,
@@ -53,16 +54,16 @@ const button = {
     },
     'Blog': {
         link: false,
-        url: 'https://buildingweb4.medium.com/',
+        url: 'https://abundances.substack.com/',
         menu: 'Home',
-        description: 'Read our articles on Medium',
+        description: 'Read our articles on Substack',
         account: false,
         working: true,
-        icon: IoReader
+        icon: SiSubstack
     },
     'YouTube': {
         link: false,
-        url: 'https://www.youtube.com/c/BuildingWeb4',
+        url: 'https://www.youtube.com/@AbundanceProtocol/',
         menu: 'Connect',
         description: 'Subscribe to our channel',
         account: false,

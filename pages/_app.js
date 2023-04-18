@@ -151,7 +151,7 @@ useEffect( () => {
             </div>
             <TitleWrapper >
               <h2 className={`nav-title${isSmall ? ' mid-frame-font' : ''}`}>Abundance Protocol</h2>
-              <p className={`nav-subtitle${isSmall ? ' small-font' : ''}`}>Building Web 4</p>
+              <p className={`nav-subtitle${isSmall ? ' small-font' : ''}`}>building an economy of abundance</p>
             </TitleWrapper>
           </div>
         </a>

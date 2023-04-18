@@ -500,6 +500,73 @@ blockquote {
     padding: 10px 40px;
 }
 
+.font-50 {
+    font-size: 50px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+.font-46 {
+    font-size: 46px;
+    font-weight: 800;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+.font-36 {
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+.font-30 {
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+.font-26 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+.font-24 {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+.font-22 {
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+.font-20 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+    text-align: center;
+    padding: 10px 40px;
+}
+
+
+
+
 .nav-button-top {
 	outline: none;
 	width: 100%;
@@ -1096,11 +1163,11 @@ blockquote {
 }
 
 .bg-grd6 {
-    background-image: linear-gradient(to bottom right, rgb(150, 182, 227), rgba(29, 50, 68, 0.05))
+    background-image: linear-gradient(to bottom right, rgb(180, 194, 184), rgba(29, 50, 68, 0.05))
 }
 
 .bg-grd6:hover {
-    background-image: linear-gradient(to bottom right, rgb(150, 182, 227), rgba(29, 50, 68, 0.0))
+    background-image: linear-gradient(to bottom right, rgb(121, 160, 136), rgba(29, 50, 68, 0.0))
 }
 
 .bg-grd7 {
