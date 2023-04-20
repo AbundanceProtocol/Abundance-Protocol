@@ -16,6 +16,7 @@ export default function Home(props) {
   const ref = useRef(null)
   const { isMobile } = useMatchBreakpoints();
   const [vidSize, setVidSize] = useState({w: 1220 + 'px', h: 1220/16*9 + 'px'})
+  const [imgSize, setImgSize] = useState({w: 600 + 'px'})
   const { posts } = props
   const account = useContext(AccountContext)
   const [viewToggle, setViewToggle] = useState({record: false, source: false, media: false, science: false})
@@ -28,6 +29,13 @@ export default function Home(props) {
 
   function handleResize() {
     setVidSize({w: ref.current.offsetWidth + 'px', h: ref.current.offsetWidth/16*9 + 'px'})
+    if (ref.current.offsetWidth >= 1200)
+      setImgSize({w: 600 + 'px'})
+    else if (ref.current.offsetWidth > 800 && ref.current.offsetWidth < 1200)
+      setImgSize({w: 500 + 'px'})
+    else
+      setImgSize({w: 400 + 'px'})
+    // console.log(ref.current.offsetWidth)
   }
 
   function toggleViews(e) {
@@ -46,7 +54,7 @@ export default function Home(props) {
         <div className="flex-middle flex-row flex-wr" ref={ref}>
           <div className='flex-col flex-2'>
             <p className={isMobile ? "large-font-mobile" : "font-46"}>BUILDING AN ECONOMY OF ABUNDANCE</p>
-            <p className="font-30">Abundance Protocol was developed to solve two fundamental problems in our economy: market failures in public goods and negative externalities</p>
+            <p className="font-30">Abundance Protocol solves two fundamental problems in our economy: market failures in public goods and negative externalities</p>
             {/* <p className="font-22">lack of incentive to create public goods</p>
             <p className="font-22">incentive to create negative externalities</p> */}
           </div>
@@ -54,7 +62,7 @@ export default function Home(props) {
             <LogoHD />
           </div> */}
           <div>
-            <img src={'./images/abundanceisland01.png'} style={{ width: '620px' }} alt="My Image" />
+            <img src={'./images/abundanceisland01.png'} style={{ width: imgSize.w }} alt="My Image" />
           </div>
         </div>
       </div>
