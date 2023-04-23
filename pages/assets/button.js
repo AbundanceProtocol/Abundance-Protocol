@@ -17,11 +17,11 @@ export default Buttons;
 const button = {
     'top-menu': ['portal', 'studio', 'consensus', 'funding', 'ecosystem'],
     'nav-menu': {
-        'Home': ['Vision', 'Roadmap', 'Mechanism', 'Whitepaper', 'FAQ', 'Blog', 'Contact'],
+        'Home': ['Vision', 'Roadmap', 'Docs', 'FAQ', 'Blog', 'Contact'],
         'Portal': ['Profile', 'Wallet', 'Expertise', 'Portfolio'],
         'Studio': ['Create', 'Contribute', 'Collaborate'],
         'Consensus': ['Propose', 'Validate', 'Challenge', 'Explore', 'Notifications'],
-        'Fund': ['Project Funding', 'Review Funding', 'Funding Proposal', 'Search Requests'],
+        'Funding': ['Project Funding', 'Review Funding', 'Funding Proposal', 'Search Requests'],
         'Ecosystem': ['Communities', 'Resources', 'Search', 'Trending', 'Curated', 'Favorites', 'Feed'],
         // 'Connect': ['GitHub', 'Discord', 'OpenSea', 'YouTube', 'Twitter', 'Email'],
     },
@@ -57,7 +57,7 @@ const button = {
     },
     'funding': {
         link: '/fund',
-        menu: 'Fund',
+        menu: 'Funding',
         description: 'Give and get funding',
         account: true,
         working: true,
@@ -93,15 +93,15 @@ const button = {
         working: false,
         icon: FaMap
     },
-    'Mechanism': {
-        link: '/mechanism',
-        menu: 'Home',
-        description: 'How it all works',
-        account: false,
-        working: false,
-        icon: FaCogs
-    },
-    'Whitepaper': {
+    // 'Mechanism': {
+    //     link: '/mechanism',
+    //     menu: 'Home',
+    //     description: 'How it all works',
+    //     account: false,
+    //     working: false,
+    //     icon: FaCogs
+    // },
+    'Docs': {
         link: '/white-paper',
         menu: 'Home',
         description: 'In-depth explanation of the Protocol',
@@ -251,11 +251,11 @@ const button = {
     
 
 
-    // FUNDING
+    ////// FUNDING //////
 
     'Project Funding': {
         link: '/project-funding',
-        menu: 'Fund',
+        menu: 'Funding',
         description: 'Request funding for a public goods project',
         account: true,
         working: false,
@@ -263,7 +263,7 @@ const button = {
     },
     'Review Funding': {
         link: '/funding',
-        menu: 'Fund',
+        menu: 'Funding',
         description: 'Request or auction funding for reviews',
         account: true,
         working: true,
@@ -271,7 +271,7 @@ const button = {
     },
     'Funding Proposal': {
         link: '/funding-proposal',
-        menu: 'Fund',
+        menu: 'Funding',
         description: 'Create an ecosystem improvement proposal',
         account: true,
         working: false,
@@ -279,7 +279,7 @@ const button = {
     },
     'Search Requests': {
         link: '/search-requests',
-        menu: 'Fund',
+        menu: 'Funding',
         description: 'Find funding requests and auctions',
         account: false,
         working: true,

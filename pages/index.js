@@ -28,7 +28,7 @@ export default function Home(props) {
   }, [])
 
   function handleResize() {
-    setVidSize({w: ref.current.offsetWidth + 'px', h: ref.current.offsetWidth/16*9 + 'px'})
+    setVidSize({w: ref.current.offsetWidth - 40 + 'px', h: (ref.current.offsetWidth - 40)/16*9 + 'px'})
     if (ref.current.offsetWidth >= 1200)
       setImgSize({w: 600 + 'px'})
     else if (ref.current.offsetWidth > 800 && ref.current.offsetWidth < 1200)

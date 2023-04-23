@@ -812,9 +812,10 @@ blockquote {
   top: 0;
   left: 0;
   border-radius: 2rem;
-	border: 1px solid #666;
+  border: 1px solid #666;
   overflow: hidden;
-	margin: 20px 20px 0 20px;
+  margin: 0 0 0 20px;
+
 }
 
 .nav-frame-title {
@@ -873,7 +874,6 @@ blockquote {
 	text-align: left;
 	padding: 10px 0 0 0;
 }
-
 
 .text-c {
 	text-align: center !important;
