@@ -24,11 +24,24 @@ function App({ Component, pageProps }) {
   const ref = useRef(null)
   const [navSize, setNavSize] = useState(1060)
   const router = useRouter()
+  const [navWidth, setNavWidth] = useState((ref?.current?.offsetWidth - 1312)/2 - 167)
   const [linkTarget, setLinkTarget] = useState('Vision')
   const [account, setAccount] = useState(null)
   const [navMenu, setNavMenu] = useState('Home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [menuHover, setMenuHover] = useState( {in: Date.now(), out: Date.now() } )
+  const Col = styled.div`
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    justify-content: space-between;
+    grid-gap: 32px;
+    width: 100%;
+
+    @media(min-width: 1440px) {
+      grid-gap: ${navWidth}px;
+    }
+  `;
 
   useEffect(() => {
     console.log('route', router.route)
@@ -40,9 +53,16 @@ function App({ Component, pageProps }) {
     setNavSize(ref?.current?.offsetWidth - 60)
     setLinkTarget(menuLink)
     setNavMenu(button[menuLink].menu)
+    handleNavResize()
+    window.addEventListener("resize", handleNavResize);
+    return () => window.removeEventListener("resize", handleNavResize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
+  function handleNavResize() {
+    setNavWidth((ref?.current?.offsetWidth - 1312)/2 - 167)
+  }
+
   const onAccount = useCallback(() => {
     store.setAccount(auth.account)
     store.setUsername(auth.username)
@@ -50,11 +70,9 @@ function App({ Component, pageProps }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.account, auth.username, setAccount])
 
-    useEffect(() => {
-      onAccount()
-    }, [onAccount])
-
-    
+  useEffect(() => {
+    onAccount()
+  }, [onAccount])
 
 useEffect( () => {
   if (menuHover.in <= menuHover.out && typeof linkTarget !== 'object') {
@@ -440,6 +458,8 @@ const MenuButton = styled(Button)`
   }
 `;
 
+
+
 const TopNavWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -459,18 +479,7 @@ const TopNavWrapper = styled.div`
   }
 `;
 
-const Col = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  justify-content: space-between;
-  grid-gap: 32px;
-  width: 100%;
 
-  @media(min-width: 1440px) {
-    grid-gap: 96px;
-  }
-`;
 
 const TitleWrapper = styled.div`
   padding: 15px;
@@ -529,7 +538,7 @@ const SubNavBoxWrapper = styled.div`
   
       @media(min-width: 1440px) {
         .sub-cat-top-box {
-          width: ${props => props.isHover ? 'calc(100vw / 4.8)' : 'min-content'};
+          width: ${props => props.isHover ? '420px' : 'min-content'};
           padding: ${props => props.isHover ? '4px 8px' : '3px 5px 2px 10px'};
           margin: ${props => props.isHover ? '0' : '5px 10px'};
           border-radius: 15px;
