@@ -126,6 +126,28 @@ blockquote {
     min-width: 67px;
 }
 
+.article-container {
+    padding: 8px;
+    margin: 20px 5px;
+    background-color: #d4dacf;
+    border-radius: 25px;
+    width: 100%;
+}
+
+.img-container {
+    font-size: 0;
+}
+
+.article-img {
+    width: 200px;
+    border-radius: 20px;
+}
+
+.article-content-container {
+    padding: 0 20px 0 10px;
+    width: 100%;
+}
+
 .size-button {
     /* height: 36px; */
     /* margin: 24px 0 24px 25px; */

@@ -118,8 +118,8 @@ const button = {
         icon: FaQuestionCircle
     },
     'Blog': {
-        link: false,
-        url: 'https://abundances.substack.com/',
+        link: '/blog',
+        // url: 'https://abundances.substack.com/',
         menu: 'Home',
         description: 'Read our articles on Substack',
         account: false,
