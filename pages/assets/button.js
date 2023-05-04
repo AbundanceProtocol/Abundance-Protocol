@@ -119,9 +119,8 @@ const button = {
     },
     'Blog': {
         link: '/blog',
-        // url: 'https://abundances.substack.com/',
         menu: 'Home',
-        description: 'Read our articles on Substack',
+        description: 'Read our articles',
         account: false,
         working: true,
         icon: SiSubstack
