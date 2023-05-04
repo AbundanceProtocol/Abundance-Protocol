@@ -148,12 +148,56 @@ blockquote {
     width: 100%;
 }
 
+.roadmap-container {
+    max-width: 640px;
+    padding: 10px 10px 18px 10px;
+    margin: 0 auto;
+    border-radius: 25px;
+    width: 100%;
+}
+
+.roadmap-sub-container {
+    max-width: 640px;
+    padding: 10px 15px;
+    margin: 13px auto 0 auto;
+    border-radius: 25px;
+    width: 100%;
+}
+
 .article-even {
-    background-color: #d4dacf;
+    background-color: #e4eadf;
+}
+
+.article-grey {
+    background-color: #f0f0f0;
 }
 
 .article-odd {
-    background-color: #c4dacf;
+    background-color: #d4dacf;
+}
+
+.rm-completed {
+    background-color: #d4dacf;
+}
+
+.rm-sub-completed {
+    background-color: #e4eadf;
+}
+
+.rm-progress {
+    background-color: #d4dacf;
+}
+
+.rm-sub-progress {
+    background-color: #e4eadf;
+}
+
+.rm-future {
+    background-color: #ddd;
+}
+
+.rm-sub-future {
+    background-color: #eee;
 }
 
 .article-container:hover {
@@ -162,6 +206,18 @@ blockquote {
 
 .img-container {
     font-size: 0;
+}
+
+.connect-solid {
+    height: 30px;
+    width: 50%;
+    border-right: 3px solid #090;
+}
+
+.connect-dashed {
+    height: 30px;
+    width: 50%;
+    border-right: 3px dashed grey;
 }
 
 .article-img {
@@ -180,6 +236,26 @@ blockquote {
 .article-content-container {
     padding: 0 20px 0 10px;
     width: 100%;
+}
+
+.border-solid {
+    border: 3px solid #070;
+    border-spacing: 10px;
+}
+
+.border-sub-solid {
+    border: 2px solid #070;
+    border-spacing: 10px;
+}
+
+.border-dashed {
+    border: 3px dashed grey;
+    border-spacing: 10px;
+}
+
+.border-sub-dashed {
+    border: 2px dashed grey;
+    border-spacing: 10px;
 }
 
 .size-button {
@@ -637,6 +713,20 @@ blockquote {
 	padding: 10px 15px;
 }
 
+.icon-complete {
+    font-size: 20px;
+    padding: 2px 12px 0 0;
+    color: #191;
+    width: 26px;
+}
+
+.icon-incomplete {
+    font-size: 20px;
+    padding: 2px 12px 0 0;
+    color: #999;
+    width: 26px;
+}
+
 .icon-40 {
     font-size: 40px;
     color: #159;
@@ -929,6 +1019,35 @@ blockquote {
 	margin: 0;
 	text-align: left;
 	padding: 10px 0 0 0;
+}
+
+.frame-desc-link {
+	font-family: inter,sans-serif;
+	font-size: 17px;
+	font-weight: 600;
+	margin: 0;
+    color: #357;
+	text-align: left;
+	padding: 10px 0 0 0;
+}
+
+.frame-desc-link:hover {
+	font-family: inter,sans-serif;
+	font-size: 17px;
+	font-weight: 600;
+	margin: 0;
+    color: #600;
+	text-align: left;
+	padding: 10px 0 0 0;
+}
+
+.frame-desc-top {
+	font-family: inter,sans-serif;
+	font-size: 17px;
+	font-weight: 400;
+	margin: 0;
+	text-align: left;
+	padding: 0;
 }
 
 .text-c {

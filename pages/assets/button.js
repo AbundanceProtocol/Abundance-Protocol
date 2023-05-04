@@ -90,7 +90,7 @@ const button = {
         menu: 'Home',
         description: "The Protocol's Master Plan",
         account: false,
-        working: false,
+        working: true,
         icon: FaMap
     },
     // 'Mechanism': {
