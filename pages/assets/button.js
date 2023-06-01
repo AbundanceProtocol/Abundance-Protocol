@@ -102,7 +102,8 @@ const button = {
     //     icon: FaCogs
     // },
     'Docs': {
-        link: '/white-paper',
+        link: false,
+        url: 'https://docs.abundance.id/',
         menu: 'Home',
         description: 'In-depth explanation of the Protocol',
         account: false,
