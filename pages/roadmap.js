@@ -42,7 +42,7 @@ export default function Roadmap() {
                 </div>
                 <div>
                   <p className='frame-desc-top'><strong>Development</strong> - Smart contract logic and data flow development. User interface buildout</p>
-                  <p className='frame-desc' style={{fontSize: '14px'}}>See: <a href='https://github.com/buildingweb4/abundance-protocol' target="_blank" rel="noopener noreferrer" className="frame-desc-link" style={{fontSize: '14px'}}>GitHub repo</a></p>
+                  <p className='frame-desc' style={{fontSize: '14px'}}>See: <a href='https://github.com/AbundanceProtocol/abundance-protocol' target="_blank" rel="noopener noreferrer" className="frame-desc-link" style={{fontSize: '14px'}}>GitHub repo</a></p>
                 </div>
               </div>
               <div className='flex-row roadmap-sub-container border-sub-dashed article-grey'>
