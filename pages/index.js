@@ -74,9 +74,6 @@ export default function Home(props) {
           <p className="frame-desc">Our vision is to allow any developer to work on any open source project and be rewarded according to their contribution. Creating a rich and deeply integrated open source ecosystem like we&apos;ve never seen before.</p>
         </div>
 
-
-
-
         <div className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-3">
           {/* <ExpandIcon /> */}
           <p className="frame-title">Blockchain Progressive Superalignment</p>
