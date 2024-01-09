@@ -74,6 +74,9 @@ export default function Home(props) {
           <p className="frame-desc">Our vision is to allow any developer to work on any open source project and be rewarded according to their contribution. Creating a rich and deeply integrated open source ecosystem like we&apos;ve never seen before.</p>
         </div>
 
+
+
+
         <div className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-3">
           {/* <ExpandIcon /> */}
           <p className="frame-title">Blockchain Progressive Superalignment</p>
@@ -133,7 +136,7 @@ export default function Home(props) {
         </div>
       </div>
       <div className="top-frame flex-middle flex-row flex-wr">
-        <a href="https://github.com/AbundanceProtocol/abundance-protocol" className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-4" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/buildingweb4/abundance-protocol" className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-4" target="_blank" rel="noopener noreferrer">
           <FaGithub className="icon-40" />
           <p className="frame-title">GitHub</p>
           <p className="frame-desc text-c">Help develop the protocol</p>
@@ -165,7 +168,7 @@ export default function Home(props) {
           <p className="frame-title">Twitter</p>
           <p className="frame-desc text-c">Follow us on Twitter</p>
         </a>
-        <a href="mailto:info@abundance.id" className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-4" target="_blank" rel="noopener noreferrer">
+        <a href="mailto:info@buildingweb4.io" className="border-style wrap-cln flex-middle flex-col flex-1 min-h flex-4" target="_blank" rel="noopener noreferrer">
           <FaAt className="icon-40" />
           <p className="frame-title">Email</p>
           <p className="frame-desc text-c">Contact us</p>

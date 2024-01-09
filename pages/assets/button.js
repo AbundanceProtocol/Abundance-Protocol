@@ -355,7 +355,7 @@ const button = {
 
     // 'GitHub': {
     //     link: false,
-    //     url: 'https://github.com/AbundanceProtocol/abundance-protocol',
+    //     url: 'https://github.com/buildingweb4/abundance-protocol',
     //     menu: 'Connect',
     //     description: 'Help us develop the protocol on GitHub',
     //     account: false,
@@ -400,7 +400,7 @@ const button = {
     // },
     // 'Email': {
     //     link: false,
-    //     url: 'mailto:info@abundance.id',
+    //     url: 'mailto:info@buildingweb4.io',
     //     menu: 'Connect',
     //     description: 'Contact us',
     //     account: false,
