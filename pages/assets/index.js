@@ -15,6 +15,7 @@ import RightCorner from './RightCorner';
 import ScienceIcon from './ScienceIcon';
 import Space from './Space';
 import Warning from './Warning';
+import Circles from './Circles';
 
 const Spaces = () => {
   return <div className="flex-s" />
@@ -38,5 +39,6 @@ export {
   RightCorner,
   ScienceIcon,
   Space,
-  Warning
+  Warning,
+  Circles
 }

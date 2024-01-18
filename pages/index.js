@@ -6,6 +6,7 @@ import { FaBalanceScale, FaCheckCircle, FaChartLine, FaHandHoldingUsd, FaMoneyBi
 import { SiSubstack } from 'react-icons/si'
 import { MdScience } from 'react-icons/md'
 import { AccountContext } from '../context'
+import { Circles } from './assets'
 import useMatchBreakpoints from '../hooks/useMatchBreakpoints';
 
 
@@ -27,19 +28,21 @@ export default function Home(props) {
   }
 
   return (
-    <div className="t-p-130" style={{backgroundColor: '#e4eadf'}}>
-      <div className="top-frame flex-middle flex-row">
-        <div className="border-style wrap-cln flex-middle flex-col">
+
+    <div className="t-p-130 top layer" style={{backgroundColor: '#e4eadf'}}>
+      <Circles />
+      <div className="top-frame flex-middle flex-row top-layer">
+        <div className="border-style wrap-cln flex-middle flex-col top-layer">
           <p className="frame-title">&nbsp;</p>
         </div>
       </div>
-      <div className="top-frame flex-middle">
-        <div className="flex-middle flex-row flex-wr" ref={ref}>
-          <div className='flex-col flex-2'>
-            <p className={isMobile ? "large-font-mobile" : "font-46"}>BUILDING AN ECONOMY OF ABUNDANCE</p>
+      <div className="top-frame flex-middle mid-layer">
+        <div className="flex-middle flex-row flex-wr mid-layer" ref={ref}>
+          <div className='flex-col flex-2 mid-layer'>
+            <p className={`${isMobile ? "large-font-mobile" : "font-46"} mid-layer`}>BUILDING AN ECONOMY OF ABUNDANCE</p>
             <p className="font-30">Abundance Protocol solves two fundamental problems in our economy: market failures in public goods and negative externalities</p>
           </div>
-          <div>
+          <div className='mid-layer'>
             <img className='homepage-img' src={'./images/abundanceisland01.png'} alt="Abundance Paradigm" />
           </div>
         </div>
@@ -181,5 +184,8 @@ export default function Home(props) {
         </div>
       </div>
     </div>
+
+
+
   )
 }

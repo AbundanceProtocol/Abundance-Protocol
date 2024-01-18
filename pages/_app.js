@@ -337,7 +337,7 @@ useEffect( () => {
     </div>
   ) : (
       <div>
-        <nav className="nav-bar">
+        <nav className="nav-bar top-layer">
           <div className="flex-row top-nav-wrap" ref={ref}>
             <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'space-between', alignItems: 'center', gridGap: '16px'}}>
               <HomeButton />
