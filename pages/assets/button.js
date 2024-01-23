@@ -355,7 +355,7 @@ const button = {
 
     // 'GitHub': {
     //     link: false,
-    //     url: 'https://github.com/buildingweb4/abundance-protocol',
+    //     url: 'https://github.com/AbundanceProtocol/abundance-protocol',
     //     menu: 'Connect',
     //     description: 'Help us develop the protocol on GitHub',
     //     account: false,
@@ -391,7 +391,7 @@ const button = {
     // },
     // 'Twitter': {
     //     link: false,
-    //     url: 'https://twitter.com/BuildingWeb4',
+    //     url: 'https://twitter.com/Abundance_DAO',
     //     menu: 'Connect',
     //     description: 'Follow us on Twitter',
     //     account: false,
@@ -400,7 +400,7 @@ const button = {
     // },
     // 'Email': {
     //     link: false,
-    //     url: 'mailto:info@buildingweb4.io',
+    //     url: 'mailto:info@abundance.id',
     //     menu: 'Connect',
     //     description: 'Contact us',
     //     account: false,

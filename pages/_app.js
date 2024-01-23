@@ -297,7 +297,7 @@ useEffect( () => {
   return isMobile ? (
     <div>
         <React.Fragment key="top">
-        <MobileAppbar position="fixed" elevation={0} sx={{paddingRight: 0}}>
+        <MobileAppbar className='top-layer' position="fixed" elevation={0} sx={{paddingRight: 0}}>
       <nav className="nav-bar-mobile">
             <NavbarHeader>
               <div className="navbar-header">
@@ -318,7 +318,7 @@ useEffect( () => {
             </NavbarHeader>
           </nav>
           </MobileAppbar> 
-          <Drawer elevation={0} anchor="top" variant="temporary" open={mobileMenuOpen} onClose={toggleDrawer()}  
+          <Drawer className='top-layer' elevation={0} anchor="top" variant="temporary" open={mobileMenuOpen} onClose={toggleDrawer()}  
             sx={{
               transform: window.innerWidth <= 360 ? 'translateY(56px)' :'translateY(62px)',
               zIndex: 1,
