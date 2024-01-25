@@ -246,6 +246,7 @@ export default function Home(props) {
           <p className="frame-desc text-l ftr-lnk"><Link className="frame-desc text-l" href="/">Home</Link></p>
           <p className="frame-desc text-l ftr-lnk" style={{color: '#999'}}><Link className="frame-desc text-l" href="/">Vision</Link></p>
           <p className="frame-desc text-l ftr-lnk"><Link className="frame-desc text-l" href="/roadmap">Roadmap</Link></p>
+          <p className="frame-desc text-l ftr-lnk"><a href="https://miro.com/app/board/uXjVPUvJDaU=/" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Miro project board</a></p>
           <p className="frame-desc text-l ftr-lnk"><Link className="frame-desc text-l" href="/blog">Blog</Link></p>
           <p className="frame-desc text-l ftr-lnk"><a href="https://mirror.xyz/0xabundance.eth" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Mirror</a></p>
           <p className="frame-desc text-l ftr-lnk"><a href="https://paragraph.xyz/@abundance" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Paragraph</a></p>
@@ -253,7 +254,7 @@ export default function Home(props) {
 
         <div className="flex-col flex-1 min-h flex-4 flex-wr" style={{paddingLeft: '10px'}}>
           <p className="frame-title text-l">Create</p>
-          <p className="frame-desc text-l"><a href="https://abundance-protocol.notion.site/5f9b1df587504ed0b8f2e74fdf578db7?v=4e43bcdc771048ef8dd5b3575520996f" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Dev Center</a></p>
+          <p className="frame-desc text-l"><a href="https://abundance-protocol.notion.site/Abundance-Dev-Center-553d59e1280e41d990967fb786c8948e" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Dev Center</a></p>
           <p className="frame-desc text-l"><a href="https://github.com/AbundanceProtocol/abundance-protocol" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
           <p className="frame-desc text-l"><a href="https://docs.abundance.id/" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Docs</a></p>
           <p className="frame-desc text-l"><a href="https://whitepaper.abundance.id/" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Whitepaper</a></p>
@@ -275,7 +276,7 @@ export default function Home(props) {
           <p className="frame-desc text-l ftr-lnk"><a href="https://warpcast.com/0xabundance.eth" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Farcaster</a></p>
           <p className="frame-desc text-l ftr-lnk"><a href="https://www.youtube.com/@AbundanceProtocol/" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">YouTube</a></p>
           <p className="frame-desc text-l ftr-lnk"><a href="https://discord.com/invite/sHcV7g3nqu" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Discord</a></p>
-          <p className="frame-desc text-l ftr-lnk"><a href="https://opensea.io/web4" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">OpenSea</a></p>
+          <p className="frame-desc text-l ftr-lnk"><a href="https://opensea.io/AbundanceDAO" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">OpenSea</a></p>
           <p className="frame-desc text-l ftr-lnk"><a href="mailto:info@abundance.id" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Email us</a></p>
         </div>
       </div>
