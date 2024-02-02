@@ -254,7 +254,7 @@ export default function Home(props) {
 
         <div className="flex-col flex-1 min-h flex-4 flex-wr" style={{paddingLeft: '10px'}}>
           <p className="frame-title text-l">Create</p>
-          <p className="frame-desc text-l"><a href="https://abundance-protocol.notion.site/Abundance-Dev-Center-553d59e1280e41d990967fb786c8948e" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Dev Center</a></p>
+          <p className="frame-desc text-l"><a href="https://abundance-protocol.notion.site/Abundance-Impact-Center-553d59e1280e41d990967fb786c8948e" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Impact Center</a></p>
           <p className="frame-desc text-l"><a href="https://github.com/AbundanceProtocol/abundance-protocol" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">GitHub</a></p>
           <p className="frame-desc text-l"><a href="https://docs.abundance.id/" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Docs</a></p>
           <p className="frame-desc text-l"><a href="https://whitepaper.abundance.id/" className="frame-desc text-l ftr-lnk" target="_blank" rel="noopener noreferrer">Whitepaper</a></p>
