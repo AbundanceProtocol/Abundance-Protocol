@@ -391,7 +391,7 @@ const button = {
     // },
     // 'Twitter': {
     //     link: false,
-    //     url: 'https://twitter.com/BuildingWeb4',
+    //     url: 'https://twitter.com/Abundance_DAO',
     //     menu: 'Connect',
     //     description: 'Follow us on Twitter',
     //     account: false,

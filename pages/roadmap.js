@@ -20,7 +20,7 @@ export default function Roadmap() {
                 <div><ImCheckboxChecked className="icon-complete" /></div>
                 <div>
                   <p className='frame-desc-top'>Research and development of the protocol. Developing a comprehensive incentive structure that aligns user interests. Identifying and redteaming potential attack vectors. Developing mechanisms to address sybil attacks, collusion, bad actors gaming protocol, and so on.</p>
-                  <p className='frame-desc' style={{fontSize: '14px'}}>See: <a href='https://abundances.substack.com/p/how-crypto-solves-the-problem-of-public-goods-8ae7125459a8' target="_blank" rel="noopener noreferrer" className="frame-desc-link" style={{fontSize: '14px'}}>Abundance Protocol Whitepaper</a></p>
+                  <p className='frame-desc' style={{fontSize: '14px'}}>See: <a href='https://whitepaper.abundance.id' target="_blank" rel="noopener noreferrer" className="frame-desc-link" style={{fontSize: '14px'}}>Abundance Protocol Whitepaper</a></p>
                 </div>
               </div>
             </div>
