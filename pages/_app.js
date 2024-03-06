@@ -44,7 +44,7 @@ function App({ Component, pageProps }) {
   `;
 
   useEffect(() => {
-    console.log('route', router.route)
+    // console.log('route', router.route)
     useStore.setState({ router })
   }, [router])
 
@@ -202,7 +202,7 @@ useEffect( () => {
         <a style={{maxWidth: '87px'}}  
         >
           <div className={menuState} style={{paddingRight: isMobile ? '1em' : 'unset' }}>
-            <div className="flex-col flex-middle" style={{height: '87px'}}>
+            <div className="flex-col flex-middle" style={{height: '87px', padding: '0 10px'}}>
               <div className="flex-col flex-middle">
                 <TopIcon className="size-25" />
                 <div className="font-15 mar-t-6" style={{textAlign: 'center', fontSize: isTablet ? '12px' : '15px'}}>
@@ -302,14 +302,24 @@ useEffect( () => {
             <NavbarHeader>
               <div className="navbar-header">
                 <HomeButton />
-                
-                <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <ConnectButton 
+                <div style={{padding: '0 0px', margin: '0 0 0 20px'}}>
+                <a style={{maxWidth: '87px'}} href="https://impact.abundance.id" target="_blank" rel="noopener noreferrer">
+                  <div className='nav-link' style={{paddingRight: isMobile ? '1em' : 'unset' }}>
+                    <div className="flex-col flex-middle" style={{height: '60px', padding: '0 0px'}}>
+                      <div className="flex-col flex-middle app-lnk" style={{padding: '5px'}}>
+                        <div className="font-15 app-txt" style={{fontSize: isTablet ? '10px' : '10px'}}>Launch App</div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+                <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
+                  {/* <ConnectButton 
                     account={store.account}
                     isMobile={isMobile}
                     onConnect={connect}
                     onDisconnect={disconnect}
-                    />
+                    /> */}
                   <MenuButton onClick={toggleDrawer()}>
                     {mobileMenuOpen ? <CollapseIcon/> : <HiMenu />}
                   </MenuButton>
@@ -336,23 +346,37 @@ useEffect( () => {
       </div>
     </div>
   ) : (
-      <div>
-        <nav className="nav-bar top-layer">
-          <div className="flex-row top-nav-wrap" ref={ref}>
-            <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'space-between', alignItems: 'center', gridGap: '16px'}}>
-              <HomeButton />
-              <Col>
-                <TopNavWrapper>
-                    { button['top-menu'].map((btn, index) => (
-                      <TopNav buttonName={btn} key={index} /> ))}
-                  </TopNavWrapper>
-                  <ConnectButton 
-                    account={account}
-                    isMobile={isMobile}
-                    onConnect={connect}
-                    onDisconnect={disconnect}
-                  />
-              </Col>
+      <div style={{width: '100%'}}>
+        <nav className="nav-bar top-layer flex-row" style={{justifyContent: 'center', width: '100%'}}>
+          <div className="flex-row top-nav-wrap" ref={ref} style={{width: '100%'}}
+            >
+            <div className='flex-row' style={{justifyContent: 'center', width: '100%'}}>
+              <div className="nav-head" style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'space-between', alignItems: 'center', gridGap: '16px', maxWidth: '1280px'}}>
+                <HomeButton />
+                <Col>
+                  <TopNavWrapper>
+                      { button['top-menu'].map((btn, index) => (
+                        <TopNav buttonName={btn} key={index} /> ))}
+                      <div style={{padding: '0 0px', margin: '0 0 0 20px'}}>
+                        <a style={{maxWidth: '87px'}} href="https://impact.abundance.id" target="_blank" rel="noopener noreferrer">
+                          <div className='nav-link' style={{paddingRight: isMobile ? '1em' : 'unset' }}>
+                            <div className="flex-col flex-middle" style={{height: '87px', padding: '0 0px'}}>
+                              <div className="flex-col flex-middle app-lnk" style={{}}>
+                                <div className="font-15 app-txt" style={{fontSize: isTablet ? '12px' : '15px'}}>Launch Impact App</div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </TopNavWrapper>
+                    {/* <ConnectButton 
+                      account={account}
+                      isMobile={isMobile}
+                      onConnect={connect}
+                      onDisconnect={disconnect}
+                    /> */}
+                </Col>
+              </div>
             </div>
             <Space />
           </div>
@@ -461,15 +485,14 @@ const MenuButton = styled(Button)`
 
 
 const TopNavWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  justify-content: space-between;
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
   align-items: center;
 
   > * svg {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
   }
   @media(min-width: 1024px) {
     > * svg {

@@ -24,6 +24,8 @@ import CoinStack from './CoinStack';
 import Waste from './Waste';
 import AbundanceStar from './AbundanceStar';
 import FeedbackLoop from './FeedbackLoop';
+import Farcaster from './Farcaster';
+import Paragraph from './Paragraph';
 
 const Spaces = () => {
   return <div className="flex-s" />
@@ -56,5 +58,7 @@ export {
   CoinStack,
   Waste,
   AbundanceStar,
-  FeedbackLoop
+  FeedbackLoop,
+  Farcaster,
+  Paragraph
 }
