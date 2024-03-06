@@ -269,7 +269,7 @@ useEffect( () => {
 
   const MobileNavMenu = () => {
     return (
-      <div className="mobile-menu-wrapper" style={{display: 'grid', gridAutoFlow: 'column', height: '100%', justifyContent: 'start', width: '100%'}}>
+      <div className="mobile-menu-wrapper top-layer" style={{display: 'grid', gridAutoFlow: 'column', height: '100%', justifyContent: 'start', width: '100%'}}>
         <Box height="100%" width="100%">
           <div style={{display: 'grid', gridAutoFlow: 'row'}}>
             {button['top-menu'].map((btn, index) => (
@@ -291,36 +291,35 @@ useEffect( () => {
 
   return isMobile ? (
     <div>
-        <React.Fragment key="top">
+      <React.Fragment key="top">
         <MobileAppbar className='top-layer' position="fixed" elevation={0} sx={{paddingRight: 0}}>
-      <nav className="nav-bar-mobile">
+          <nav className="nav-bar-mobile">
             <NavbarHeader>
               <div className="navbar-header">
                 <HomeButton />
-                
                 <div className='flex-row'>
-                <div style={{padding: '0 0px', margin: '0 0 0 20px'}}>
-                  <a style={{maxWidth: '87px'}} href="https://impact.abundance.id" target="_blank" rel="noopener noreferrer">
-                    <div className='nav-link' style={{paddingRight: isMobile ? '1em' : 'unset' }}>
-                      <div className="flex-col flex-middle" style={{height: '60px', padding: '0 0px'}}>
-                        <div className="flex-col flex-middle app-lnk" style={{padding: '5px'}}>
-                          <div className="font-15 app-txt" style={{fontSize: isTablet ? '10px' : '10px'}}>Launch App</div>
+                  <div style={{padding: '0 0px', margin: '0 0 0 20px'}}>
+                    <a style={{maxWidth: '87px'}} href="https://impact.abundance.id" target="_blank" rel="noopener noreferrer">
+                      <div className='nav-link' style={{paddingRight: isMobile ? '1em' : 'unset' }}>
+                        <div className="flex-col flex-middle" style={{height: '60px', padding: '0 0px'}}>
+                          <div className="flex-col flex-middle app-lnk" style={{padding: '5px'}}>
+                            <div className="font-15 app-txt" style={{fontSize: isTablet ? '10px' : '10px'}}>Launch App</div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
-                  {/* <ConnectButton 
-                    account={store.account}
-                    isMobile={isMobile}
-                    onConnect={connect}
-                    onDisconnect={disconnect}
-                    /> */}
-                  <MenuButton onClick={toggleDrawer()}>
-                    {mobileMenuOpen ? <CollapseIcon/> : <HiMenu />}
-                  </MenuButton>
-                </Box>
+                    </a>
+                  </div>
+                  <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
+                    {/* <ConnectButton 
+                      account={store.account}
+                      isMobile={isMobile}
+                      onConnect={connect}
+                      onDisconnect={disconnect}
+                      /> */}
+                    <MenuButton onClick={toggleDrawer()}>
+                      {mobileMenuOpen ? <CollapseIcon/> : <HiMenu />}
+                    </MenuButton>
+                  </Box>
                 </div>
               </div>
             </NavbarHeader>
@@ -334,7 +333,7 @@ useEffect( () => {
               '& .MuiDrawer-paper': { width: 'fit-content',backgroundColor: 'transparent', padding: '16px', overflowX: 'hidden'}
             }}
             >
-            <MobileNavMenu />
+            <MobileNavMenu className='top-layer' />
           </Drawer>
         </React.Fragment>
       <div className="container">
