@@ -35,12 +35,7 @@ function App({ Component, pageProps }) {
     grid-template-columns: 1fr auto;
     align-items: center;
     justify-content: space-between;
-    grid-gap: 32px;
     width: 100%;
-
-    @media(min-width: 1440px) {
-      grid-gap: ${navWidth}px;
-    }
   `;
 
   useEffect(() => {
@@ -302,17 +297,19 @@ useEffect( () => {
             <NavbarHeader>
               <div className="navbar-header">
                 <HomeButton />
+                
+                <div className='flex-row'>
                 <div style={{padding: '0 0px', margin: '0 0 0 20px'}}>
-                <a style={{maxWidth: '87px'}} href="https://impact.abundance.id" target="_blank" rel="noopener noreferrer">
-                  <div className='nav-link' style={{paddingRight: isMobile ? '1em' : 'unset' }}>
-                    <div className="flex-col flex-middle" style={{height: '60px', padding: '0 0px'}}>
-                      <div className="flex-col flex-middle app-lnk" style={{padding: '5px'}}>
-                        <div className="font-15 app-txt" style={{fontSize: isTablet ? '10px' : '10px'}}>Launch App</div>
+                  <a style={{maxWidth: '87px'}} href="https://impact.abundance.id" target="_blank" rel="noopener noreferrer">
+                    <div className='nav-link' style={{paddingRight: isMobile ? '1em' : 'unset' }}>
+                      <div className="flex-col flex-middle" style={{height: '60px', padding: '0 0px'}}>
+                        <div className="flex-col flex-middle app-lnk" style={{padding: '5px'}}>
+                          <div className="font-15 app-txt" style={{fontSize: isTablet ? '10px' : '10px'}}>Launch App</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </a>
-              </div>
+                  </a>
+                </div>
                 <Box className="navbar-header-end" sx={{display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', alignItems: 'center', justifyContent: 'space-between'}}>
                   {/* <ConnectButton 
                     account={store.account}
@@ -324,6 +321,7 @@ useEffect( () => {
                     {mobileMenuOpen ? <CollapseIcon/> : <HiMenu />}
                   </MenuButton>
                 </Box>
+                </div>
               </div>
             </NavbarHeader>
           </nav>
@@ -431,7 +429,9 @@ const NavbarHeader = styled.div`
   .navbar-header {
     display: grid;
     grid-auto-flow: column;
+    grid-template-columns: min-content min-content;
     justify-content: space-between;
+    width: 100%;
     align-items: center;
     // grid-gap: 16px;
 
