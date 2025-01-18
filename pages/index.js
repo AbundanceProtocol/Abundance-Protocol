@@ -138,7 +138,7 @@ export default function Home(props) {
                 <p id='SC10' className="frame-title">Negative Externalities</p>
               </div>
               <div id='SC11' className='' style={{padding: '0 17%'}}>
-                <p id='SC12' className="title-desc">There is an incentive in the economy to offload proudction costs onto the public. This way the private business gets all the returns while the public suffers the harms. There is no effective feedback loop in the market to fix this problem.
+                <p id='SC12' className="title-desc">There is an incentive in the economy to offload production costs onto the public. This way the private business gets all the returns while the public suffers the harms. There is no effective feedback loop in the market to fix this problem.
                 </p>
               </div>
             </div>
