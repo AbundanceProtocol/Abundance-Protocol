@@ -13,3 +13,5 @@ Project website: https://abundance.id/
 Project White Paper: https://whitepaper.abundance.id/
 
 Project Discord: https://discord.gg/sHcV7g3nqu
+
+Project X (Twitter): https://x.com/Abundance_DAO
